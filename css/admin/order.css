@@ -1,0 +1,61 @@
+#filterStatus {
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+/* th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+} */
+
+/* th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+} */
+
+/* td {
+    background-color: #fff;
+} */
+
+/* tr:hover {
+    background-color: #f1f1f1;
+} */
+.btn-detail, .btn-delete {
+    display: inline-block;
+    padding: 5px 10px;
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 5px;
+    margin: 2px;
+}
+
+/* Nút Chi tiết (Màu xanh) */
+.btn-detail {
+    background-color: #007bff;
+    color: white;
+    border: 1px solid #007bff;
+}
+
+.btn-detail:hover {
+    background-color: #0056b3;
+}
+
+/* Nút Xóa (Màu đỏ) */
+.btn-delete {
+    background-color: #dc3545;
+    color: white;
+    border: 1px solid #dc3545;
+}
+
+.btn-delete:hover {
+    background-color: #b02a37;
+}

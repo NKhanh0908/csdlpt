@@ -1,0 +1,251 @@
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+}
+
+.container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+}
+
+.in-content {
+    background-color: white;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 45%;
+}
+
+.left-content, .middle-content {
+    display: flex;
+}
+
+#img-em {
+    width: 200px;
+    height: 200px;
+    border-radius: 8px;
+}
+
+#name, #gioitinh, #ngaysinh, #email, #sdt, #tinhtrang {
+    font-weight: bold;
+    color: #333;
+}
+
+/* khúc chấm công trở xuống */
+#chamcong {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.popup{
+    background-color: antiquewhite;
+    width: 70%;
+    height: 70%;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    border-radius: 5px;
+    transform: translate(-50%, -50%) scale(0.075);
+    text-align: center;
+    /* padding: 15% 20% 15%; */
+    visibility: hidden;
+    transition: transform 0.4s, top 0.4s;
+}
+
+.open-popup{
+    visibility: visible;
+    top: 45%;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* khúc chấm công trở lên */
+
+/* Khúc xin nghỉ trở xuống */
+#close-leave{
+    width: 15%;
+    height: 10%;
+    position: absolute;
+    margin-top: 10%;
+    margin-left: 41%;
+    padding: 2%;
+    background-color: #007e02;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 15px;
+}
+#close-leave:hover{
+    background-color: #0c480d;
+}
+.leave-form h1{
+    padding: 1%;
+    width: 60%;
+    border-radius: 50px;
+    background-color: rgb(13, 220, 20);
+    position: absolute;
+    margin-top: -5%;
+    margin-left: 21.5%;
+    color: white;
+}
+.leave-container{
+    margin-top: 10%;
+    font-size: 25px;
+}
+#leave-popup {
+    width: 100%;
+    margin-top: 20px;
+}
+#ngaynghi{
+    width: 40%;
+    height: 20%;
+}
+.leave-form{
+    background-color: antiquewhite;
+    width: 30%;
+    height: 50%;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    border-radius: 15px;
+    transform: translate(-50%, -50%) scale(0.075);
+    text-align: center;
+    visibility: hidden;
+    transition: transform 0.4s, top 0.4s;
+}
+/* input date */
+input[type="date"]::-webkit-datetime-edit{
+    font-size: 18px;
+    /* color: red; */
+}
+input[type="date"]::-webkit-calendar-picker-indicator{
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+input[type="date"]::-webkit-calendar-picker-indicator:hover{
+    background-color: #cfd1c9;
+}
+/* input date */
+
+#submit-leave{
+    width: 15%;
+    height: 10%;
+    /* position: absolute;
+    margin-top: 10%;
+    margin-left: 41%; */
+    padding: 1.5%;
+    background-color: rgb(13, 220, 20);
+    color: rgb(255, 255, 255);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 22px;
+}
+#submit-leave:hover{
+    background-color: rgb(53, 149, 56);
+}
+
+.open-leaveform{
+    visibility: visible;
+    top: 45%;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* Bảng lương */
+.salary-form{
+    display: block;
+    /* align-items: left;*/
+    text-align: left;
+    background-color: rgb(255, 252, 246);
+    box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.1);
+    width: 50%;
+    height: 80%;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    border-radius: 5px;
+    transform: translate(-50%, -50%) scale(0.075);
+    visibility: hidden;
+    transition: transform 0.4s, top 0.4s;
+
+    /* transform: translate(-50%, -50%) scale(1);
+    top: 45%; */
+}
+
+.open-salaryform{
+    visibility: visible;
+    top: 45%;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.salary-form h1{
+    text-align: center;
+    margin-bottom: 3%;
+}
+
+.cty-info{
+    padding-left: 2%;
+    padding-top: 0.5%;
+}
+
+.contain{
+    padding: 2%;
+}
+.contain h3 {
+    margin-top: 2%;
+}
+
+.contain div{
+    display: flex;
+}
+
+.contain div p{
+    margin-top: 1%;
+    width: 50%;
+}
+
+.contain tr{
+    height: 25px;
+}
+.contain th, td{
+    border: 0.5px solid black;
+}
+
+.stt{
+    text-align: center;
+}
+.text{
+    padding-left: 1%;
+}
+.output-text{
+    /* padding-left: 1%; */
+    text-align: center;
+}
+
+/* Bảng lương */
+
+/* Button X đóng cửa sổ */
+.close {
+    position: absolute;
+    margin-left: 93.5%;
+    /* margin-top: -2%; */
+    padding: 10px 20px;
+    background-color: #f41111;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.close:hover{
+    background-color: #9f0909;
+}
