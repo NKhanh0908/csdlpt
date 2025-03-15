@@ -2,13 +2,10 @@
 
 <h1>Quản lý Nhà cung cấp</h1><br>
 <?php
-include('../../Controller/connectDB.php');
-$conn = getConnection();
 
-//Truy vấn nhà cung cấp
-$sql = "SELECT * FROM nhacungcap n ";
+include  '.\..\Controller\Provider\GetAllProvider.php';
 
-$result = mysqli_query($conn, $sql);
+$result = getAllProvider();
 ?>
 
 <div class='containers'>

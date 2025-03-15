@@ -1,6 +1,6 @@
 <?php
-include('../../Controller/connectDB.php');
-$conn = getConnection();
+//include '../connectDB.php';
+//$connect = getConnection();
 $idHD = isset($_GET['idHD']) ? intval($_GET['idHD']) : 0;
 if ($idHD <= 0) {
     die("ID đơn hàng không hợp lệ.");

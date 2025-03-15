@@ -1,12 +1,9 @@
 <?php
 
-include('../../Controller/connectDB.php');
-$db = getConnection();
+include  '.\..\Controller\vouncher\GetAllVouncher.php';
 
-$sql = "SELECT * FROM khuyenmai";
-$data = [];
 
-$result = $db->query($sql);
+$result = getAllVouncher();
 while ($row = $result->fetch_assoc()) {
     $data[] = $row;
 }

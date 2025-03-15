@@ -1,5 +1,7 @@
-<?php include('../../Controller/connectDB.php');
-$conn = getConnection(); ?>
+<?php 
+// include_once '../../Controller/connectDB.php';
+// $conn = getConnection(); 
+?>
 
 <h3>Danh sách đơn hàng</h3>
 

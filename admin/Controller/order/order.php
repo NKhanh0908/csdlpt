@@ -1,5 +1,5 @@
 <?php
-include('../../Controller/connectDB.php');
+include('../connectDB.php');
 $conn = getConnection();
 
 // Lấy trạng thái từ request
