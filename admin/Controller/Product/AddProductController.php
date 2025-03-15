@@ -1,6 +1,6 @@
 <?php
-
-$conn=mysqli_connect("localhost:3306", "root", "", "chdidong");
+include('../../Controller/connectDB.php');
+$conn = getConnection();
 
 if(isset($_POST["Add-SP"])){
     if (!empty($_POST["txtTensp"])

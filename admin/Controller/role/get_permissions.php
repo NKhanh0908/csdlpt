@@ -1,9 +1,7 @@
 <?php
 // Kết nối database
-include_once(__DIR__ . "/../../../Model/db_connect.php");
-
-$db = new Database();
-$conn = $db->connect();
+include('../../Controller/connectDB.php');
+$conn = getConnection();
 
 // Lấy vai trò được chọn từ yêu cầu AJAX
 $selected_role = $_POST['role'];

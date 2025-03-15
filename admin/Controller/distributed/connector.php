@@ -1,85 +1,33 @@
 <?php
+function getConnection($branch) {
+    $servers = [
+        'branch1' => 'LAPTOP-O2NQEJ35',          // Server chính
+        'branch2' => 'LAPTOP-O2NQEJ35\MSSQLSERVER2',  
+        'branch3' => 'LAPTOP-O2NQEJ35\MSSQLSERVER3',  
+        'branch4' => 'LAPTOP-O2NQEJ35\MSSQLSERVER4'
+    ];
 
-function getConnection(){
-
-    $serverName = "LAPTOP-O2NQEJ35";
     $database = "chdidong";
     $uid = "sa";
     $password = "13524679";
-    
-    $connection = [
-        "Database" => $database,
-        "Uid" => $uid,
-        "PWD" => $password,
-        "CharacterSet" => "UTF-8"
-    ];
-    
-    $conn = sqlsrv_connect($serverName, $connection);
-    if(!$conn){
-        die(print_r(sqlsrv_errors(), true));
+
+    if (!isset($servers[$branch])) {
+        die("Chi nhánh không tồn tại!");
     }
-    return $conn;  
-}
 
-function getConnectionServer1(){
-    $serverName = "LAPTOP-O2NQEJ35\MSSQLSERVER2";
-    $database = "chdidong";
-    $uid = "sa";
-    $password = "13524679";
-    
-    $connection = [
+    $connectionInfo = [
         "Database" => $database,
         "Uid" => $uid,
         "PWD" => $password,
         "CharacterSet" => "UTF-8"
     ];
-    
-    $conn = sqlsrv_connect($serverName, $connection);
-    if(!$conn){
+
+    $conn = sqlsrv_connect($servers[$branch], $connectionInfo);
+
+    if (!$conn) {
         die(print_r(sqlsrv_errors(), true));
     }
     return $conn;
 }
-
-function getConnectionServer2(){
-    $serverName = "LAPTOP-O2NQEJ35\MSSQLSERVER3";
-    $database = "chdidong";
-    $uid = "sa";
-    $password = "13524679";
-    
-    $connection = [
-        "Database" => $database,
-        "Uid" => $uid,
-        "PWD" => $password,
-        "CharacterSet" => "UTF-8"
-    ];
-    
-    $conn = sqlsrv_connect($serverName, $connection);
-    if(!$conn){
-        die(print_r(sqlsrv_errors(), true));
-    }
-    return $conn;
-}
-
-function getConnectionServer3(){
-    $serverName = "LAPTOP-O2NQEJ35\MSSQLSERVER4";
-    $database = "chdidong";
-    $uid = "sa";
-    $password = "13524679";
-    
-    $connection = [
-        "Database" => $database,
-        "Uid" => $uid,
-        "PWD" => $password,
-        "CharacterSet" => "UTF-8"
-    ];
-    
-    $conn = sqlsrv_connect($serverName, $connection);
-    if(!$conn){
-        die(print_r(sqlsrv_errors(), true));
-    }
-    return $conn;
-}
-
 
 ?>

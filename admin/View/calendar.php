@@ -2,8 +2,6 @@
 <html lang="en">
 
 <?php
-    $path = $_SERVER["DOCUMENT_ROOT"] . '/admin/Controller/connectDB.php';
-    include($path);
 
     $id = $_SESSION['idNV'];
 ?>

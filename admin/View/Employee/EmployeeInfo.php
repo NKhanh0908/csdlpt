@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="/css/admin/Employee.css">
-<?php include("../Controller/Employee/Getid.php"); ?>
+<?php include("../../Controller/Employee/Getid.php"); ?>
 
 <body onload="LoadInfo()">
 <h1>Thông tin nhân viên</h1><br>

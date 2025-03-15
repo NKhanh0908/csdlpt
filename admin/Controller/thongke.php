@@ -1,11 +1,9 @@
 <?php
 header('Content-Type: application/json; charset=utf-8');
-include_once(__DIR__ . "/../../Model/db_connect.php");
+include_once("connectDB.php");
 
-
-
-$db = new Database();
-$conn = $db->connect();
+ 
+$conn = getConnection();
 
 // Nhận tham số từ request (từ ngày - đến ngày)
 $fromDate = isset($_GET['fromDate']) ? $_GET['fromDate'] : date('Y-01-01');

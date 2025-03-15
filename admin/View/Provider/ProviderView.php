@@ -2,7 +2,8 @@
 
 <h1>Quản lý Nhà cung cấp</h1><br>
 <?php
-include('../Controller/connectDB.php'); 
+include('../../Controller/connectDB.php');
+$conn = getConnection();
 
 //Truy vấn nhà cung cấp
 $sql = "SELECT * FROM nhacungcap n ";

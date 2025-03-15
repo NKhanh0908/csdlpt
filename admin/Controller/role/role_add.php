@@ -1,9 +1,9 @@
 <?php
-include_once(__DIR__ . "/../../Model/db_connect.php");
+include('../../Controller/connectDB.php');
 
 function themQuyenMoi($tenquyen) {
-    $db = new Database();
-    $conn = $db->connect();
+ 
+    $conn = getConnection();
 
     // Kiểm tra xem tên quyền đã tồn tại chưa
     $sqlCheck = "SELECT idQUYEN FROM QUYEN WHERE TENQUYEN = ?";
@@ -33,8 +33,8 @@ function themQuyenMoi($tenquyen) {
 }
 
 function themPhanQuyen($idQUYEN, $idCN, $thaotac) {
-    $db = new Database();
-    $conn = $db->connect();
+ 
+    $conn = getConnection();
 
     $sql = "INSERT INTO PHANQUYEN (idQUYEN, idCN, THAOTAC) VALUES (?, ?, ?)";
     $stmt = $conn->prepare($sql);

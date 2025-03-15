@@ -1,8 +1,6 @@
 <?php
-include_once(__DIR__ . "/../../../Model/db_connect.php");
-
-$db = new Database();
-$conn = $db->connect(); // Sử dụng $conn thay vì $connect
+include('../../Controller/connectDB.php');
+$conn = getConnection();
 
 // Lấy trạng thái từ request
 $status = isset($_GET["status"]) ? $_GET["status"] : "all";

@@ -2,8 +2,8 @@
 session_start();
 $alert = '';
 
-// Kết nối cơ sở dữ liệu
-$connect = new mysqli("localhost", "root", "", "chdidong");
+include('../Controller/connectDB.php');
+$connect = getConnection();
 
 if ($connect->connect_error) {
     die("Kết nối thất bại: " . $connect->connect_error);

@@ -3,9 +3,8 @@ session_start();
 header('Content-Type: application/json');
 
 // Kết nối DB
-$path = $_SERVER["DOCUMENT_ROOT"] . '/admin/Controller/connectDB.php';
-include($path);
-$conn->set_charset("utf8");
+include('../Controller/connectDB.php');
+$conn = getConnection();
 
 $idNV = isset($_SESSION['idNV']) ? $_SESSION['idNV'] : (isset($_GET['idNV']) ? $_GET['idNV'] : null);
 

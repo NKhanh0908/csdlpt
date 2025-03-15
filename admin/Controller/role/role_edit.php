@@ -1,8 +1,7 @@
     <?php
         function capNhatPhanQuyen($idQuyen, $dsQuyen) {
-        include_once(__DIR__ . "/../../Model/db_connect.php");
-        $db = new Database();
-        $conn = $db->connect();
+            include('../../Controller/connectDB.php');
+            $conn = getConnection();
 
         // Xóa hết quyền cũ của vai trò này trước khi cập nhật lại
         $sqlDelete = "DELETE FROM phanquyen WHERE idQUYEN = ?";

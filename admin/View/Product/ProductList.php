@@ -2,6 +2,9 @@
 
 include('ProductFilter.php');
 
+include('../../Controller/connectDB.php');
+$conn = getConnection();
+
 echo "<br><h3>Danh sách sản phẩm</h3>";
 echo '<table>
 <thead>

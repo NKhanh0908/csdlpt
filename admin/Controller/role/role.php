@@ -1,8 +1,6 @@
 <?php
-include_once(__DIR__ . "/../../../Model/db_connect.php");
-
-$db = new Database();
-$conn = $db->connect();
+include('../../Controller/connectDB.php');
+$conn = getConnection();
 
 // Lấy danh sách các vai trò từ bảng quyen
 $sql_roles = "SELECT * FROM quyen WHERE TRANGTHAI = 1";

@@ -1,7 +1,8 @@
 <?php
 include "checkLogin.php";  // Đúng - cùng thư mục
 
-$connect = new mysqli("localhost:3306", "root", "", "chdidong");
+include('../Controller/connectDB.php');
+$connect = getConnection();
 
 if ($connect->connect_error) {
     die("Connection failed: " . $connect->connect_error);

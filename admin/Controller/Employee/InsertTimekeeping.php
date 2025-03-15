@@ -2,8 +2,8 @@
 // session_start(); // Bắt buộc để lấy session
 
 header('Content-Type: application/json');
-$path = $_SERVER["DOCUMENT_ROOT"] . '/admin/Controller/connectDB.php';
-include($path);
+include('../../Controller/connectDB.php');
+$conn = getConnection();
 
 // Thiết lập múi giờ Việt Nam (UTC+7)
 date_default_timezone_set('Asia/Ho_Chi_Minh');

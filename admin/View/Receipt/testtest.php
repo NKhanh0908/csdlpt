@@ -1,6 +1,7 @@
 <?php
-$path = $_SERVER["DOCUMENT_ROOT"] . '/admin/Controller/connectDB.php';
-include($path);
+include('../../Controller/connectDB.php');
+$conn = getConnection();
+
 header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

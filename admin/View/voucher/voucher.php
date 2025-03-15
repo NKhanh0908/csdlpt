@@ -1,8 +1,7 @@
 <?php
-include_once(__DIR__ . "/../../../Model/db_connect.php");
 
-$db = new Database();
-$db->connect();  // QUAN TRỌNG: gọi hàm connect() trước khi query
+include('../../Controller/connectDB.php');
+$db = getConnection();
 
 $sql = "SELECT * FROM khuyenmai";
 $data = [];

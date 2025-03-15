@@ -1,4 +1,5 @@
-<?php include_once(__DIR__ . "/../../../Model/db_connect.php"); ?>
+<?php include('../../Controller/connectDB.php');
+$conn = getConnection(); ?>
 
 <h3>Danh sách đơn hàng</h3>
 
@@ -7,8 +8,7 @@
 <select id="filterStatus">
     <option value="all">Tất cả</option>
     <?php
-    $db = new Database();
-    $conn = $db->connect();
+  
 
     $sql_status = "SELECT * FROM trangthaidonhang";
     $result_status = $connect->query($sql_status);

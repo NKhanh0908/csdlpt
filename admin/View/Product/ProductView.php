@@ -1,10 +1,10 @@
 <link rel="stylesheet" href="/css/admin/Product.css">
 <?php
-include_once(__DIR__ . "/../../../Model/db_connect.php");
+ 
 include_once(__DIR__ . "/../../Controller/role/role.php");
 
-$db = new Database();
-$conn = $db->connect();
+include('../../Controller/connectDB.php');
+$conn = getConnection();
 
 if (!isset($_SESSION['role'])) {
     die("Bạn chưa đăng nhập hoặc không có quyền truy cập.");

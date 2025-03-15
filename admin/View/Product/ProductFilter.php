@@ -1,4 +1,8 @@
 <?php 
+
+include('../../Controller/connectDB.php');
+$conn = getConnection();
+
 //Lấy ra hãng
 $sql_hang = mysqli_query($conn, "SELECT * FROM hang ORDER BY idHANG DESC");
 //Lấy ra danh mục

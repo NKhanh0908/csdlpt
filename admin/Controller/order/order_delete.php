@@ -1,11 +1,10 @@
 <?php
-include_once(__DIR__ . "/../../../Model/db_connect.php");
+include('../../Controller/connectDB.php');
+$conn = getConnection();
 
 if (isset($_GET['idHD'])) {
     $idHD = intval($_GET['idHD']); // Đảm bảo kiểu dữ liệu
-
-    $db = new Database();
-    $conn = $db->connect();
+ 
 
     // Bắt đầu transaction để đảm bảo tính toàn vẹn dữ liệu
     $conn->begin_transaction();

@@ -1,8 +1,6 @@
 <?php
-include_once(__DIR__ . "/../../../Model/db_connect.php");
-
-$db = new Database();
-$conn = $db->connect(); // Sử dụng $conn thay vì $connect
+include('../../Controller/connectDB.php');
+$conn = getConnection();
 $idHD = isset($_GET['idHD']) ? intval($_GET['idHD']) : 0;
 if ($idHD <= 0) {
     die("ID đơn hàng không hợp lệ.");
