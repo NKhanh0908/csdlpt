@@ -1,12 +1,6 @@
 <?php
 include "checkLogin.php";  // Đúng - cùng thư mục
 
-include('../Controller/connectDB.php');
-$connect = getConnection();
-
-if ($connect->connect_error) {
-    die("Connection failed: " . $connect->connect_error);
-}
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -36,16 +30,18 @@ if ($connect->connect_error) {
         <?php if (checkPermission('Nhà cung cấp')): ?>
             <a href="?page=provider">Nhà cung cấp</a>
         <?php endif; ?>
-        <?php if (checkPermission('Khuyen mai')): ?>
-            <a href="?page=voucher">Khuyến mãi</a>
-        <?php endif; ?>
-        <?php if (checkPermission('Thông tin nhân viên')): ?>
-            <a href="?page=employeeinfo">Thông tin nhân viên</a>
-        <?php endif; ?>   
+        <!-- ======================== -->
+                <?php if (checkPermission('Khuyen mai')): ?>
+                    <a href="?page=voucher">Khuyến mãi</a>
+                <?php endif; ?>
+                <?php if (checkPermission('Thông tin nhân viên')): ?>
+                    <a href="?page=employeeinfo">Thông tin nhân viên</a>
+                <?php endif; ?>   
 
-        <?php if (checkPermission('Phân quyền')): ?>
-            <a href="?page=role">Phân quyền</a>
-        <?php endif; ?>
+                <?php if (checkPermission('Phân quyền')): ?>
+                    <a href="?page=role">Phân quyền</a>
+                <?php endif; ?>
+        <!-- ======================== -->
         <?php if (checkPermission('Tài khoản')): ?>
             <a href="?page=account">tài khoản</a>
         <?php endif; ?>
@@ -54,9 +50,12 @@ if ($connect->connect_error) {
         <?php endif; ?>
         <a href="?page=product">Sản phẩm</a>
         <a href="?page=phieunhap">Phiếu nhập</a>
-        <a href="?page=employeeinfo">Thông tin nhân viên</a>
+        <!-- ======================== -->
 
-        <a href="?page=calendar">Lịch làm việc</a>
+                <a href="?page=employeeinfo">Thông tin nhân viên</a>
+
+                <a href="?page=calendar">Lịch làm việc</a>
+        <!-- ======================== -->
 
         <a href="logout.php" style="color: white; background: crimson; text-align: center; margin-top: 20px;">Đăng xuất</a>
 

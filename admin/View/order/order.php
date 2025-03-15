@@ -10,23 +10,37 @@
 <select id="filterStatus">
     <option value="all">Tất cả</option>
     <?php
-  
-
+  include_once './../Controller/connector.php';
+  $connector = getConnection('branch2');
     $sql_status = "SELECT * FROM trangthaidonhang";
-    $result_status = $connect->query($sql_status);
-    while ($row_status = $result_status->fetch_assoc()) {
+    $result_status = sqlsrv_query($connector, $sql_status);
+    while ($row_status = sqlsrv_fetch_array($result_status, SQLSRV_FETCH_ASSOC)) {
         echo "<option value='{$row_status['idSTATUS']}'>{$row_status['STATUS']}</option>";
     }
-    $connect->close();
     ?>
 </select>
+
+<label for="filterBranch">Lọc theo chi nhánh:</label>
+<select id="filterBranch">
+    <option value="branch1">Tất cả</option>
+    <option value="branch2">Chi nhánh 1</option>
+    <option value="branch3">Chi nhánh 2</option>
+    <option value="branch4">Chi nhánh 3</option>
+</select>
+
 
 <!-- Khu vực hiển thị đơn hàng -->
 <div id="orderList"></div>
 
 <script>
-    function loadOrders(status = "all") {
-    fetch("../Controller/order/order.php?status=" + status)
+    function loadOrders() {
+        let statusValue = document.getElementById("filterStatus").value;
+        let branchValue = document.getElementById("filterBranch").value;
+
+    console.log("Trạng thái đơn hàng:", statusValue);
+    console.log("Chi nhánh:", branchValue);
+
+    fetch("../Controller/order/order.php?status=" + statusValue + "&branch=" + branchValue)
         .then(response => response.json())
         .then(orders => {
             let html = `<table>
@@ -50,7 +64,7 @@
                     <td>${order.THANHTIEN} VND</td>
                     <td>${order.STATUS}</td>
                     <td>
-                        <a href='?page=orderdetail&idHD=${order.idHD}' class='btn-detail'>Chi tiết</a>
+                        <a href='?page=orderdetail&idHD=${order.idHD}&idCN=${order.idCN}' class='btn-detail'>Chi tiết</a>
                         ${order.STATUS === "Hủy" ? `<a href="javascript:deleteOrder(${order.idHD})" class="btn-delete">Xóa</a>` : ''}
                     </td>
                 </tr>`;
@@ -63,7 +77,11 @@
 }
 
     document.getElementById("filterStatus").addEventListener("change", function () {
-        loadOrders(this.value);
+        loadOrders();
+    });
+
+    document.getElementById("filterBranch").addEventListener("change", function () {
+        loadOrders();
     });
 
     window.onload = function() {

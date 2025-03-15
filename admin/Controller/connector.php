@@ -1,5 +1,5 @@
 <?php
-function getConnection($branch) {
+function getConnection($branch = "branch2") {
     $servers = [
         'branch1' => 'LAPTOP-O2NQEJ35',          // Server chính
         'branch2' => 'LAPTOP-O2NQEJ35\MSSQLSERVER2',  
