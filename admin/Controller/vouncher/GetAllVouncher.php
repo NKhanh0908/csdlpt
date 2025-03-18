@@ -1,12 +1,12 @@
 <?php
 
-
+include('../Controller/connector.php');
 function getAllVouncher(){
     global $conn;
-    $conn = getConnection();
+    $conn = getConnection('branch2');
     $sql = "SELECT * FROM khuyenmai";
 
-    $result = mysqli_query($conn, $sql);
+    $result = sqlsrv_query($conn, $sql);
     return $result;
 }
 

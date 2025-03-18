@@ -1,22 +1,8 @@
 <link rel="stylesheet" href="/css/admin/Product.css">
-<?php
  
-include_once(__DIR__ . "/../../Controller/role/role.php");
-
-include('../../Controller/connectDB.php');
-$conn = getConnection();
-
-if (!isset($_SESSION['role'])) {
-    die("Bạn chưa đăng nhập hoặc không có quyền truy cập.");
-}
-
-$coQuyenThem = kiemTraQuyen($conn, $_SESSION['role'], 1, 'THEM');  // Đã truyền đúng thứ tự
-
-?>
 
 <h1>Quản lý sản phẩm</h1><br>
 <?php 
-include('../Controller/connectDB.php'); 
 ?>
 
 <div class='containers'>

@@ -43,6 +43,7 @@
     fetch("../Controller/order/order.php?status=" + statusValue + "&branch=" + branchValue)
         .then(response => response.json())
         .then(orders => {
+            console.log(orders)
             let html = `<table>
                 <thead>
                     <tr>

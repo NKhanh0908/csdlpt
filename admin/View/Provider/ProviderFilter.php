@@ -38,5 +38,5 @@ if(isset($_POST['filter'])){
 $sql .= ($sql_search . $sql_order);
 echo "<script>console.log('$sql')</script>";
 //Chạy truy vấn
-$result = mysqli_query($conn, $sql);
+$result = sqlsrv_query($conn, $sql);
 ?>

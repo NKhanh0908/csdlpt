@@ -6,21 +6,21 @@ EXEC sp_linkedservers;
 
 EXEC sp_addlinkedserver 
     @server='LINKEDSV2', 
-    @srvproduct='', 
+    @srvproduct='SQL Server', 
     @provider='SQLNCLI', 
     @datasrc='LAPTOP-O2NQEJ35\MSSQLSERVER2';
 GO
 
 EXEC sp_addlinkedserver 
     @server='LINKEDSV3', 
-    @srvproduct='', 
+    @srvproduct='SQL Server', 
     @provider='SQLNCLI', 
     @datasrc='LAPTOP-O2NQEJ35\MSSQLSERVER3';
 GO
 
 EXEC sp_addlinkedserver 
     @server='LINKEDSV4', 
-    @srvproduct='', 
+    @srvproduct='SQL Server', 
     @provider='SQLNCLI', 
     @datasrc='LAPTOP-O2NQEJ35\MSSQLSERVER4';
 GO

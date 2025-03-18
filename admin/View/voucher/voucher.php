@@ -4,7 +4,9 @@ include  '.\..\Controller\vouncher\GetAllVouncher.php';
 
 
 $result = getAllVouncher();
-while ($row = $result->fetch_assoc()) {
+while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
+    $row['NGAYAPDUNG'] = $row['NGAYAPDUNG']->format('Y-m-d');
+    $row['HANSUDUNG'] = $row['HANSUDUNG']->format('Y-m-d');
     $data[] = $row;
 }
 ?>

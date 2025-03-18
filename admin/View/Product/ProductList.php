@@ -2,8 +2,6 @@
 
 include('ProductFilter.php');
 
-include('../../Controller/connectDB.php');
-$conn = getConnection();
 
 echo "<br><h3>Danh sách sản phẩm</h3>";
 echo '<table>
@@ -20,11 +18,10 @@ echo '<table>
 </thead>
 <tbody>';
 
-while ($row = mysqli_fetch_array($result)) {
+while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
 $path = "/images/products/" . $row['IMG'];
-$row_sp = mysqli_query($conn, "SELECT * from sanpham
-where idSP={$row['idSP']}");
-$result_sp = mysqli_fetch_array($row_sp);
+$row_sp = sqlsrv_query($conn, "SELECT * from sanpham where idSP={$row['idSP']}");
+$result_sp = sqlsrv_fetch_array($row_sp, SQLSRV_FETCH_ASSOC);
 
 echo "<tr style='opacity: ".($result_sp['TRANGTHAI']==1? 1 : 0.5)."'>
 <td class='name-row'>
@@ -53,6 +50,6 @@ echo "<button><a class='btn-remove' href=
 echo "</td></tr>";
 echo "</tbody></table>";
 
-$list = mysqli_num_rows($result)<=0? 'Không tìm thấy sản phẩm': 'Đã hiển thị toàn bộ sản phẩm';
+$list = sqlsrv_num_rows($result)<=0? 'Không tìm thấy sản phẩm': 'Đã hiển thị toàn bộ sản phẩm';
 echo "<div id='last-row'>$list</div>";
 ?>

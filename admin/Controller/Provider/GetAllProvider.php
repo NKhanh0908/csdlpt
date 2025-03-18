@@ -1,13 +1,12 @@
 <?php
 
-//include '.\connectDB.php';
+include('../Controller/connector.php');
 
 function getAllProvider(){
     global $conn;
-    $conn = getConnection();
+    $conn = getConnection('branch2');
     $sql = "SELECT n.* FROM nhacungcap n ";
-
-    $result = mysqli_query($conn, $sql);
+    $result = sqlsrv_query($conn, $sql);
     return $result;
 }
 

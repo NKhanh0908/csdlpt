@@ -34,7 +34,7 @@ include("../Controller/order/orderdetail.php");
                 </tr>
             </thead>
             <tbody>
-                <?php while ($row = $products->fetch_assoc()) { ?>
+                <?php foreach ($products as $row) { ?>
                     <tr>
                     <td>
                                 <img src="../../images/products/<?php echo htmlspecialchars($row["IMG"]); ?>" alt="" width="100">

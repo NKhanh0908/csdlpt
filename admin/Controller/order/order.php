@@ -29,6 +29,7 @@ function getAllOderOfAllBranch($status = "all") {
         $queries[] = $query;
     }
 
+    
  
     $sql = implode(" UNION ALL ", $queries) . " ORDER BY idHD ASC";
 
