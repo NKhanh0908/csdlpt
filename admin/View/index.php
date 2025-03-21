@@ -34,16 +34,16 @@ include "checkLogin.php";  // Đúng - cùng thư mục
                 <?php if (checkPermission('Khuyen mai')): ?>
                     <a href="?page=voucher">Khuyến mãi</a>
                 <?php endif; ?>
-                <?php if (checkPermission('Thông tin nhân viên')): ?>
+                <!-- <?php if (checkPermission('Thông tin nhân viên')): ?>
                     <a href="?page=employeeinfo">Thông tin nhân viên</a>
-                <?php endif; ?>   
+                <?php endif; ?>    -->
 
-                <?php if (checkPermission('Phân quyền')): ?>
+                <!-- <?php if (checkPermission('Phân quyền')): ?>
                     <a href="?page=role">Phân quyền</a>
-                <?php endif; ?>
+                <?php endif; ?> -->
         <!-- ======================== -->
-        <?php if (checkPermission('Tài khoản')): ?>
-            <a href="?page=account">tài khoản</a>
+        <!-- <?php if (checkPermission('Tài khoản')): ?>
+            <a href="?page=account">tài khoản</a> -->
         <?php endif; ?>
         <?php if (checkPermission('Phiếu nhập')): ?>
             
@@ -52,9 +52,9 @@ include "checkLogin.php";  // Đúng - cùng thư mục
         <a href="?page=phieunhap">Phiếu nhập</a>
         <!-- ======================== -->
 
-                <a href="?page=employeeinfo">Thông tin nhân viên</a>
+               <!--  <a href="?page=employeeinfo">Thông tin nhân viên</a>
 
-                <a href="?page=calendar">Lịch làm việc</a>
+                <a href="?page=calendar">Lịch làm việc</a> -->
         <!-- ======================== -->
 
         <a href="logout.php" style="color: white; background: crimson; text-align: center; margin-top: 20px;">Đăng xuất</a>

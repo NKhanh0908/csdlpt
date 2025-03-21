@@ -1,7 +1,9 @@
 <?php
-function getAllAccounts() {
-    $connect = new mysqli("localhost:3306", "root", "", "chdidong");
 
+include_once '../../Controller/connector.php';
+
+function getAllAccounts() {
+    $connect = getConnection();
     if ($connect->connect_error) {
         die("Kết nối thất bại: " . $connect->connect_error);
     }

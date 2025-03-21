@@ -63,40 +63,30 @@ document.addEventListener('DOMContentLoaded', function() {
             // alert("Tên sản phẩm không hợp lệ");
             document.querySelector('p[name="varTen"]').style.visibility='visible';
             event.preventDefault();
-        }else{
-            document.querySelector('p[name="varTen"]').style.visibility='hidden';
         }
 
         if(hang == 0){
             // alert("Vui lòng chọn hãng");
             document.querySelector('p[name="varHang"]').style.visibility='visible';
             event.preventDefault();
-        }else{
-            document.querySelector('p[name="varHang"]').style.visibility='hidden';
         }
     
         if (!Number.isInteger(parseInt(gianhap)) || gianhap==0) {
             // alert("Giá nhập không hợp lệ");
             document.querySelector('p[name="varGia"]').style.visibility='visible';
             event.preventDefault(); 
-        }else{
-            document.querySelector('p[name="varGia"]').style.visibility='hidden';
         }
     
         if(danhmuc==0){
             // alert("Vui lòng chọn danh mục");
             document.querySelector('p[name="varDanhmuc"]').style.visibility='visible';
             event.preventDefault();
-        }else{
-            document.querySelector('p[name="varDanhmuc"]').style.visibility='hidden';
         }
     
         if(img.files.length == 0){
             // alert("Vui lòng chọn ảnh cho sản phẩm");
             document.querySelector('p[name="varImg"]').style.visibility='visible';
             event.preventDefault();
-        }else{
-            document.querySelector('p[name="varImg"]').style.visibility='hidden';
         }
 
     });

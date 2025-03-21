@@ -76,31 +76,56 @@ $conn = getConnection("branch2");
       fetchDanhMucHang(branch);
     });
 
-    document.getElementById('add_product').addEventListener('submit', function(e){
-      e.preventDefault();
-      var txtTensp = document.getElementById('txtTensp').value;
-      var txtHang = document.getElementById('hang').value;
-      var txtDanhmuc = document.getElementById('danhmuc').value;
-      var txtMotasp = document.getElementById('txtMotasp').value;
-      var txtGianhap = document.getElementById('txtGianhap').value;
-      formData.append('txtImg', file);
-      fetch('./Product/AddProduct.php', {
+    document.getElementById('add_product').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    var formData = new FormData();
+    var txtTensp = document.querySelector('input[name="txtTensp"]').value;
+    var txtHang = document.querySelector('select[name="txtHang"]').value;
+    var txtDanhmuc = document.querySelector('select[name="txtDanhmuc"]').value;
+    var txtGianhap = document.querySelector('input[name="txtGianhap"]').value;
+    var txtMotasp = document.querySelector('textarea[name="txtMotasp"]').value;
+    var branch = document.querySelector('select[name="choose-branch"]').value;
+    var fileInput = document.querySelector('input[name="txtImg"]');
+    
+    // Kiểm tra nếu có file được chọn
+    if (fileInput.files.length > 0) {
+        formData.append('txtImg', fileInput.files[0]); 
+    } else {
+        alert('Vui lòng chọn hình ảnh.');
+        return;
+    }
+
+    // Thêm dữ liệu vào FormData
+    formData.append('txtTensp', txtTensp);
+    formData.append('txtHang', txtHang);
+    formData.append('txtDanhmuc', txtDanhmuc);
+    formData.append('txtGianhap', txtGianhap);
+    formData.append('txtMotasp', txtMotasp);
+    formData.append('branch', branch);
+
+    console.log("Form Data:");
+    formData.forEach((value, key) => {
+        console.log(key + ':', value);
+    });
+
+    // Gửi request bằng fetch
+    fetch('./../Controller/Product/ProductCreate.php', {
         method: 'POST',
         body: formData
-      })
-       .then(response => response.json())
-       .then(data => {
-          if(data.success){
-            alert(data.message);
-            window.location.href = '../View/index.php?page=product&chon=list';
-          } else {
-            alert(data.message);
-          }
-        })
-       .catch(error => {
-            console.error('Error:', error);
-        });
     })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert(data.message);
+        } else {
+            alert(data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+});
 
     function fetchDanhMucHang(branch="branch2"){
       fetch(`./Product/GetInfoProduct.php?branch=${branch}`)
