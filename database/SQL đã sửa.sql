@@ -2,7 +2,6 @@
 
 USE chdidong
 
-
 CREATE TABLE bangchamcong (
   idCC INT NOT NULL IDENTITY(1,1) PRIMARY KEY, 
   idNV INT NOT NULL,
@@ -38,7 +37,7 @@ CREATE TABLE lsuthangchuc (
 
 SET IDENTITY_INSERT dbo.lsuthangchuc ON
 
-INSERT INTO lsuthangchuc (idTK, vitricu, vitrimoi, luongcu, luongmoi, ngaynhamchuc, trangthai)
+INSERT INTO lsuthangchuc (idTC, idTK, vitricu, vitrimoi, luongcu, luongmoi, ngaynhamchuc, trangthai)
 VALUES
 (1, 12, 2, 5, 0, 0, '2025-03-28', 1),
 (2, 13, 2, 7, 0, 0, '2025-03-28', 0),
@@ -193,10 +192,10 @@ CREATE TABLE donhang (
   idVC int NOT NULL,
   TRANGTHAI int NOT NULL DEFAULT 1,
   idTHANHTOAN int NOT NULL,
-  idChiNhanh int NOTNULL,
+  idCN int NOT NULL,
 );
-SET IDENTITY_INSERT dbo.donhang ON;
 
+SET IDENTITY_INSERT dbo.donhang ON;
 INSERT INTO donhang (idHD, idTK, THANHTIEN, NGAYMUA, DIACHI, MAKHUYENMAI, idVC, TRANGTHAI, idTHANHTOAN, idCN) VALUES
 (1, 1, 17000000, '2024-01-10', N'123 Le Loi, Q1, TP HCM', 1, 1, 1, 1, 1),
 (2, 2, 25000000, '2024-02-15', N'456 Tran Hung Dao, Q5, TP HCM', 2, 2, 1, 2, 1),
@@ -243,7 +242,6 @@ CREATE TABLE dvvanchuyen (
 );
 
 SET IDENTITY_INSERT dbo.dvvanchuyen ON;
-
 INSERT INTO dvvanchuyen (idVC, TENDVVC, GIAVANCHUYEN, TRANGTHAI) VALUES
 (1, N'Hỏa tốc', 30000, 1),
 (2, N'Giao hàng nhanh', 25000, 1),
@@ -278,7 +276,6 @@ CREATE TABLE hang (
 );
 
 SET IDENTITY_INSERT dbo.hang ON;
-
 INSERT INTO hang (idHANG, TENHANG, TRANGTHAI) VALUES
 (1, 'Apple', 1),
 (2, 'Xiaomi', 1),
@@ -319,7 +316,6 @@ CREATE TABLE khuyenmai (
 );
 
 SET IDENTITY_INSERT dbo.khuyenmai ON;
-
 INSERT INTO khuyenmai (MAKHUYENMAI, CODE, GIATRI, SOLUONG, NGAYAPDUNG, HANSUDUNG, TRANGTHAI) VALUES
 (1, 'SALE10', 10000, 89, '2024-01-01', '2024-12-31', 1),
 (2, 'SALE20', 20000, 50, '2024-02-01', '2024-06-30', 1),
@@ -372,7 +368,6 @@ INSERT INTO nhacungcap (idNCC, TENNCC, SDT, DIACHI, TRANGTHAI) VALUES
 (1, N'Công ty A', '0123456789', N'123123', 1),
 (2, N'Công ty B', '0798654567', N'Sài gòn đẹp lắm', 1),
 (3, N'Nhà cái X', '0098967645', N'Trần Hưng Đạo, Q5', 1);
-
 SET IDENTITY_INSERT dbo.nhacungcap OFF
 
 --
@@ -480,11 +475,9 @@ CREATE TABLE ptthanhtoan (
 );
 
 SET IDENTITY_INSERT dbo.ptthanhtoan ON;
-
 INSERT INTO ptthanhtoan (idThanhToan, TENPHUONGTHUC) VALUES
 (1, N'Thanh toán khi nhận hàng'),
 (2, N'Thanh toán online');
-
 SET IDENTITY_INSERT dbo.ptthanhtoan OFF;
 
 
@@ -500,8 +493,7 @@ CREATE TABLE quyen (
 );
 
 SET IDENTITY_INSERT dbo.quyen ON;
-
-INSERT INTO quyen (idQUYEN, TENQUYEN, TRANGTHAI) VALUES
+INSERT INTO quyen (idQUYEN, TENQUYEN,LUONGCOBAN, TRANGTHAI) VALUES
 (0, N'Khách hàng', 0, 1),
 (1, N'admin', 0, 1),
 (2, N'Nhân viên bán hàng',1000000, 1),
@@ -566,7 +558,6 @@ CREATE TABLE sanpham (
 );
 
 SET IDENTITY_INSERT dbo.sanpham ON;
-
 INSERT INTO sanpham (idSP, TENSP, HANG, GIANHAP, SOLUONG, idDM, IMG, MOTA, TRANGTHAI, DISCOUNT, GIA) VALUES
 (1, N'iPhone 16', 1, 19200000, 0, 2, N'Iphone 16.jpeg', N'Hiệu năng vượt trội với chip A18\r\nVới lần nâng cấp này, Apple đã mạnh tay sử dụng chip A18 trên toàn bộ iPhone 16 Series, bao gồm iPhone 16 256GB. Đây là thế hệ chip 3nm thứ 2 của TSMC, công nghệ chip hiện đại nhất hiện nay, mang tới hiệu năng, tốc độ xử lý nhanh và tiết kiệm pin hơn so với chip A16 Bionic của iPhone 15 256GB.\r\n\r\nVề hệ điều hành, không còn là đồn đoán, gã khổng lồ công nghệ đã thực sự ứng dụng hệ điều hành iOS 18 tiên tiến trên điện thoại iPhone 16 phiên bản Tiêu Chuẩn. Hệ điều hành mới được cải tiến đặc biệt về AI, bổ sung tính năng tin nhắn mới, cập nhật Apple Maps, Siri, hỗ trợ RCS… mang đến nhiều tiện ích và nâng cấp trải nghiệm người dùng hơn iPhone 15 256GB', 1, 10, 24000000),
 (2, N'iPhone 16 plus', 1, 28000000, 0, 1, N'Iphone 16 pờ lếch.jpeg', N'iPhone 16 Plus 512GB dự kiến sẽ là sản phẩm cháy hàng trong thời gian tới vì dung lượng lưu trữ lớn và có nhiều thay đổi về mặt thiết kế - công nghệ so với mức giá. Hãy cùng điểm mặt 10 lý do bạn nên mua iPhone 16 Plus 512GB ngay khi ra mắt qua bài viết sau nhé!', 1, 10, 35000000),
@@ -689,7 +680,6 @@ CREATE TABLE taikhoan (
 );
 
 SET IDENTITY_INSERT dbo.taikhoan ON;
-
 INSERT INTO taikhoan (idTK, USERNAME, PASSWORD, SDT, EMAIL, HOTEN, idQUYEN, TRANGTHAI) VALUES
 (1, 'user1', 'pass1', '0123456789', 'user1@example.com', N'Nguyen Van A', 1, 1),
 (2, 'user2', 'pass2', '0987654321', 'user2@example.com', N'Le Thi B', 1, 1),
@@ -702,8 +692,17 @@ INSERT INTO taikhoan (idTK, USERNAME, PASSWORD, SDT, EMAIL, HOTEN, idQUYEN, TRAN
 (9, 'nguoideptrai', '$2y$12$4kqyNGv5RQ.IrtX0.Jz0.eM9FOZUyfV5.q.nwONQGR6gNPFUX622y', '0799697981', 'biedu.upes@gmail.com', N'ấy sì bà', 1, 1),
 (10, 'XuanCanh', '$2y$12$GtimSHuPw8QhzTkW.D0TbeD4jOfcSSeLgIhi4vnTkIxAys6jJGxJ2', '0397161910', 'xuanc38791@gmail.com', N'Trương Xuân Cảnh', 1, 1),
 (11, 'Xuân Cảnh Xuân Cảnh Xuân Cảnh ', '$2y$12$fMMjoSAHcsmCwQow0xGXgud6epKwXOgubFXp7ESfg006GjrKUeCO2', '0397161912', 'xuanc387911@gmail.com', N'Trương Xuân Cảnh', 1, 1),
-(12, '0123456789', '$2y$12$be2GvgfmO.x3E2bKbN6tH.DUWc3AFlsXIGBesV5QhHBU1d4xEObfC', '0123456787', 'kemetao.upes@gmail.com', N'ài dố sì mà', 1, 1);
-
+(12, '0123456789', '$2y$12$be2GvgfmO.x3E2bKbN6tH.DUWc3AFlsXIGBesV5QhHBU1d4xEObfC', '0123456787', 'kemetao.upes@gmail.com', N'ài dố sì mà', 1, 1),
+(13, 'user1', 'pass1', '0123456789', 'user1@example.com', N'Nguyen Van A', 1, 1),
+(17, 'user2', 'pass2', '0987654321', 'user2@example.com', N'Le Thi B', 1, 1),
+(18, 'user3', 'pass3', '0345678923', 'user3@example.com', N'Tran Van C', 1, 1),
+(19, 'user4', 'pass4', '0765432189', 'user4@example.com', N'Pham Thi D', 1, 1),
+(24, 'user5', 'pass5', '0912345678', 'user5@example.com', N'Hoang Van E', 1, 1),
+(25, 'user1', 'pass1', '0123456789', 'user1@example.com', N'Nguyen Van A', 1, 1),
+(27, 'user2', 'pass2', '0987654321', 'user2@example.com', N'Le Thi B', 1, 1),
+(29, 'user3', 'pass3', '0345678923', 'user3@example.com', N'Tran Van C', 1, 1),
+(30, 'user4', 'pass4', '0765432189', 'user4@example.com', N'Pham Thi D', 1, 1),
+(31, 'user5', 'pass5', '0912345678', 'user5@example.com', N'Hoang Van E', 1, 1);
 SET IDENTITY_INSERT dbo.taikhoan OFF;
 
 --
@@ -716,7 +715,6 @@ CREATE TABLE trangthaidonhang (
 );
 
 SET IDENTITY_INSERT dbo.trangthaidonhang ON;
-
 INSERT INTO trangthaidonhang (idSTATUS, STATUS) VALUES
 (1, N'Chờ xác nhận'),
 (2, N'Đang chuẩn bị hàng'),
@@ -782,7 +780,7 @@ ALTER TABLE chitietphieunhap
 --
 
 ALTER TABLE lsuthangchuc
-  ADD CONSTRAINT tk_lsu FOREIGN KEY (idTK) REFERENCES taikhoan (idTK);
+  ADD CONSTRAINT tk_lsu FOREIGN KEY (idTK) REFERENCES nhanvien (idTK);
 ALTER TABLE lsuthangchuc
   ADD CONSTRAINT vtcu_lsu FOREIGN KEY (vitricu) REFERENCES quyen (idQUYEN);
 ALTER TABLE lsuthangchuc
@@ -874,16 +872,7 @@ INSERT INTO chinhanh (idCN, ten, diachi, email, sdt) VALUES
 (3, N'Chi nhánh C', N'Quận 7, Tp HCM', 'cn3@com.exe', '0903456789');
 SET IDENTITY_INSERT dbo.chinhanh OFF;
 
-
-ALTER TABLE nhanvien
-ADD idCN INT;
-GO
-
-ALTER TABLE nhanvien
-  ADD CONSTRAINT [chinhanh-nhanvien] FOREIGN KEY (idCN) REFERENCES chinhanh (idCN);
-
-ALTER TABLE donhang
-  ADD CONSTRAINT [chinhanh-donhang] FOREIGN KEY (idCN) REFERENCES chinhanh (idCN);
-
-  ALTER TABLE donhang
-  ADD CONSTRAINT [chinhanh-donhang] FOREIGN KEY (idCN) REFERENCES chinhanh (idCN);
+ ALTER TABLE donhang
+  ADD CONSTRAINT [cn-hd] FOREIGN KEY (idCN) REFERENCES chinhanh (idCN);
+ ALTER TABLE nhanvien
+  ADD CONSTRAINT [cn-nv] FOREIGN KEY (idCN) REFERENCES chinhanh (idCN);
