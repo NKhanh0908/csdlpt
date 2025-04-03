@@ -381,22 +381,23 @@ CREATE TABLE nhanvien (
   DIACHI Nvarchar(255),
   IMG varchar(255) NOT NULL,
   NGAYVAOLAM date NOT NULL,
-  TINHTRANG varchar(40) NOT NULL
+  TINHTRANG varchar(40) NOT NULL,
+  idCN int NOT NULL,
 );
 
-INSERT INTO nhanvien (idTK, GIOITINH, NGAYSINH, DIACHI, IMG, NGAYVAOLAM, TINHTRANG) 
+INSERT INTO nhanvien (idTK, GIOITINH, NGAYSINH, DIACHI, IMG, NGAYVAOLAM, TINHTRANG, idCN) 
 VALUES
-(12, 1, '2025-03-02', '', 'mei.jpg', '1900-01-01', 'Đang làm'),
-(13, 0, '2025-03-20', '', 'hertame.jpg', '1900-01-01', 'Đang tu'),
-(17, 1, '0555-12-31', 'sg', 'NV17.jpg', '2025-03-19', 'Dang lam'),
-(18, 1, '0254-12-31', 'Quảng Bình', 'NV18.jpg', '2025-03-19', 'Dang lam'),
-(19, 1, '0067-02-06', 'Quảng Bình', 'NV19.jpg', '2025-03-19', 'Dang lam'),
-(24, 1, '1911-11-11', 'HN', 'NV24.png', '2025-03-19', 'Dang lam'),
-(25, 1, '1991-11-11', 'HN', 'NV25.jpg', '2025-03-19', 'Dang lam'),
-(27, 1, '1111-11-11', 'HN', 'NV27.jpg', '2025-03-19', 'Dang lam'),
-(29, 1, '1111-11-11', 'HN', 'NV29.jpg', '2025-03-19', 'Dang lam'),
-(30, 1, '2000-01-01', 'TP Hồ Chí Minh', 'NV30.jpg', '2025-03-20', 'Dang lam'),
-(31, 1, '2000-01-01', 'TP Hồ Chí Minh', 'NV31.png', '2025-03-21', 'Dang lam');
+(12, 1, '2025-03-02', '', 'mei.jpg', '1900-01-01', 'Đang làm', 1),
+(13, 0, '2025-03-20', '', 'hertame.jpg', '1900-01-01', 'Đang tu', 2),
+(17, 1, '0555-12-31', 'sg', 'NV17.jpg', '2025-03-19', 'Dang lam', 1),
+(18, 1, '0254-12-31', 'Quảng Bình', 'NV18.jpg', '2025-03-19', 'Dang lam', 1),
+(19, 1, '0067-02-06', 'Quảng Bình', 'NV19.jpg', '2025-03-19', 'Dang lam'), 1,
+(24, 1, '1911-11-11', 'HN', 'NV24.png', '2025-03-19', 'Dang lam', 1),
+(25, 1, '1991-11-11', 'HN', 'NV25.jpg', '2025-03-19', 'Dang lam', 2),
+(27, 1, '1111-11-11', 'HN', 'NV27.jpg', '2025-03-19', 'Dang lam', 3),
+(29, 1, '1111-11-11', 'HN', 'NV29.jpg', '2025-03-19', 'Dang lam', 3),
+(30, 1, '2000-01-01', 'TP Hồ Chí Minh', 'NV30.jpg', '2025-03-20', 'Dang lam', 3),
+(31, 1, '2000-01-01', 'TP Hồ Chí Minh', 'NV31.png', '2025-03-21', 'Dang lam', 3);
 
 --
 -- Table structure for table phanquyen
