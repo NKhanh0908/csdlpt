@@ -1,0 +1,38 @@
+1. Check version php
+-> Mở XAMPP Control Panel.
+-> Nhấn nút Shell (góc phải).
+-> Nhập 'php -v'
+
+(Nếu tải php riêng thì thêm vô pathvariable r check version php --version)
+
+2. Truy cập 'https://github.com/microsoft/msphpsql/releases'
+-> Tìm phiên bản hỗ trợ 'Support for PHP <version>' tải về mục Assets Windows
+
+3. Copy paste
+-> Copy 4 file trong Downloads\Windows-8.3.zip\Windows-8.3\x64
+-> Dán 4 file vô xampp\php\ext
+-> Mở file php.ini từ xampp\php bằng note và Search 'extension=curl'
+-> Enter và dán 2 dòng này 'extension=php_sqlsrv_<version>_ts.dll
+                            extension=php_pdo_sqlsrv_<version>_ts.dll' (<version> là số tương ứng của file tải từ mục 2)
+-> Lưu
+
+
+-> Code test Connect 
+<?php 
+$servername = "localhost";
+$databasename = "chdidong";
+$username = "sa"; // hoặc tài khoản SQL của bạn
+$password = "13524679";
+
+try {
+    $dsn = "sqlsrv:Server=$servername;Database=$databasename";
+    $conn = new PDO($dsn, $username, $password);
+    
+    // Thiết lập chế độ báo lỗi
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    echo "Kết nối thành công!";
+} catch (PDOException $e) {
+    die("Lỗi kết nối: " . $e->getMessage());
+}
+?>
