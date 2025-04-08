@@ -391,7 +391,7 @@ VALUES
 (13, 0, '2025-03-20', '', 'hertame.jpg', '1900-01-01', 'Đang tu', 2),
 (17, 1, '0555-12-31', 'sg', 'NV17.jpg', '2025-03-19', 'Dang lam', 1),
 (18, 1, '0254-12-31', 'Quảng Bình', 'NV18.jpg', '2025-03-19', 'Dang lam', 1),
-(19, 1, '0067-02-06', 'Quảng Bình', 'NV19.jpg', '2025-03-19', 'Dang lam'), 1,
+(19, 1, '0067-02-06', 'Quảng Bình', 'NV19.jpg', '2025-03-19', 'Dang lam', 1),
 (24, 1, '1911-11-11', 'HN', 'NV24.png', '2025-03-19', 'Dang lam', 1),
 (25, 1, '1991-11-11', 'HN', 'NV25.jpg', '2025-03-19', 'Dang lam', 2),
 (27, 1, '1111-11-11', 'HN', 'NV27.jpg', '2025-03-19', 'Dang lam', 3),
@@ -877,3 +877,40 @@ SET IDENTITY_INSERT dbo.chinhanh OFF;
   ADD CONSTRAINT [cn-hd] FOREIGN KEY (idCN) REFERENCES chinhanh (idCN);
  ALTER TABLE nhanvien
   ADD CONSTRAINT [cn-nv] FOREIGN KEY (idCN) REFERENCES chinhanh (idCN);
+
+  
+ CREate table kho(
+	idKho INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
+	idCN int,
+	TENKHO NVARCHAR(100),
+	idNhanVienQuanLy int
+)
+
+ ALTER TABLE kho
+ ADD CONSTRAINT [kho-cn] FOREIGN KEY (idCN) REFERENCES chinhanh (idCN);
+
+ ALTER TABLE kho
+ ADD CONSTRAINT [kho-nvql] FOREIGN KEY (idNhanVienQuanLy) REFERENCES nhanvien (idTK);
+
+ CREATE TABLE tonkho(
+	idTonKho INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
+	idKho INT,
+	idSP INT,
+	SOLUONG INT,
+	THOIGIANCAPNHAT DATETIME DEFAULT GETDATE()
+)
+
+ALTER TABLE tonkho
+ ADD CONSTRAINT [tonkho-kho] FOREIGN KEY (idKho) REFERENCES kho (idKho);
+
+ ALTER TABLE tonkho
+ ADD CONSTRAINT [tonkho-sp] FOREIGN KEY (idSP) REFERENCES sanpham (idSP);
+
+
+
+ALTER TABLE phieunhap
+ADD idCN INT;
+
+
+ALTER TABLE phieunhap
+ADD CONSTRAINT fk_idCN FOREIGN KEY (idCN) REFERENCES chinhanh (idCN);

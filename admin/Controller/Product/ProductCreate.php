@@ -13,15 +13,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $images_dir = $_SERVER["DOCUMENT_ROOT"] . "\images\products";
         $branch = $_POST["branch"];
 
-        $conn = getConnection($branch);
+        $connectBranch = getConnection($branch);
 
 
-        //Tính id của hiện tại của sản phẩm
-        $id_temp = sqlsrv_query($conn, "SELECT idSP FROM [LINKEDSV2].[chdidong].[dbo].[sanpham]");
+        $id_temp = sqlsrv_query($connectBranch, "SELECT idSP FROM [chdidong].[dbo].[sanpham]", [], ["Scrollable" => SQLSRV_CURSOR_STATIC]);
+
+        if ($id_temp === false) {
+            die(print_r(sqlsrv_errors(), true));
+        }
+
         $num_rows_id = sqlsrv_num_rows($id_temp) + 1;
 
         // Kiểm tra xem sản phẩm đã tồn tại trong cơ sở dữ liệu chưa
-        $sql_check_product = sqlsrv_query($conn, "SELECT * FROM [LINKEDSV2].[chdidong].[dbo].[sanpham] WHERE TENSP = '$tensp'");
+        $sql_check_product = sqlsrv_query($connectBranch, "SELECT * FROM [chdidong].[dbo].[sanpham] WHERE TENSP = '$tensp'");
         $num_rows = sqlsrv_num_rows($sql_check_product);
 
         header('Content-Type: application/json');
@@ -34,16 +38,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ));
         } else {
             // Sản phẩm chưa tồn tại, thêm sản phẩm mới
-            $sqp_insert_product = sqlsrv_query($conn, "INSERT INTO [LINKEDSV2].[chdidong].[dbo].[sanpham]
+            $sqp_insert_product = sqlsrv_query($connectBranch, "INSERT INTO [chdidong].[dbo].[sanpham]
         (idSP, TENSP, HANG, GIANHAP, idDM, IMG, MOTA, GIA) 
-        VALUES('$num_rows_id', '$tensp', '$hang', '$gianhap', '$danhmuc', '$img', '$motasp', '$gianhap')");
+        VALUES($num_rows_id, '$tensp', '$hang', '$gianhap', '$danhmuc', '$img', '$motasp', '$gianhap')");
+        
 
-            //Thêm ảnh vào folder images
+
             move_uploaded_file($img_temp, "$images_dir/$img");
         }
         echo json_encode(array(
             'status' => true,
-            'message' => 'Thêm sản phẩm thành công'
+            'message' => 'Thêm sản phẩm thành công',
+            "id" => $num_rows_id,
+            "sql" => "INSERT INTO [LINKEDSV2].[chdidong].[dbo].[sanpham]
+            (idSP, TENSP, HANG, GIANHAP, idDM, IMG, MOTA, GIA) 
+            VALUES('$num_rows_id', '$tensp', '$hang', '$gianhap', '$danhmuc', '$img', '$motasp', '$gianhap')"
         ));
     }
 

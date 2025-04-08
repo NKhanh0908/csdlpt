@@ -109,6 +109,8 @@ $conn = getConnection("branch2");
         console.log(key + ':', value);
     });
 
+
+
     // Gửi request bằng fetch
     fetch('./../Controller/Product/ProductCreate.php', {
         method: 'POST',
@@ -118,6 +120,7 @@ $conn = getConnection("branch2");
     .then(data => {
         if (data.success) {
             alert(data.message);
+            console.log(data);
         } else {
             alert(data.message);
         }
