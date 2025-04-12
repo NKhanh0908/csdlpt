@@ -2,6 +2,7 @@
 include('../connector.php');
 
 
+
 // Lấy trạng thái từ request
 $status = isset($_GET["status"]) ? $_GET["status"] : "all";
 $branch = isset($_GET["branch"]) ? $_GET["branch"] : "branch1";
@@ -82,12 +83,9 @@ function getAllOderOfSingleBranch($branch, $status= "all"){
     }
     
 
+    
+
     header('Content-Type: application/json');
     echo json_encode($orders);
 }
-
-
-
-
-
 ?>
