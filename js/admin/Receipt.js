@@ -1,3 +1,7 @@
+// Đơn vị tiền VND
+function formatCurrencyVND(amount) {
+    return new Intl.NumberFormat('vi-VN').format(amount);
+}
 
 function OnloadData(){
     LoadData();
@@ -43,12 +47,10 @@ function DisplaySelect(type){
 
 
 function LoadReceipt(){
-    // console.log("dô r");
     const table = document.getElementById('hang');
     let keyword = document.getElementById('keyword').value;
     let order = document.getElementById('order-price').value;
     let dateSearch = document.getElementById('date-serch').value;
-    // console.log(dateSearch);
    
     try{
         var str = '';
@@ -68,18 +70,15 @@ function LoadReceipt(){
             .then(data =>{
                 if(data.length > 0){
                     data.forEach(element => {
-                        // console.log(element.heso, element.ngaylam);
-                        str +=`<tr class='PN-rows' id='tr-${element.id}' onmouseenter="ShowDetail(${element.id})">
+                        str +=`
+                            <tr class='PN-rows' id='tr-${element.id}' onmouseenter="ShowDetail(${element.id})" onclick="OpenDetail(${element.id})">
                                 <td id="idPN">PN${element.id}</td>
                                 <td id="NCC">${element.ncc}</td>
                                 <td id="diachi">${element.diachi}</td>
                                 <td id="ngaynhap">${element.ngaynhap}</td>
-                                <td id="thanhtien">${element.thanhtien} VND</td>
+                                <td id="thanhtien">${formatCurrencyVND(element.thanhtien)} VND</td>
                                 <td id="loinhuan">${element.loinhuan}%</td>
-                                <td id="action">
-                                    <button class="detail-btn" onclick="OpenDetail(${element.id})">Chi tiết</button>
-                                </td>
-                                </tr>`;
+                            </tr>`;
                     });
                     table.innerHTML = str;
                     document.getElementById("result").innerHTML = "";
@@ -97,11 +96,8 @@ function LoadReceipt(){
 }
 
 function ShowDetail(id){
-
     var btn = document.getElementById('tr-' + id);
     var str = '';
-    // btn.title = "id: " + id; 
-    // console.log(btn);
 
     try{
         url = '../Controller/Receipt/LoadReceiptDetail.php';
@@ -132,6 +128,7 @@ function ShowDetail(id){
 const addreceipt = document.getElementById('addReceipt-popup');
 
 function OpenAddReceiptPop(){
+    modal.classList.add('open-modal');
     addreceipt.classList.add("open-addreceipt");
 }
 
@@ -140,25 +137,35 @@ function CloseAddReceiptPop(){
 }
 
 //Mở trang chi tiết phiếu nhập
-
 const receiptdetail = document.getElementById('receiptDetail-form');
 const modal = document.getElementById('modal');
 
 function OpenReceiptDetailPop(){
-    receiptdetail.classList.add("open-receiptDetail");
     modal.classList.add('open-modal');
+    receiptdetail.classList.add("open-detail");
+    document.querySelector(".hidden-log-out").classList.add("active");
 }
 
 function closeReceiptDetailPop(){
-    receiptdetail.classList.remove("open-receiptDetail");
     modal.classList.remove('open-modal');
+    receiptdetail.classList.remove("open-detail");
+    document.querySelector(".hidden-log-out").classList.remove("active");
 }
+
 function OpenDetail(clicked_id){
     OpenReceiptDetailPop();
     const hangSP = document.getElementById('hang-sp');
+    const nccElement = document.getElementById('ncc-name');
+    const ngaynhapElement = document.getElementById('ngay-nhap');
     var str = '';
 
-    // console.log(ngaynghi, lydo);
+    const row = document.getElementById('tr-' + clicked_id);
+    const ncc = row.querySelector('#NCC').innerText; 
+    const ngaynhap = row.querySelector('#ngaynhap').innerText; 
+
+    nccElement.innerText = ncc;
+    ngaynhapElement.innerText = ngaynhap;
+
     const url = "../Controller/Receipt/ShowReceiptDetail.php?idPN=" + clicked_id;
     fetch(url, {
         method: 'GET',
@@ -169,19 +176,22 @@ function OpenDetail(clicked_id){
     .then(response => response.json())
     .then(data => {
         data.forEach(element =>{
-            str += `<tr class='SP-rows'">
-                <td><div class='name-sp'>
-                    <img class='img-sp' src="/images/products/${element.img}">
-                    <p>${element.tensp}</p>
-                </div></td>
-                <td>${element.gianhap}</td>
-                <td>${element.giaban}</td>
+            str += `
+            <tr class='SP-rows'">
+                <td>
+                    <div class='name-sp'>
+                        <img class='img-sp' src="/images/products/${element.img}">
+                        <p>${element.tensp}</p>
+                    </div>
+                </td>
+                <td>${formatCurrencyVND(element.gianhap)}</td>
+                <td>${formatCurrencyVND(element.giaban)}</td>
                 <td>${element.soluong}</td>
-                </tr>`;
+            </tr>`;
         })
 
         hangSP.innerHTML = str;
-        document.getElementById('maPN').innerText = 'Mã phiếu nhập: PN' + clicked_id;
+        document.getElementById('maPN').innerText = 'PN' + clicked_id;
     })
     .catch(error => console.error('Error:', error))
 }

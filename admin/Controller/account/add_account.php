@@ -36,15 +36,12 @@ function addAccount() {
     $idQUYEN = (int)$_POST['idQUYEN'];
     $trangthai = (int)$_POST['trangthai'];
 
-
-
     // $stmt = $connect->prepare("INSERT INTO taikhoan (USERNAME, HOTEN, EMAIL, PASSWORD, idQUYEN, TRANGTHAI) 
     //                           VALUES (?, ?, ?, ?, ?, ?)");
 
     // Đúng tên cột
     $stmt = $connect->prepare("INSERT INTO taikhoan (USERNAME, PASSWORD, idQUYEN, TRANGTHAI) 
                               VALUES (?, ?, ?, ?)");
-
 
     if (!$stmt) {
         die("Lỗi prepare: " . $connect->error);
@@ -53,16 +50,13 @@ function addAccount() {
     $stmt->bind_param("ssii", $username, $password, $idQUYEN, $trangthai);
 
     if ($stmt->execute()) {
-        echo "<script>alert('Thêm tài khoản thành công!'); window.location.href = '../../View/account/account.php';</script>";
+        echo "<script>alert('Thêm tài khoản thành công!'); 
+        console.log('231');
+        window.location.href = '../../View/account/account.php'</script>";
     } else {
         echo "<script>alert('Thêm tài khoản thất bại: " . $stmt->error . "');</script>";
     }
 
     $stmt->close();
     $connect->close();
-}
-
-// Xử lý khi form submit
-if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST['action'] === "add_account") {
-    addAccount();
 }

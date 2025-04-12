@@ -1,7 +1,7 @@
 <?php
 
-include('../../Controller/connectDB.php');
-$conn = getConnection();
+$path = $_SERVER["DOCUMENT_ROOT"] . '/admin/Controller/connectDB.php';
+include($path);
 header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -14,9 +14,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $id = isset($data['id']) ? $data['id'] : null;
 
-    $luong = mysqli_query($conn, "SELECT LUONGCOBAN from nhanvien WHERE idTK=".intval($id));
+    $luong = mysqli_query($conn, "SELECT q.LUONGCB from quyen q JOIN taikhoan tk ON q.idQUYEN=tk.idQUYEN WHERE idTK=".intval($id));
     while($luong_row = mysqli_fetch_assoc($luong)){
-        $luongcoban = $luong_row['LUONGCOBAN'];
+        $luongcoban = $luong_row['LUONGCB'];
     }
 
     //Tính số ngày của tháng này
