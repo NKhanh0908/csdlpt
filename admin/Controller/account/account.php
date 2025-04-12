@@ -1,6 +1,5 @@
 <?php
-
-include_once '../../Controller/connector.php';
+include('../Controller/connectDB.php');
 
 function getAllAccounts() {
     $connect = getConnection();

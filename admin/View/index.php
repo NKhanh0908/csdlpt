@@ -34,9 +34,9 @@ include "checkLogin.php";  // Đúng - cùng thư mục
                 <?php if (checkPermission('Khuyen mai')): ?>
                     <a href="?page=voucher">Khuyến mãi</a>
                 <?php endif; ?>
-                <!-- <?php if (checkPermission('Thông tin nhân viên')): ?>
+                <?php if (checkPermission('Thông tin nhân viên')): ?>
                     <a href="?page=employeeinfo">Thông tin nhân viên</a>
-                <?php endif; ?>    -->
+                <?php endif; ?>   
 
                 <!-- <?php if (checkPermission('Phân quyền')): ?>
                     <a href="?page=role">Phân quyền</a>

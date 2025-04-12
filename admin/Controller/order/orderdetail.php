@@ -10,18 +10,23 @@ if ($idHD <= 0) {
 $branch = '';
 
 
-if ($idCN == 4) {
+if ($idCN == 1) {
     $branch = 'branch2';
     $connect = getConnection("branch2");
-} elseif ($idCN == 5) {
+} elseif ($idCN == 2) {
     $branch = 'branch3';
     $connect = getConnection("branch3");
-} elseif ($idCN == 6) {
+} elseif ($idCN == 3) {
     $branch = 'branch4';
     $connect = getConnection("branch4");
-} else {
+// } elseif ($idCN == 1) {
+//     $branch = 'branch1';
+//     $connect = getConnection("branch1");
+}
+ else {
     die("Chi nhánh không hợp lệ.");
 }
+
 
 if (!$connect) {
     die("Kết nối đến database thất bại: " . print_r(sqlsrv_errors(), true));
