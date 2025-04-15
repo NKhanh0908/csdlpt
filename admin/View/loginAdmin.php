@@ -56,19 +56,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <title>Đăng nhập hệ thống</title>
-    <link rel="stylesheet" href="/css/admin/login.css">
-</head>
+<title>Đăng nhập hệ thống</title>
+<link rel="stylesheet" href="../../css/admin/login.css">
+
 <body>
-    <h2>Đăng nhập hệ thống</h2>
-    <?php if ($alert) echo "<p style='color:red;'>$alert</p>"; ?>
-    <form method="POST">
-        <input type="text" name="username" placeholder="Tên đăng nhập" required>
-        <input type="password" name="password" placeholder="Mật khẩu" required>
-        <button type="submit">Đăng nhập</button>
-    </form>
+    <div class="login-box">
+        <h2>Đăng nhập hệ thống</h2>
+        <form method="POST" id="login-form">
+            <div class="user-box">
+                <input type="text" name="username" required>
+                <label for="">Username</label>
+            </div>
+
+            <div class="user-box">
+                <input type="password" name="password" required>
+                <label for="">Password</label>
+            </div>
+            <!-- <p class="error"></p> -->
+            <button type="submit">Đăng nhập</button>
+        </form>
+    </div>
+
+    <div class="moving-div">
+        <img src="../../images/system/error copy.png" alt="">
+        <p class="error"></p>
+    </div>
 </body>
-</html>

@@ -1,23 +1,124 @@
-
+// Gọi gì gì đó
 const str = document.getElementById("idNV").value;
-
-let popup = document.getElementById("popup");
-
-let leavepopup = document.getElementById("leave-form");
+const modal = document.getElementById("modal");
+const leavepopup = document.getElementById("leave-form");
 
 let salarypopup = document.getElementById("salary-form");
-
+let list_plieu_luong = document.getElementById('PL-List');
 let count = 0;
 
-//Lương
-//Hàm hiện cửa sổ bảng lương
-function OpenSalaryPopup(){
-    salarypopup.classList.add("open-salaryform");
+// Đơn vị tiền VND
+function formatCurrencyVND(amount) {
+    return new Intl.NumberFormat('vi-VN').format(amount);
 }
 
-//Hàm đóng cửa sổ bảng lương
+// click modal
+document.addEventListener('click', (e)=> {
+    if (modal.contains(e.target) 
+        && !leavepopup.contains(e.target) 
+        && !salarypopup.contains(e.target) 
+        && !list_plieu_luong.contains(e.target)) {
+            modal.classList.remove("open-modal");
+            closeLeavePop()
+            closeSalaryPop()
+            closePLList()
+    }
+})
+
+
+//Load thông tin nhân viên
+function LoadInfo(){
+    try{
+    const api = '../../admin/Controller/Employee/EmployeeInfoController.php';
+    fetch(api, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            id: str
+        })
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('img-em').src = "../../images/employee/" + data.img;
+            document.getElementById('name').querySelector('.value').innerHTML = data.hoten;
+            document.getElementById('gioitinh').querySelector('.value').innerHTML = data.gioitinh == 1 ? 'Nam' : 'Nữ';
+            var parts = data.ngaysinh.split('-');
+            document.getElementById('ngaysinh').querySelector('.value').innerHTML = parts[2] + '/' + parts[1] + '/' + parts[0];
+            document.getElementById('email').querySelector('.value').innerHTML = data.email;
+            document.getElementById('sdt').querySelector('.value').innerHTML = data.sdt;
+            document.getElementById('diachi').querySelector('.value').innerHTML = data.diachi;
+            document.getElementById('tinhtrang').querySelector('.value').innerHTML = data.tinhtrang;
+            
+            //Xin nghỉ
+            document.getElementById('name-leave').querySelector('.value').innerHTML = data.hoten;
+            document.getElementById('idNV-leave').querySelector('.value').innerHTML = str;
+
+            //Lương
+            document.getElementById('idNV-salary').querySelector('.value').innerHTML = str;
+            document.getElementById('name-salary').querySelector('.value').innerHTML = data.hoten;
+            document.getElementById('vitri').querySelector('.value').innerHTML = data.quyen;
+            document.getElementById('luong').querySelector('.value').innerHTML = formatCurrencyVND(data.luong) + " VNĐ/tháng";
+            DisplaySalary()
+        })
+    }catch(error){
+        console.error(error)
+    }
+}
+
+// Nghỉ phép
+function OpenLeavePopup(){
+    modal.classList.add("open-modal");
+    leavepopup.classList.add("open-leaveform");
+    document.querySelector(".hidden-log-out").classList.add("active");
+}
+
+function closeLeavePop(){
+    modal.classList.remove("open-modal");
+    leavepopup.classList.remove("open-leaveform");
+    document.querySelector(".hidden-log-out").classList.remove("active");
+}
+
+//Gửi đơn nghỉ
+function SendLeaveRequest(){
+    const ngaynghi = document.getElementById('ngaynghi').value;
+    const lydo = document.getElementById("lydo").value;
+    const api = "../../admin/Controller/Employee/SendLeaveRequest.php";
+    console.log(api);
+    fetch(api, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            id: str,
+            ngaynghi : ngaynghi,
+            lydo : lydo
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if(data.status >= 0){
+            alert(data.message);
+
+            if(data.status < 4)  closeLeavePop();
+        }
+    })
+    .catch(error => console.error('Error:', error))
+}
+
+// Xem lương
+function OpenSalaryPopup(){
+    modal.classList.add("open-modal");
+    salarypopup.classList.add("open-salaryform");
+    document.querySelector(".hidden-log-out").classList.add("active");
+}
+
 function closeSalaryPop(){
+    modal.classList.remove("open-modal");
     salarypopup.classList.remove("open-salaryform");
+    document.querySelector(".hidden-log-out").classList.remove("active");
 }
 
 function DisplaySalary(){
@@ -44,177 +145,95 @@ function DisplaySalary(){
     const tongtru = document.getElementById('tongtru'); 
     const tongcong = document.getElementById('tongcong'); 
 
-    const api = "../Controller/Employee/SalaryCalculating.php";
-    fetch(api, {
+    const url = "../../admin/Controller/Employee/SalaryCalculating.php";
+    fetch(url, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
+        body: JSON.stringify ({
             id: str
         })
     })
     .then(response => response.json())
     .then(data => {
-        ngaycong.innerHTML = 'Chấm công ngày làm: ' + data.ngaycong + " ngày";
-        ngaycongtt.innerHTML = 'Chấm công thực tế: ' + data.ngaycongtt + ' ngày';
-        ngayle.innerHTML = 'Làm ngày lễ: ' + data.ngayle + ' ngày';
-        hesole.innerHTML = 'Hệ số ngày lễ: '+ data.hesongayle + ' ngày';
-        luongchinh.innerHTML = data.luongchinh;
+        ngaycong.querySelector('.value').innerHTML = data.ngaycong + " ngày";
+        ngaycongtt.querySelector('.value').innerHTML = data.ngaycongtt + ' ngày';
+        ngayle.querySelector('.value').innerHTML = data.ngayle + ' ngày';
+        hesole.querySelector('.value').innerHTML = data.hesongayle;
+        luongchinh.innerHTML = formatCurrencyVND(data.luongchinh);
         datetitle.innerHTML = "Ngày " + today.getUTCDate() + " tháng " + (today.getUTCMonth() + 1) + " năm " + today.getUTCFullYear();
     })
     .catch(error => console.error('Error:', error))
-
-}
-//Lương
-
-//Hàm hiện cửa sổ xin nghỉ
-function OpenLeavePopup(){
-    leavepopup.classList.add("open-leaveform");
 }
 
-//Hàm đóng cửa sổ xin nghi
-function closeLeavePop(){
-    leavepopup.classList.remove("open-leaveform");
+//Xem phiếu lương
+function closePLList(){ 
+    modal.classList.remove("open-modal");
+    list_plieu_luong.classList.remove("open-PL-list");
+    document.querySelector(".hidden-log-out").classList.remove("active");
 }
 
-//Gửi đơn nghỉ
-function SendLeaveRequest(){
-    const ngaynghi = document.getElementById('ngaynghi').value;
-    const lydo = document.getElementById("lydo").value;
-    // var ngay = new Date(ngaynghi);
-    // console.log(ngaynghi, lydo);
-    const api = "../Controller/Employee/SendLeaveRequest.php";
-    fetch(api, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            id: str,
-            ngaynghi : ngaynghi,
-            lydo : lydo
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if(data.status >= 0){
-            alert(data.message);
+LoadListLuong = async() => {
+    modal.classList.add("open-modal");
+    list_plieu_luong.classList.add("open-PL-list");
+    document.querySelector(".hidden-log-out").classList.add("active");
+    const url = '../Controller/Employee/LoadPayslipList.php?idNV=' + str
 
-            if(data.status < 4)  closeLeavePop();
+    const LoadPL = async() => {
+        try {
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+
+            const data = response.json()
+            return data
+        } catch(err) {
+            console.error(err)
         }
-    })
-    .catch(error => console.error('Error:', error))
-}
-
-//Insert vào bảng chấm công
-// function Insert(){
-//     fetch('../Controller/Employee/InsertTimekeeping.php', {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json'
-//         },
-//         body: JSON.stringify({
-//             id: str
-//         })
-//         })
-//         .then(response => response.json())
-//         .then(data => {
-//             if(data.status){
-//                 alert(data.message);
-//             }
-//         })
-//         .catch(error => console.error('Error:', error))
-// }
-
-//Load thông tin nhân viên
-function LoadInfo(){
-    // console.log("dô r");
-    try{
-    const api = '../Controller/Employee/EmployeeInfoController.php';
-    fetch(api, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            id: str
-        })
-        })
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById('img-em').src = "/images/employee/" + data.img;
-            document.getElementById('name').innerHTML = "Họ tên nhân viên: " + data.hoten;
-            document.getElementById('gioitinh').innerHTML ="Giới tính: " + (data.gioitinh==1? 'Nam' : 'Nữ');
-            var parts = data.ngaysinh.split('-');
-            document.getElementById('ngaysinh').innerHTML ="Ngày sinh: "+ parts[2]+'/'+ parts[1]+'/'+ parts[0];
-            document.getElementById('email').innerHTML ="Địa chỉ email: " + data.email;
-            document.getElementById('sdt').innerHTML ="Số điện thoại: " + data.sdt;
-            document.getElementById('tinhtrang').innerHTML ="Tình trạng: "+ data.tinhtrang;
-            //
-            document.getElementById('idNV-leave').innerHTML ="Mã nhân viên: "+ str;
-            document.getElementById('name-leave').innerHTML = "Họ tên: " + data.hoten;
-            //
-            document.getElementById('idNV-salary').innerHTML ="Mã nhân viên: "+ str;
-            document.getElementById('name-salary').innerHTML = "Họ tên nhân viên: " + data.hoten;
-            document.getElementById('vitri').innerHTML ="Vị trí làm việc: " + data.quyen;
-            document.getElementById('luong').innerHTML ="Lương cơ bản: " + data.luong + " VNĐ/ngày";
-
-            DisplaySalary()
-        })
-    }catch(error){
-        console.error(error)
     }
+
+    const listPL = await LoadPL()
+    list_plieu_luong.innerHTML = `
+        <h1>Giai đoạn lương</h1>
+        <div class='head-timing'>
+            <p>Giai đoạn</p>
+            <p>Ngày nhận</p>
+            <p>Tổng nhận (VND)</p>      
+        </div>
+        <div class='PL-content'></div>
+        <div class='PL-footer'>
+            <button class='PL-close' onclick='closePLList()'>Xác nhận</button>
+        </div>
+    `;
+
+    const plContent = document.querySelector('.PL-content');
+
+    listPL.forEach(element => {
+        plContent.innerHTML += `
+        <div class='timing-hook'>
+            <p>GĐ-${element.idPL}</p>
+            <p>${element.time}</p>
+            <p>${formatCurrencyVND(element.total)}</p>
+        </div>`;
+    });
 }
 
-//Hàm hiện cửa sổ
-function OpenPop(){
-    popup.classList.add("open-popup");
-}
+//In phiếu lương
+document.addEventListener('DOMContentLoaded', function() {
+    // Lấy các phần tử
+    var loaderFrame = document.getElementById('loaderFrame');
+    var printerButton = document.getElementById('salary-printer');
 
-//Hàm đóng cửa sổ
-function closePop(){
-    popup.classList.remove("open-popup");
-}
+    loaderFrame.addEventListener('load', function() {
+        var iframeWindow = loaderFrame.contentWindow || loaderFrame.contentDocument.defaultView;
+        iframeWindow.print();
+    });
 
-//Load data từ bảng chấm công và hiện ra cửa sổ
-// function LoadTimekeeping(){
-//     OpenPop()
-//     // console.log("dô r");
-//     const table = document.getElementById('hang');
-
-//     try{
-//         console.log("dô r nè");
-//         fetch('../Controller/Employee/LoadTimekeeping.php', {
-//             method: 'POST',
-//             headers: {
-//                 'Content-Type': 'application/json'
-//             },
-//             body: JSON.stringify({
-//                 id: str
-//             })
-//             })
-//             .then(response => response.json())
-//             .then(data =>{
-//                     data.forEach(element => {
-//                         // console.log(element.heso, element.ngaylam);
-//                         if(count < data.length){
-//                             table.insertAdjacentHTML("afterend", 
-//                                 `<td id="ngaylam"></td>
-//                                 <td id="heso"></td>`
-//                             )
-//                             document.getElementById('ngaylam').innerHTML= element.ngaylam;
-//                             document.getElementById('heso').innerHTML= element.heso;
-//                             count++;
-//                         }
-
-//                         console.log("count= ", count);
-//                     });
-//                 }
-//             )
-//             .catch(error => console.error(error))
-
-//         }catch(error){
-//             console.error(error)
-//         }
-// }
+    printerButton.addEventListener('click', function() {
+        loaderFrame.setAttribute('src', '../View/Employee/Payslip.php?idBL=1');
+    });
+});

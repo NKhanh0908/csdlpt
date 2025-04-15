@@ -1,55 +1,73 @@
 <?php
-include("../Controller/account/account.php");
-$accounts = getAllAccounts();
+    include("../../admin/Controller/account/account.php");
+    $accounts = getAllAccounts();
 ?>
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <title>Danh sách tài khoản</title>
-    <link rel="stylesheet" href="/css/admin/account.css">
 
-</head>
+<title>Danh sách tài khoản</title>
+<!-- CSS chung -->
+<link rel="stylesheet" href="../../css/admin/OneForAll.css">
+<link rel="stylesheet" href="../../css/admin/account.css">
+
 <body>
+    <div class="header">    
+        <div class="first-header">
+            <p>Danh sách tài khoản</p>
+        </div>
+        <div class="second-header">
+            <div class="second-header-main">
+                <button class="home">
+                    <a href="?page=employeeinfo"> 
+                        <i class="fa-solid fa-house home-outline"></i>
+                    </a>
+                </button>
+                <div class="line"></div>
+                <button class="btn-AddAccount" onclick="OpenAddAccount()">Thêm tài khoản</button>
+            </div>
+        </div>
+    </div>
 
-<h2>Danh sách tài khoản</h2>
+    <!-- Nội dung chính -->
+    <main class="main">
+        <div class='container'>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Họ Tên</th>
+                        <th>Email</th>
+                        <th>Quyền</th>
+                        <th>Trạng Thái</th>
+                    </tr>
+                </thead>
 
-<!-- Nút thêm tài khoản -->
-<a href="?page=add_account" class="add-btn">Thêm Tài Khoản</a>
+                <tbody>
+                    <?php if (count($accounts) > 0): ?>
+                        <?php foreach ($accounts as $row): ?>
+                            <tr>
+                                <td class="id"><?= $row['idTK'] ?></td>
+                                <td><?= htmlspecialchars($row['USERNAME']) ?></td>
+                                <td><?= htmlspecialchars($row['HOTEN']) ?></td>
+                                <td><?= htmlspecialchars($row['EMAIL']) ?></td>
+                                <td class="role"><?= $row['TENQUYEN'] ?></td>
+                                <td class="<?= $row['TRANGTHAI'] ? 'active' : 'inactive' ?> state">
+                                    <?= $row['TRANGTHAI'] ? 'Hoạt động' : 'Ngưng hoạt động' ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="6" style="text-align:center;">Không có tài khoản nào.</td>
+                        </tr>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
 
-
-<table>
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Username</th>
-            <th>Họ Tên</th>
-            <th>Email</th>
-            <th>ID Quyền</th>
-            <th>Trạng Thái</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php if (count($accounts) > 0): ?>
-            <?php foreach ($accounts as $row): ?>
-                <tr>
-                    <td><?= $row['idTK'] ?></td>
-                    <td><?= htmlspecialchars($row['USERNAME']) ?></td>
-                    <td><?= htmlspecialchars($row['HOTEN']) ?></td>
-                    <td><?= htmlspecialchars($row['EMAIL']) ?></td>
-                    <td><?= $row['TENQUYEN'] ?></td>
-                    <td class="<?= $row['TRANGTHAI'] ? 'active' : 'inactive' ?>">
-                        <?= $row['TRANGTHAI'] ? 'Hoạt động' : 'Ngưng hoạt động' ?>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-        <?php else: ?>
-            <tr>
-                <td colspan="6" style="text-align:center;">Không có tài khoản nào.</td>
-            </tr>
-        <?php endif; ?>
-    </tbody>
-</table>
-
+        <div class="modal" id="modal">
+            <?php include('../../admin/View/account/add_account.php'); ?>   
+        </div>
+    </main>
 </body>
-</html>
+
+<script src="../../js/admin/account.js"></script>

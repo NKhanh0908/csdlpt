@@ -1,75 +1,48 @@
-/* Tổng quan trang */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
-}
-
-.container {
-    width: 80%;
-    max-width: 800px;
-    margin: 30px auto;
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-h2, h3 {
-    color: #333;
-    text-align: center;
-}
-
-/* Thông tin đơn hàng */
-.order-info p {
-    font-size: 16px;
-    padding: 5px 0;
-    border-bottom: 1px solid #ddd;
-}
-
-.order-info strong {
-    color: #555;
-}
-
-/* Bảng danh sách sản phẩm */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-th, td {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-th {
-    background-color: #007bff;
-    color: white;
-}
-
-/* Nút quay lại */
-.back-btn {
-    display: inline-block;
-    padding: 10px 15px;
-    background: #28a745;
-    color: white;
+/* Nội dung 1 */
+.first-order-detail a {
     text-decoration: none;
-    border-radius: 5px;
-    margin-top: 20px;
-    display: block;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.first-order-detail i {
+    font-size: 20px;
+}
+
+/* Nội dung 2 */
+.second-order-detail {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.second-order-detail h3 {
     text-align: center;
 }
 
-.back-btn:hover {
-    background: #218838;
+.order-info {
+    width: 49%;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
 }
 
-/* Radio button cập nhật trạng thái */
+.order-info p {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.line-order-detail {
+    width: 0.1px;
+    background-color: #ccc;
+}
+
 .status-update {
-    margin-top: 20px;
+    width: 49%;
     padding: 15px;
     background: #f9f9f9;
     border-radius: 8px;
@@ -79,7 +52,7 @@ th {
 .status-update label {
     display: block;
     font-size: 16px;
-    margin: 10px 0;
+    margin: 15px 0;
     cursor: pointer;
 }
 
@@ -89,20 +62,71 @@ th {
     cursor: pointer;
 }
 
-/* Nút cập nhật */
 .update-btn {
-    display: block;
-    width: 100%;
+    width: 50%;
     padding: 10px;
-    background: #007bff;
+    margin: 15px 0px 0px 25%;
     color: white;
     border: none;
     border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
-    margin-top: 15px;
+    background-color: #1eb123;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
 .update-btn:hover {
-    background: #0056b3;
+    background-color: #0ddc14;
+    transform: translateY(-5px);
+}
+
+/* Nội dung 3 */
+.third-order-content {
+    margin-top: 15px;
+}
+
+table {
+    width: 100%;
+    margin-top: 10px;
+    border-collapse: collapse;
+    font-size: 16px;
+    text-align: left;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+table th {
+    border: 1px solid #e0e0e0;
+    padding: 10px 16px;
+}
+
+table th {
+    background-color: #363a3d;
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    font-size: 14px;
+    text-align: center;
+}
+
+table tbody td {
+    text-align: center;
+    border: 1px solid #d4d4d4;
+    padding: 3px 0px;
+}
+
+.detail-order-effect.active a {
+    background: linear-gradient(90deg, #ff5e00 0, #ffa46b 90%);
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+/* index.php */
+.detail-order-effect.active a i {
+    color: white;
+    font-weight: bold;
 }

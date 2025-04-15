@@ -1,58 +1,50 @@
-<?php 
-include('../../Controller/connectDB.php');
+<?php
+include('../connector.php');
 
-$conn = getConnection();
+// Lấy tham số chi nhánh từ request
+$branch = isset($_GET["branch"]) ? $_GET["branch"] : "all";
 
+// Kết nối đến database chính (branch1) để lấy dữ liệu từ tất cả chi nhánh
+$conn = getConnection('branch1');
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $json = file_get_contents('php://input');
-    $data = json_decode($json, true);
+// Xây dựng query cơ bản
+$query = "SELECT 
+             tk.idTK, tk.HOTEN, tk.SDT, tk.EMAIL, nv.GIOITINH, nv.NGAYSINH, nv.NGAYSINH, nv.DIACHI, nv.IMG, nv.NGAYVAOLAM, nv.TINHTRANG
+            , nv.DIACHI, nv.NGAYVAOLAM, 
+             tk.TRANGTHAI, cv.TENCHUCVU as tenCV, nv.idCN,
+            cn.ten AS TEN_CHI_NHANH
+          FROM chdidong.dbo.taikhoan tk
+          JOIN chdidong.dbo.nhanvien nv ON tk.idTK = nv.idTK
+          JOIN chdidong.dbo.chucvu cv on nv.idCV = cv.idCV
+        --   JOIN chdidong.dbo.quyen q ON tk.QUYEN = q.idQUYEN
+          JOIN chdidong.dbo.chinhanh cn ON nv.idCN = cn.idCN";
+          
 
-    $id = isset($data['id']) ? $data['id'] : null;
-
-    $sql = 'SELECT * from taikhoan tk 
-    JOIN quyen q ON tk.idQUYEN=q.idQUYEN JOIN nhanvien nv 
-    ON tk.idTK=nv.idTK WHERE tk.idTK=' . intval($id);
-
-    $employee = mysqli_query($conn, $sql);
-
-    if(mysqli_num_rows($employee) > 0){
-
-        $info = array();
-        while($employee_rows = mysqli_fetch_array($employee)){
-            $idnv = $employee_rows['idTK'];
-            $hoten = $employee_rows['HOTEN'];
-            $img = $employee_rows['IMG'];
-            $gioitinh = $employee_rows['GIOITINH'];
-            $ngaysinh = $employee_rows['NGAYSINH'];
-            $email = $employee_rows['EMAIL'];
-            $sdt = $employee_rows['SDT'];
-            $quyen = $employee_rows['TENQUYEN'];
-            $luong = $employee_rows['LUONGCOBAN'];
-            $tinhtrang = $employee_rows['TINHTRANG'];
-
-            $info = array(
-                'id' => $idnv,
-                'hoten' => $hoten,
-                'img' => $img,
-                'gioitinh' => $gioitinh, 
-                'ngaysinh' => $ngaysinh,  
-                'email' => $email,  
-                'sdt' => $sdt,  
-                'quyen' => $quyen,  
-                'luong' => $luong,  
-                'tinhtrang' => $tinhtrang,   
-            ); 
-        }
-
-        $json = json_encode($info);
-        echo $json;
-    }
-    // $file = "info.json";
-    // if (file_put_contents($file, $json) !== false) {
-    //     echo "Data has been written to $file.";
-    // } else {
-    //     echo "Error occurred while writing to $file.";
-    // }
+// Thêm điều kiện lọc nếu không phải là "all"
+if ($branch !== "all") {
+    $query .= " WHERE nv.idCN = " . intval(str_replace("branch", "", $branch));
 }
+
+$query .= " ORDER BY tk.idTK ASC";
+
+$result = sqlsrv_query($conn, $query);
+
+if (!$result) {
+    die(json_encode(["error" => sqlsrv_errors()]));
+}
+
+$employees = [];
+while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
+    // Format các trường ngày tháng
+    if ($row['NGAYSINH'] instanceof DateTime) {
+        $row['NGAYSINH'] = $row['NGAYSINH']->format('Y-m-d');
+    }
+    if ($row['NGAYVAOLAM'] instanceof DateTime) {
+        $row['NGAYVAOLAM'] = $row['NGAYVAOLAM']->format('Y-m-d');
+    }
+    $employees[] = $row;
+}
+
+header('Content-Type: application/json');
+echo json_encode($employees);
 ?>

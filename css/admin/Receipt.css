@@ -1,247 +1,197 @@
-
-.receipt-list{
-    /* background-color: aqua; */
-    font-size: 20px;
+/* Filter */
+.filter {
+    display: flex;
+    align-items: center;
+    gap: 20px;
 }
 
-.receipt-list td{
-    /* background-color: aqua; */
-    text-align: center;
+.filter-search {
+    width: 35%;
 }
 
-.receipt-list th, tr, td{
-    border: 0.5px solid black
-}
-
-#result {
-    /* background-color: aqua; */
+.filter-search input {
     width: 100%;
-    text-align: center;
-    margin-top: 2%;
-    font-size: 20px;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 17px;
 }
 
-.PN-rows td, th{
-    padding: 1%;
+.filter-search input:focus {
+    outline: none;
 }
 
-.PN-rows:hover{
-    background-color: rgb(224, 224, 224);
+.filter-date input{
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 17px;
 }
 
-/* Thim PN */
-.btn-add{
-    padding: 0.5%;
-    font-size: 15px;
-}
-.addReceipt-popup{
-    position: absolute;
-    z-index: 10;
-    background-color: rgb(82, 82, 82);
-
-    width: 110%;
-    height: 110vh;
-    top: -10%;
-    left: -10%;
-    padding: 1%;
-    align-items: center;
-    /* display: none; */
-    visibility: hidden;
-
-}
-.addreceipt-form{
-    /* align-items: left;*/
-    display: block;
-    /* text-align: center; */
-    background-color: rgb(255, 252, 246);
-    box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.1);
-    width: 80%;
-    height: 80%;
-    position: relative;
-    top: 15%;
-    left: 15%;
-    border-radius: 5px;
+.filter-date input:focus {
+    outline: none;
 }
 
-.addreceipt-form h2{
-    text-align: center;
+.filter-merge select{
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 17px;
 }
 
-.open-addreceipt{
-    visibility: visible;
-}
-.addReceipt-popup h1{
-    text-align: center;
+/* Bảng */
+.receipt-list {
+    margin-top: 20px;
 }
 
-.addReceipt-popup label{
-    align-self: center;
-    padding: 1%;
-    margin: 0.5%;
-}
-#input-receipt{
-    display: flex;
-}
-#input-receiptinfo{
-    width: 30%;
-    background-color: aqua;
-}
-#input-receiptdetail{
-    width: 70%;
-    background-color: aquamarine;
-    /* display: flex; */
-}
-
-#btn-addSP{
-    position: absolute;
-}
-
-/* Chỗ hiện sản phẩm ra */
-#scrollView-SP{
-    overflow:scroll; 
-    height: 350px;
-    border: 1px solid black;
-    overflow-x: hidden;
-    overflow-y: auto;
-}
-
-.item{
-    height: 25%;
-    display: flex;
-    padding: 1%;
-    border: 1px solid black ;
-    margin: 1%;
-    /* background-color: aqua; */
-}
-.item img{
-    width: 10%;
-    height: 100%;
-    align-self: center;
-}
-.item p{
-    width: 20%;
-    align-self: center;
-}
-.action-item{
-    display: flex;
-    width: 45%;
-    height: 55%;
-    align-items: center;
-    align-self: center;
-    text-align: center;
-}
-
-.action-item button{
-    width: 5%;
-}
-
-.btn-delete{
-    float: right;
-    width: 5%;
-    height: 50%;
-    align-self: center;
-}
-/* Chỗ hiện sản phẩm ra */
-
-/* thành tiền */
-.thanhtien{
+table {
     width: 100%;
-    height: 10%;
-    display: flex;
-    align-items: center;
+    border-collapse: collapse;
+    font-size: 16px;
+    text-align: left;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
 }
-.thanhtien p{
-    font-size: 23px;
-    margin-left: 75%;
+
+table th {
+    border: 1px solid #e0e0e0;
+    padding: 10px 16px;
 }
-#thanhtien-sp{
+
+table th {
+    background-color: #363a3d;
+    color: white;
+    text-transform: uppercase;
     font-weight: bold;
-    margin-left: 1%;
-    color: red;
-}
-/* thành tiền */
-/* Thim PN */
-
-/* Show SP */
-.name-sp{
-    display: flex;
-    padding: 0.5%;
-}
-.name-sp p{
-    padding: 5%;
-}
-.img-sp{
-    width: 75px;
-    height: 75px;
-    align-self: center;
-}
-
-.receiptDetail-form{
-    display: block;
-    /* align-items: left;*/
+    letter-spacing: 0.5px;
+    font-size: 14px;
     text-align: center;
-    background-color: #fffcf6;
-    box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.1);
-    width: 83%;
-    height: 90%;
-    position: relative;
+}
+
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table tr:hover {
+    background-color: #f1f1f1;
+    transition: background-color 0.3s ease;
+}
+
+table tbody td {
+    text-align: center;
+    border: 1px solid #d4d4d4;
+    padding: 10px 0px;
+    cursor: pointer;
+}
+
+/* modal */
+.modal {
+    position: fixed;
+    top: 0; 
+    left: 0;
+    right: 0; 
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.4s ease, visibility 0s linear 0.4s;
+    z-index: 10;
+}
+
+.open-modal {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.4s ease, visibility 0s;
+}
+
+/* Chi tiết phiếu */
+.receiptDetail-form,
+.addReceipt-popup {
+    position: absolute;
+    top: 50%;
+    left: 55%;
+    width: 50%;
+    border-radius: 15px;
+    background-color: antiquewhite;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    visibility: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0);
+    transition: transform 0.4s ease, opacity 0.4s ease, box-shadow 0.4s ease, visibility 0s linear 0.4s;
+    z-index: 20;
+}
+
+.open-detail,
+.open-addreceipt {
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    opacity: 1;
+    transition: transform 0.4s ease, opacity 0.4s ease, box-shadow 0.4s ease, visibility 0s;
+}
+
+.receiptDetail-form h1 {
+    position: absolute;
+    padding: 1% 4%;
+    margin: -3% 0% 0% 30%;
+    text-align: center;
+    border-radius: 50px;
+    background-color: #0ddc14;
+    color: white;
+}
+
+.receiptDetail-form-main {
+    margin-top: 30px;
+    padding: 20px;
+}
+
+.receiptDetail-form-info {
+    display: flex;
+    justify-content: space-between;
+}
+
+.receiptDetail-container {
+    overflow-y: auto;
+    max-height: 400px;
+    margin-top: 15px;
     border-radius: 10px;
 }
 
-.open-receiptDetail{
-    visibility: visible;
-    top: 55%;
-    left: 58%;
-    transform: translate(-50%, -50%) scale(1);
-}
-
-#close-receiptdetail{
-    width: 45px;
-    height: 45px;
-    border-width: 0px ;
-    border-radius: 15%;
-    position: absolute;
-    margin-top: -8%;
-    margin-left: 47%;
-    background-color: red;
-    color: white;
-    font-size: 20px;
-
-}
-/* Show SP */
-
-/* Modal đen thui */
-.modal{
+.receiptDetail-container::-webkit-scrollbar {
     display: none;
-    justify-content: center;
+}
+
+.name-sp {
+    display: flex;
     align-items: center;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    gap: 10px;
+    margin-left: 20px;
 }
 
-
-.open-modal{
-    display: block;
+.img-sp {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    object-fit: cover;
 }
 
-/* Ấy cái popup thêm sản phửm */
-.addproduct-container{
-    background-color: antiquewhite;
-    position: absolute;
-    width: 70%;
-    height: 60%;
-    top: 15%;
-    left: 15%;
-    padding: 1%;
-    border-radius: 15px;
-    visibility: hidden;
+.receiptDetail-form-btn {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
 }
 
-.open-addproduct{
-    visibility: visible;
+.receiptDetail-form-btn button {
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.receiptDetail-form-btn button:hover {
+    background-color: #ccc;
 }

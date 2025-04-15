@@ -1,0 +1,83 @@
+
+#btn-tb{
+    border-radius: 50%;
+    border: none;
+    width: 30px;
+    height: 30px;
+    background-color: rgb(246, 35, 35);
+    color: whitesmoke;
+    align-items: center;
+    text-align: center;
+}
+
+#btn-tb p{
+    margin-top: -0.01px;
+    position: relative;
+    font-size: 16px;
+}
+.sub-menu{
+    margin-top: -1%;
+    margin-left: 1%;
+    width: 30%;
+    position: absolute;
+    visibility: hidden;
+    background-color: rgb(247, 247, 159);
+}
+.sub-menu-popup{
+    visibility: visible;
+}
+.sub-menu h2{
+    margin-left: 10%;
+    width: 100%;
+    /* background-color: aquamarine; */
+}
+.listPhep{
+    text-align: center;
+    position: relative;
+    list-style-type: none;
+    font-size: 20px;
+    width: 90%;
+    /* background-color: rgb(247, 247, 159); */
+}
+.listPhep li{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    border: 0.5px solid black;
+    margin: 0.5% 0%;
+}
+.listPhep li img{
+    width: 50px;
+    height: 50px;
+    margin-left: 1%;
+}
+.listPhep li p{
+    margin-left: 2%;
+    width: 40%;
+    /* position: relative; */
+}
+
+.listPhep li:hover{
+    background-color: rgb(201, 196, 196);
+}
+
+.detail{
+    width: 40%;
+    height: 45vh;
+    visibility: hidden;
+    position: absolute;
+    background-color: aqua;
+    padding: 2%;
+    z-index: 1000;
+    left: 0;
+}
+
+.detail-popup{
+    visibility: visible;
+}
+
+.detail img{
+    width: 150px;
+    height: 150px;
+}

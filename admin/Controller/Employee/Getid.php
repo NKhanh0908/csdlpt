@@ -1,7 +1,5 @@
 <?php 
-    include('../../Controller/connectDB.php');
-
-    $conn = getConnection();
+    include('../Controller/connectDB.php');
 
     $user = $_SESSION['user'];
     // echo "<script>console.log('$user')</script>";

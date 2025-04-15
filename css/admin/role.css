@@ -1,107 +1,258 @@
-/* Tổng thể form */
-.container {
-    width: 80%;
-    margin: 20px auto;
-    font-family: Arial, sans-serif;
+/* Form phân quyền hiện tại */
+.form-group-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
 }
 
-/* Tiêu đề chính */
-h2 {
-    font-size: 24px;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-/* Nút thêm quyền mới */
-#btn-them-quyen {
-    padding: 10px 15px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
-    display: block;
-    margin-bottom: 20px;
-}
-
-#btn-them-quyen:hover {
-    background-color: #218838;
-}
-
-/* Form thêm quyền mới */
-#form-them-quyen {
-    background-color: #f8f9fa;
-    border: 1px solid #ddd;
-    padding: 15px;
-    border-radius: 5px;
-    margin-bottom: 20px;
-}
-
-/* Các nhãn và input trong form */
-label {
-    display: block;
+.form-group-header label {
     font-weight: bold;
-    margin-bottom: 8px;
+    font-size: 17px;
 }
 
-input[type="text"], select {
-    width: 100%;
-    padding: 8px;
+.form-group-header select {
+    width: 30%;
+    padding: 5px;
+    border-radius: 8px;
     border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-bottom: 15px;
 }
 
-/* Nút submit */
-button[type="submit"] {
-    padding: 10px 15px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
+.form-group-content {
+    margin-top: 15px;
 }
 
-button[type="submit"]:hover {
-    background-color: #0056b3;
-}
-
-/* Card chứa danh sách chức năng */
-.card {
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    background-color: #fff;
-}
-
-.card-header {
-    background-color: #f1f1f1;
+.form-group-content label {
     font-weight: bold;
+    font-size: 17px;
+}
+
+.content-role {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 0% 2.5%;
+}
+
+.role-card {
+    width: 45%;
+    margin: 10px 0px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    text-align: center;
+    box-shadow: 0px 0px 5px #ccc;
+}
+
+.role-card-header {
+    font-weight: bold;
+    font-size: 17px;
+    padding: 8px 0px;
+    border-radius: 10px 10px 0px 0px;
+    border-bottom: 1px solid #ccc;
+    background-color: #e6e6e6;
+}   
+
+.role-card-body {
     padding: 8px;
-    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border-radius: 0px 0px 10px 10px;
+    gap: 20px;
 }
 
-.card-body {
-    padding: 10px;
+.body-detail {
+    display: flex;
+    align-items: center;
 }
 
-/* Checkbox */
-input[type="checkbox"] {
-    margin-right: 5px;
+.body-detail input {
+    cursor: pointer;
+    margin-right: 2px;
+}
+
+.btn-update {
+    display: flex;
+    justify-content: right;
+    margin-right: 2.5%;
+}
+
+.btn-update-role {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #aee2b0;
+}
+
+.btn-update-role:hover {
+    background-color: #4CAF50;
+    color: white;
+}
+
+/* Form Thêm quyền */
+.modal {
+    position: fixed;
+    top: 0; 
+    left: 0;
+    right: 0; 
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.4s ease, visibility 0s linear 0.4s;
+    z-index: 10;
+}
+
+.open-modal {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.4s ease, visibility 0s;
+}
+
+.form-add-role {
+    position: absolute;
+    top: 50%;
+    left: 55%;
+    width: 1100px;
+    border-radius: 15px;
+    background-color: antiquewhite;
+    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    visibility: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0);
+    transition: transform 0.4s ease, opacity 0.4s ease, box-shadow 0.4s ease, visibility 0s linear 0.4s;
+    z-index: 20;
+    transition: all 0.7s ease;
+}
+
+.open-form-add-role  {
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    opacity: 1;
+    transition: transform 0.4s ease, opacity 0.4s ease, box-shadow 0.4s ease, visibility 0s;
+}
+
+.form-add-role h4 {
+    position: absolute;
+    margin: -2% 0% 0% 20%;
+    padding: 1%;
+    width: 60%;
+    text-align: center;
+    border-radius: 50px;
+    background-color: #0ddc14;
+    color: white;
+}
+
+.form-add-role form {
+    padding: 30px 20px 20px 20px;
+}
+
+.form-group-content-add {
+    margin-top: 10px;
+}
+
+.form-group-content-add label {
+    font-weight: bold;
+    font-size: 17px;
+}
+
+.form-group-content-add .role-card {
+    width: calc(95% / 3);
+    margin: 10px 0px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    text-align: center;
+    box-shadow: 0px 0px 5px #ccc;
+}
+
+.form-control {
+    width: 30%;
+    padding: 5px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.form-control:focus {
+    outline: none;
+}
+
+.btn-form-add {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn-form-add button {
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-return-add {
+    border: #ccc;
+    background-color: #ccc;
+}
+
+.btn-add-submit {
+    background-color: #0ddc14;
+    border: #0ddc14;
+    color: white;
 }
 
 /* Alert thông báo */
+@keyframes slideIn {
+    from {
+        transform: translateX(10px); 
+        opacity: 0; 
+    }
+    to {
+        transform: translateX(0); 
+        opacity: 1;
+    }
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateX(0); 
+        opacity: 1; 
+    }
+    to {
+        transform: translateX(-100%); 
+        opacity: 0; 
+    }
+}
+
+/* Thông báo mặc định */
 .alert {
+    position: absolute;
+    top: 140px;
+    right: 40px;
     padding: 10px;
     margin-bottom: 15px;
     border-radius: 5px;
     font-size: 14px;
+    border: 1px solid;
+    opacity: 0; 
+    transform: translateX(100%);
+    animation-fill-mode: forwards; 
 }
 
+.alert.show {
+    animation: slideIn 0.4s ease forwards; 
+}
+
+.alert.hide {
+    animation: slideOut 0.4s ease forwards; 
+}
+
+.alert.auto-hide {
+    animation: slideIn 0.4s ease forwards, slideOut 0.4s ease 2s forwards;
+}
+
+/* Các kiểu thông báo */
 .alert-success {
     background-color: #d4edda;
     color: #155724;
@@ -112,21 +263,4 @@ input[type="checkbox"] {
     background-color: #f8d7da;
     color: #721c24;
     border: 1px solid #f5c6cb;
-}
-
-/* Select vai trò */
-select {
-    padding: 8px;
-    width: 100%;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background-color: white;
-}
-
-/* Form chính */
-form {
-    background-color: #f8f9fa;
-    padding: 20px;
-    border-radius: 8px;
-    border: 1px solid #ddd;
 }

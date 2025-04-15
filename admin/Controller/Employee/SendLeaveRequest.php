@@ -1,8 +1,8 @@
 <?php
 header('Content-Type: application/json');
 
-include('../../Controller/connectDB.php');
-$conn = getConnection();
+$path = $_SERVER["DOCUMENT_ROOT"] . '/HTTTDN/admin/Controller/connectDB.php';
+include($path);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $json = file_get_contents('php://input');
@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 if($ngaynghi == ''){
     $response = [
         'status' => 6,
-        'message' => 'Không định nghỉ hả'
+        'message' => 'Vui lòng chọn ngày nghỉ và lý do nghỉ'
     ];
 
     echo json_encode($response);
@@ -29,7 +29,7 @@ if($ngaynghi == ''){
 if($lydo == ''){
     $response = [
         'status' => 5,
-        'message' => 'Nhập lý do bạn êy'
+        'message' => 'Vui lòng nhập lý do nghỉ'
     ];
 
     echo json_encode($response);
@@ -72,16 +72,16 @@ if($tester = mysqli_num_rows($test) > 0){
 
 
 //Kiểm tra tháng này xin nghỉ bao nhiêu lần gồi
-$leave = mysqli_query($conn, "SELECT NGAYNGHI from ngaynghi WHERE 
-DATE_FORMAT(NGAYNGHI, '%m')='$month' AND DATE_FORMAT(NGAYNGHI, '%Y')='$year' AND idNV='$id'");
+$leave = mysqli_query($conn, "SELECT NGAYGUI from ngaynghi WHERE 
+DATE_FORMAT(NGAYGUI, '%m')='$month' AND DATE_FORMAT(NGAYGUI, '%Y')='$year' AND idNV='$id'");
 
 //Lấy ra ngày đã nghỉ trong tháng
 $num_leave = mysqli_num_rows($leave);
 
-if($num_leave > 3){
+if($num_leave > 2){ //Đã xin phép tận 3 lần r
     $response = [
         'status' => 2,
-        'message' => 'Quá số lần xin phép trong tháng rồi đi~ ơi'
+        'message' => 'Quá số lần xin phép trong tháng rùi!'
     ];
 
     echo json_encode($response);
@@ -96,7 +96,7 @@ DATE_FORMAT(NGAYNGHI, '%m')='$month' AND DATE_FORMAT(NGAYNGHI, '%Y')='$year' AND
 if(mysqli_num_rows($authorized_leave) > 0){
     $response = [
         'status' => 1,
-        'message' => 'Tháng được phép 1 ngày thoi đi~ ơi'
+        'message' => 'Tháng được phép 1 ngày thôi'
     ];
 
     echo json_encode($response);
