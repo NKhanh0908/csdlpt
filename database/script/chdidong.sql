@@ -558,6 +558,12 @@ SET IDENTITY_INSERT dbo.chinhanh OFF;
  ALTER TABLE kho
  ADD CONSTRAINT [kho-nvql] FOREIGN KEY (idNhanVienQuanLy) REFERENCES nhanvien (idTK);
 
+INSERT INTO kho (idCN, TENKHO, idNhanVienQuanLy)
+VALUES 
+(1, N'Kho 1', 12),
+(2, N'Kho 2', 13),
+(3, N'Kho 3', 27);
+
  CREATE TABLE tonkho(
 	idTonKho INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
 	idKho INT,
