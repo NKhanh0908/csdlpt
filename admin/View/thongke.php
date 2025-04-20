@@ -87,7 +87,7 @@
         <button onclick="loadOrderCountChart()">Số lượng đơn hàng</button>
         <button onclick="loadOrderStatusChart()">Tỷ lệ đơn hàng</button>
         <button onclick="loadGrowthChart()">Tăng trưởng doanh thu</button>
-        <button onclick="loadBranchProductChart()">Sản phẩm theo chi nhánh</button>
+        <button onclick="loadBranchProductChart()">Sản phẩm bán chạy theo chi nhánh</button>
   
 
     </div>
