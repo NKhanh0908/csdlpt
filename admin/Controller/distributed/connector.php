@@ -30,6 +30,17 @@ function getConnection($branch) {
     return $conn;
 }
 
+
+function getValidBranch($idCN) {
+    switch ($idCN) {
+        case 1: return getConnection('branch1');
+        case 2: return getConnection('branch2');
+        case 3: return getConnection('branch3');
+        case 4: return getConnection('branch4');
+        default: return false;
+    }
+}
+
 // Kiểm tra xem chi nhánh có tồn tại không
 function isBranchValid($conn, $branchId) {
     $sql = "SELECT COUNT(*) FROM dbo.chinhanh WHERE idCN = ?";

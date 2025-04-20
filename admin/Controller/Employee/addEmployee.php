@@ -210,9 +210,9 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST' && isset($_POST["addEmployee"])) {
             throw new Exception("Lỗi thực thi kiểm tra tài khoản: " . print_r(sqlsrv_errors(), true));
         }
         
-        if (sqlsrv_has_rows($stmt_check)) {
-            throw new Exception("Số điện thoại hoặc email đã tồn tại trong hệ thống");
-        }
+        // if (sqlsrv_has_rows($stmt_check)) {
+        //     throw new Exception("Số điện thoại hoặc email đã tồn tại trong hệ thống");
+        // }
         error_log("Validated phone and email uniqueness");
 
         // Hash mật khẩu

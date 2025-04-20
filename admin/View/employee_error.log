@@ -1,0 +1,121 @@
+LỖI THÊM NHÂN VIÊN - Chi nhánh 2: Số điện thoại hoặc email đã được sử dụng.
+LỖI THÊM NHÂN VIÊN - Chi nhánh 3: Lỗi thêm nhân viên: Array
+(
+    [0] => Array
+        (
+            [0] => 23000
+            [SQLSTATE] => 23000
+            [1] => 547
+            [code] => 547
+            [2] => [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "cn-nv". The conflict occurred in database "chdidong", table "dbo.chinhanh", column 'idCN'.
+            [message] => [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "cn-nv". The conflict occurred in database "chdidong", table "dbo.chinhanh", column 'idCN'.
+        )
+
+    [1] => Array
+        (
+            [0] => 01000
+            [SQLSTATE] => 01000
+            [1] => 3621
+            [code] => 3621
+            [2] => [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated.
+            [message] => [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated.
+        )
+
+)
+
+LỖI THÊM NHÂN VIÊN - Chi nhánh 1: Lỗi thêm nhân viên: Array
+(
+    [0] => Array
+        (
+            [0] => 23000
+            [SQLSTATE] => 23000
+            [1] => 547
+            [code] => 547
+            [2] => [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "cn-nv". The conflict occurred in database "chdidong", table "dbo.chinhanh", column 'idCN'.
+            [message] => [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "cn-nv". The conflict occurred in database "chdidong", table "dbo.chinhanh", column 'idCN'.
+        )
+
+    [1] => Array
+        (
+            [0] => 01000
+            [SQLSTATE] => 01000
+            [1] => 3621
+            [code] => 3621
+            [2] => [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated.
+            [message] => [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated.
+        )
+
+)
+
+LỖI THÊM NHÂN VIÊN - Chi nhánh 1: Lỗi thêm nhân viên: Array
+(
+    [0] => Array
+        (
+            [0] => 23000
+            [SQLSTATE] => 23000
+            [1] => 547
+            [code] => 547
+            [2] => [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "cn-nv". The conflict occurred in database "chdidong", table "dbo.chinhanh", column 'idCN'.
+            [message] => [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "cn-nv". The conflict occurred in database "chdidong", table "dbo.chinhanh", column 'idCN'.
+        )
+
+    [1] => Array
+        (
+            [0] => 01000
+            [SQLSTATE] => 01000
+            [1] => 3621
+            [code] => 3621
+            [2] => [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated.
+            [message] => [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated.
+        )
+
+)
+
+LỖI THÊM NHÂN VIÊN - Chi nhánh 1: Lỗi thêm nhân viên: Array
+(
+    [0] => Array
+        (
+            [0] => 23000
+            [SQLSTATE] => 23000
+            [1] => 547
+            [code] => 547
+            [2] => [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "cn-nv". The conflict occurred in database "chdidong", table "dbo.chinhanh", column 'idCN'.
+            [message] => [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "cn-nv". The conflict occurred in database "chdidong", table "dbo.chinhanh", column 'idCN'.
+        )
+
+    [1] => Array
+        (
+            [0] => 01000
+            [SQLSTATE] => 01000
+            [1] => 3621
+            [code] => 3621
+            [2] => [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated.
+            [message] => [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated.
+        )
+
+)
+
+LỖI THÊM NHÂN VIÊN - Chi nhánh 3: Lỗi thêm nhân viên: Array
+(
+    [0] => Array
+        (
+            [0] => 23000
+            [SQLSTATE] => 23000
+            [1] => 547
+            [code] => 547
+            [2] => [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "cn-nv". The conflict occurred in database "chdidong", table "dbo.chinhanh", column 'idCN'.
+            [message] => [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The INSERT statement conflicted with the FOREIGN KEY constraint "cn-nv". The conflict occurred in database "chdidong", table "dbo.chinhanh", column 'idCN'.
+        )
+
+    [1] => Array
+        (
+            [0] => 01000
+            [SQLSTATE] => 01000
+            [1] => 3621
+            [code] => 3621
+            [2] => [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated.
+            [message] => [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]The statement has been terminated.
+        )
+
+)
+

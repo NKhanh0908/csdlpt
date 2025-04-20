@@ -30,6 +30,9 @@ function getConnection($branch = "branch2") {
     return $conn;
 }
 
+
+
+
 // Kiểm tra xem chi nhánh có tồn tại không
 function isBranchValid($conn, $branchId) {
     $sql = "SELECT COUNT(*) FROM dbo.chinhanh WHERE idCN = ?";

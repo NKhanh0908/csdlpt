@@ -103,19 +103,20 @@ include("../Controller/Employee/addEmployee.php");  // Chỉnh lại đường d
     
     <label for="branch">Chi nhánh:</label>
     <select name="idCN" required>
-    <?php
-    // Kết nối cơ sở dữ liệu để lấy danh sách chi nhánh
-    $conn = getConnection('branch1');
-    $result = sqlsrv_query($conn, "SELECT idCN, ten FROM chdidong.dbo.chinhanh");
-    if ($result) {
-        while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
-            // Kiểm tra chi nhánh hiện tại của nhân viên và đánh dấu lựa chọn
-            $selected = ($emp['idCN'] ?? '') == $row['idCN'] ? 'selected' : '';
-            echo "<option value='{$row['idCN']}' $selected>{$row['ten']}</option>";  // Sửa dòng này để hiển thị tên chi nhánh thay vì chỉ idCN
-        }
-    }
-    ?>
-</select>
+                <?php
+            // Kết nối tạm tới 1 chi nhánh (ví dụ: branch1) chỉ để hiển thị danh sách chi nhánh
+            $conn = getConnection('branch1');  // Không dùng getValidBranch ở đây
+
+            $result = sqlsrv_query($conn, "SELECT idCN, ten FROM chdidong.dbo.chinhanh");
+            if ($result) {
+                while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
+                    // Nếu có giá trị cũ (khi submit lỗi), giữ lại lựa chọn
+                    $selected = (isset($_POST['idCN']) && $_POST['idCN'] == $row['idCN']) ? 'selected' : '';
+                    echo "<option value='{$row['idCN']}' $selected>{$row['ten']}</option>";
+                }
+            }
+            ?>
+            </select>
 
                     <label for="jobTitle">Chức vụ:</label>
                     <select name="idCV" required>
