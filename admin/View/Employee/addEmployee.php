@@ -1,6 +1,6 @@
 <?php
 include("../Controller/Employee/addEmployee.php");  // Chỉnh lại đường dẫn đúng
-// $dsQuyen = getAllRoles();
+
 
 ?>
 
@@ -99,19 +99,38 @@ include("../Controller/Employee/addEmployee.php");  // Chỉnh lại đường d
         <input type="number" name="luongCB">
         <span class="error" id="luongCBError"></span> -->
 
-        <label>Vị trí làm việc: </label>
-        <select name="QUYEN">
-            <?php
-                $result = mysqli_query($conn, "SELECT idQUYEN, TENQUYEN from quyen WHERE idQUYEN <> 1 AND idQUYEN <> 0 ");
-                while($row = mysqli_fetch_assoc($result)){
-                    if($_SESSION["role"] == 4) {
-                        continue;
-                    }?>
-                    <option value="<?php echo $row['idQUYEN']?>"><?php echo $row['TENQUYEN'] ?></option>
-                <?php
-                }
-             ?>
-        </select>
+       
+    
+    <label for="branch">Chi nhánh:</label>
+    <select name="idCN" required>
+    <?php
+    // Kết nối cơ sở dữ liệu để lấy danh sách chi nhánh
+    $conn = getConnection('branch1');
+    $result = sqlsrv_query($conn, "SELECT idCN, ten FROM chdidong.dbo.chinhanh");
+    if ($result) {
+        while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
+            // Kiểm tra chi nhánh hiện tại của nhân viên và đánh dấu lựa chọn
+            $selected = ($emp['idCN'] ?? '') == $row['idCN'] ? 'selected' : '';
+            echo "<option value='{$row['idCN']}' $selected>{$row['ten']}</option>";  // Sửa dòng này để hiển thị tên chi nhánh thay vì chỉ idCN
+        }
+    }
+    ?>
+</select>
+
+                    <label for="jobTitle">Chức vụ:</label>
+                    <select name="idCV" required>
+                        <?php
+                        $result = sqlsrv_query($conn, "SELECT idCV, TENCHUCVU FROM chdidong.dbo.chucvu");
+                        if ($result) {
+                            while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
+                                $selected = ($emp['idCV'] ?? '') == $row['idCV'] ? 'selected' : '';
+                                echo "<option value='{$row['idCV']}' $selected>{$row['TENCHUCVU']}</option>";
+                            }
+                        }
+                        ?>
+                    </select>
+                
+                
 
         <input type="submit" value="Thêm nhân viên" name="addEmployee">
     </form>

@@ -2,7 +2,10 @@
 // include_once '../../Controller/connectDB.php';
 // $conn = getConnection(); 
 ?>
-
+<!-- CSS chung -->
+<link rel="stylesheet" href="../../css/admin/OneForAll.css">
+<link rel="stylesheet" href="../../css/admin/order.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <h3>Danh sách đơn hàng</h3>
 
 <!-- Bộ lọc trạng thái -->

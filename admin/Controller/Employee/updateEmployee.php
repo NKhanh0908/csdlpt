@@ -14,6 +14,7 @@ function getBranchConnectionName($idCN) {
     }
 }
 
+
 // Khởi tạo biến
 $errors = [];
 $success = '';

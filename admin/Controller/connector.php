@@ -130,4 +130,27 @@ function getEmployeeBranch($employeeId) {
 
     return $branchId; // Trả về ID chi nhánh
 }
+
+
+function getValidBranch($idCN) {
+    $branchMap = [
+        1 => 'branch1',
+        2 => 'branch2',
+        3 => 'branch3',
+        4 => 'branch4'
+    ];
+
+    if (!isset($branchMap[$idCN])) {
+        die("<script>alert('ID chi nhánh không hợp lệ!');</script>");
+    }
+
+    $conn = getConnection($branchMap[$idCN]);
+
+    if (!$conn) {
+        die("<script>alert('Không thể kết nối đến chi nhánh $idCN!');</script>");
+    }
+
+    return $conn;
+}
+
 ?>
