@@ -146,19 +146,19 @@
                 $count = (int)$row['total_orders'];
     
                 switch ($status) {
-                    case 0:
+                    case 1:
                         $statusData['Chờ xác nhận'] += $count;
                         break;
-                    case 1:
+                    case 2:
                         $statusData['Đang chuẩn bị hàng'] += $count;
                         break;
-                    case 2:
+                    case 3:
                         $statusData['Đang giao hàng'] += $count;
                         break;
-                    case 3:
+                    case 4:
                         $statusData['Giao hàng thành công'] += $count;
                         break;
-                    case 4:
+                    case 5:
                         $statusData['Đã hủy'] += $count;
                         break;
                     default:
