@@ -586,3 +586,43 @@ ADD idCN INT;
 
 ALTER TABLE phieunhap
 ADD CONSTRAINT fk_idCN FOREIGN KEY (idCN) REFERENCES chinhanh (idCN);
+
+-- Thêm dữ liệu cho bảng tonkho
+-- iPhone
+INSERT INTO tonkho (idKHO, idSP, SOLUONG) VALUES
+(1, 2, 50),  -- iPhone 15 Pro Max
+(1, 3, 30),  -- iPhone 15 Pro
+(1, 4, 40),  -- iPhone 15
+(1, 2, 20),
+(1, 3, 15),
+(1, 4, 25);
+
+-- Samsung
+INSERT INTO tonkho (idKHO, idSP, SOLUONG) VALUES
+(2, 28, 45),  -- Samsung Galaxy S23 Ultra
+(2, 29, 35),  -- Samsung Galaxy S23+
+(2, 30, 30),  -- Samsung Galaxy S23
+(2, 28, 25),
+(2, 29, 20),
+(2, 30, 15);
+
+-- Xiaomi và OPPO
+INSERT INTO tonkho (idKHO, idSP, SOLUONG) VALUES
+(3, 39, 60),  -- Xiaomi 13T Pro
+(3, 40, 40),  -- Xiaomi 13T
+(3, 61, 55),  -- OPPO Find N3
+(3, 39, 30),
+(3, 40, 25),
+(3, 61, 35);
+
+-- Phụ kiện (Củ sạc, dây sạc, ốp lưng)
+INSERT INTO tonkho (idKHO, idSP, SOLUONG) VALUES
+(1, 5, 100),  -- Củ sạc
+(1, 6, 150),  -- Dây sạc
+(1, 7, 200),  -- Ốp lưng
+(2, 5, 80),
+(2, 6, 120),
+(2, 7, 180),
+(3, 5, 70),
+(3, 6, 100),
+(3, 7, 150);

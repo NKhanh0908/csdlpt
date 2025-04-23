@@ -62,6 +62,13 @@ include "checkLogin.php";  // Đúng - cùng thư mục
                 <?php endif; ?>
             </li>
             <li>
+                    <a href="?page=kho" data-page="kho">
+                        <i class="fa-solid fa-warehouse"></i>
+                        <span class="links-name">Kho</span>
+                    </a>
+                    <span class="tooltip">Kho</span>
+            </li>
+            <li>
                 <?php if (checkPermission('Nhân viên')): ?>
                     <a href="?page=employee" data-page="employee">
                         <i class="fa-solid fa-users"></i>
@@ -111,11 +118,21 @@ include "checkLogin.php";  // Đúng - cùng thư mục
                         echo "<p style='color:red;'>Không tìm thấy đơn hàng</p>";
                     }
                     break;
+                case 'tonkhodetail':
+                    if (!isset($_GET['idKho']) || !isset($_GET['branch'])) {
+                        die("Không nhận được thông tin kho hoặc chi nhánh!");
+                    } else {
+                        include("kho/tonkho_detail.php");
+                    }
+                        break;
                 case 'provider':
                     include(__DIR__ . "/Provider/ProviderView.php");
                     break;
                 case 'calendar':
                     include "calendar.php";
+                    break;
+                case 'kho':
+                    include(__DIR__ . "/kho/index.php");
                     break;
                 case 'voucher':
                     include "voucher/voucher.php";
