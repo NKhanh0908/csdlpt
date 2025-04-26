@@ -1,54 +1,47 @@
 <?php
-//include('../../Controller/connectDB.php');
-include '..\connector.php';
-
-$conn = getConnection('branch1');
+include('../connector.php');
 header('Content-Type: application/json');
 
-// if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
-//     $idPN = isset($_GET['idPN'])? $_GET['idPN'] : '';
+    $idPN = isset($_GET['idPN'])? $_GET['idPN'] : '';
+    $branch = isset($_GET['branch'])? $_GET['branch'] : '';
 
-//     //Móc ra sản phẩm trong phiếu nhập
-//     $sql = 'SELECT sp.TENSP, sp.IMG, ct.GIANHAP, sp.GIA, ct.SOLUONG 
-//     FROM `chitietphieunhap` ct JOIN phieunhap pn ON 
-//     ct.idPN = pn.idPN JOIN sanpham sp ON ct.idSP = sp.idSP WHERE pn.idPN=' . intval($idPN);
+    $connect = getConnection($branch);
 
-//     $result = mysqli_query($conn, $sql);
-//     $list_details= array();
-//     //Chạy truy vấn lưu từng sp vào mảng
-//     while($details = mysqli_fetch_array($result)){
-//         $tensp = $details['TENSP'];
-//         $soluong = $details['SOLUONG'];
-//         $gianhap = $details['GIANHAP'];
-//         $giaban = $details['GIA'];
-//         $img = $details['IMG'];
+    //Móc ra sản phẩm trong phiếu nhập
+    $sql = 'SELECT sp.TENSP, sp.IMG, dm.LOAISP, ct.SOLUONG, sp.GIA, h.TENHANG
+    FROM chitietphieunhap ct 
+	JOIN phieunhap pn ON ct.idPN = pn.idPN 
+	JOIN sanpham sp ON ct.idSP = sp.idSP 
+	JOIN danhmuc dm ON sp.idDM = dm.idDM
+	JOIN hang h ON sp.HANG = h.idHANG
+	WHERE pn.idPN=' . intval($idPN);
 
-//         $arr = array(
-//             'tensp' => $tensp,
-//             'soluong' => $soluong,
-//             'gianhap' => $gianhap,
-//             'giaban' => $giaban,
-//             'img' => $img
-//         );
+    $result = sqlsrv_query($connect, $sql);
+    $list_details= array();
+    //Chạy truy vấn lưu từng sp vào mảng
+    while($details = sqlsrv_fetch_array($result)){
+        $tensp = $details['TENSP'];
+        $soluong = $details['SOLUONG'];
+        $gianhap = $details['GIA'];
+        $loaisp = $details['LOAISP'];
+        $hang = $details['TENHANG'];
+        $img = $details['IMG'];
 
-//         array_push($list_details, $arr);
-//     }
+        $arr = array(
+            'tensp' => $tensp,
+            'soluong' => $soluong,
+            'gianhap' => $gianhap,
+            'loaisp' => $loaisp,
+            'hang' => $hang,
+            'img' => $img
+        );
 
-//     $json = json_encode($list_details);
-//     echo $json;
-// }
+        array_push($list_details, $arr);
+    }
 
-getAllReceipt();
-
-function getAllReceipt(){
-    $tsql = "SELECT * FROM [chdidong].[dbo].[donhang]";
-    $conn = getConnection('branch2');
-    $getProducts = sqlsrv_query($conn, $tsql);
-            while($row = sqlsrv_fetch_array($getProducts, SQLSRV_FETCH_ASSOC))
-            {
-                echo($row['idTK'] . $row['THANHTIEN'] . $row['DIACHI']);
-                echo("<br/>");
-            }
+    $json = json_encode($list_details);
+    echo $json;
 }
 ?>

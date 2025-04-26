@@ -1,6 +1,5 @@
 <?php
-include('../../Controller/connectDB.php');
-$conn = getConnection();
+$conn=mysqli_connect("localhost:3306", "root", "", "chdidong");
 header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

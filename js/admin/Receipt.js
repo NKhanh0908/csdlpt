@@ -3,54 +3,67 @@ function formatCurrencyVND(amount) {
     return new Intl.NumberFormat('vi-VN').format(amount);
 }
 
-function OnloadData(){
-    LoadData();
-    LoadReceipt();
-}
-
-function LoadData(){
-    DisplaySelect('NCC');
-    DisplaySelect('SP');
-    DisplaySelect('HANG');
-    DisplaySelect('DANHMUC');
-}
-function DisplaySelect(type){
+function OpenDetail(clicked_id){
+    OpenReceiptDetailPop();
+    let branch = document.getElementById('branch-id').value;
+    const hangSP = document.getElementById('hang-sp');
+    const nccElement = document.getElementById('ncc-name');
+    const ngaynhapElement = document.getElementById('ngay-nhap');
     var str = '';
-    var url = '../Controller/Receipt/LoadDataToInsert.php?type=' + type;
-    fetch(url, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        str += type=='NCC'? `<option value="0">---Chọn nhà cung cấp---</option>`: 
-        (type=='HANG'? `<option value="0">---Chọn hãng---</option>`:
-        (type=='DANHMUC'? `<option value="0">---Chọn danh mục---</option>` : `<option value="0">---Chọn sản phẩm---</option>`));
-        data.forEach(element => {
-            str += `<option value="${element.id}">${element.name}</option>`
-        });
 
-        if(type=='NCC'){
-            ncc_select.innerHTML += str;
-        }else if(type=='SP'){
-            sp_select.innerHTML += str;
-        }else if(type=='HANG'){
-            hang_select.innerHTML += str;
-        }
-        else{
-            danhmuc_select.innerHTML += str;
-        }
-    })
+    const row = document.getElementById('tr-' + clicked_id);
+    const ncc = row.querySelector('#NCC').innerText; 
+    const ngaynhap = row.querySelector('#ngaynhap').innerText; 
+
+    nccElement.innerText = ncc;
+    ngaynhapElement.innerText = ngaynhap;
+
+    // console.log(ngaynghi, lydo);
+    const url = "../Controller/Receipt/ShowReceiptDetail.php?idPN=" + clicked_id + "&branch=" + branch;
+    console.log(clicked_id);
+    try {
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("efbe" + data);
+            data.forEach(element =>{
+                console.log(element.img);
+                str += `<tr class='SP-rows'">
+                    <td><div class='name-sp'>
+                        <img class='img-sp' src="../../images/products/${element.img}">
+                        <p>${element.tensp}</p>
+                    </div></td>
+                    <td>${element.soluong}</td>
+                    <td>${formatCurrencyVND(element.gianhap)}</td>
+                    <td>${element.loaisp}</td>
+                    <td>${element.hang}</td>
+                    </tr>`;
+            })
+    
+            hangSP.innerHTML = str;
+            document.getElementById('maPN').innerText = 'PN' + clicked_id;
+        })
+        .catch(error => console.error('Error:', error))
+    } catch (error) {
+        console.log(error);
+    }
+    
 }
 
 
 function LoadReceipt(){
+    // console.log("dô r");
     const table = document.getElementById('hang');
     let keyword = document.getElementById('keyword').value;
     let order = document.getElementById('order-price').value;
     let dateSearch = document.getElementById('date-serch').value;
+    let branch = document.getElementById('branch-id').value;
+    console.log(branch + " " + keyword + " " + order + " " + dateSearch);
    
     try{
         var str = '';
@@ -63,22 +76,24 @@ function LoadReceipt(){
             body: JSON.stringify({
                 keyword: keyword,
                 order : order,
-                dateSearch : dateSearch
+                dateSearch : dateSearch,
+                branch : branch
             })
             })
             .then(response => response.json())
             .then(data =>{
                 if(data.length > 0){
                     data.forEach(element => {
-                        str +=`
-                            <tr class='PN-rows' id='tr-${element.id}' onmouseenter="ShowDetail(${element.id})" onclick="OpenDetail(${element.id})">
+                        console.log(element);
+                        // console.log(element.heso, element.ngaylam);
+                        str +=`<tr class='PN-rows' id='tr-${element.id}' onmouseenter="ShowDetail(${element.id})" onclick="OpenDetail(${element.id})">
                                 <td id="idPN">PN${element.id}</td>
                                 <td id="NCC">${element.ncc}</td>
                                 <td id="diachi">${element.diachi}</td>
-                                <td id="ngaynhap">${element.ngaynhap}</td>
-                                <td id="thanhtien">${formatCurrencyVND(element.thanhtien)} VND</td>
+                                <td id="ngaynhap">${element.ngaynhap.date}</td>
+                                <td id="thanhtien">${formatCurrencyVND(element.thanhtien)} VND VND</td>
                                 <td id="loinhuan">${element.loinhuan}%</td>
-                            </tr>`;
+                                </tr>`;
                     });
                     table.innerHTML = str;
                     document.getElementById("result").innerHTML = "";
@@ -96,8 +111,11 @@ function LoadReceipt(){
 }
 
 function ShowDetail(id){
+
     var btn = document.getElementById('tr-' + id);
     var str = '';
+    // btn.title = "id: " + id; 
+    // console.log(btn);
 
     try{
         url = '../Controller/Receipt/LoadReceiptDetail.php';
@@ -127,13 +145,27 @@ function ShowDetail(id){
 
 const addreceipt = document.getElementById('addReceipt-popup');
 
+document.addEventListener('click', (e)=> {
+    if (modal.contains(e.target) 
+        && !addreceipt.contains(e.target) 
+        && !receiptdetail.contains(e.target)) {
+            modal.classList.remove("open-modal");
+            CloseAddReceiptPop();
+            closeReceiptDetailPop();
+    }
+})
+
+
 function OpenAddReceiptPop(){
-    modal.classList.add('open-modal');
+    modal.classList.add("open-modal");
     addreceipt.classList.add("open-addreceipt");
+    document.querySelector(".hidden-log-out").classList.add("active");
 }
 
 function CloseAddReceiptPop(){
+    modal.classList.remove("open-modal");
     addreceipt.classList.remove("open-addreceipt");
+    document.querySelector(".hidden-log-out").classList.remove("active");
 }
 
 //Mở trang chi tiết phiếu nhập
@@ -152,46 +184,46 @@ function closeReceiptDetailPop(){
     document.querySelector(".hidden-log-out").classList.remove("active");
 }
 
-function OpenDetail(clicked_id){
-    OpenReceiptDetailPop();
-    const hangSP = document.getElementById('hang-sp');
-    const nccElement = document.getElementById('ncc-name');
-    const ngaynhapElement = document.getElementById('ngay-nhap');
-    var str = '';
 
-    const row = document.getElementById('tr-' + clicked_id);
-    const ncc = row.querySelector('#NCC').innerText; 
-    const ngaynhap = row.querySelector('#ngaynhap').innerText; 
-
-    nccElement.innerText = ncc;
-    ngaynhapElement.innerText = ngaynhap;
-
-    const url = "../Controller/Receipt/ShowReceiptDetail.php?idPN=" + clicked_id;
-    fetch(url, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        data.forEach(element =>{
-            str += `
-            <tr class='SP-rows'">
-                <td>
-                    <div class='name-sp'>
-                        <img class='img-sp' src="/images/products/${element.img}">
-                        <p>${element.tensp}</p>
-                    </div>
-                </td>
-                <td>${formatCurrencyVND(element.gianhap)}</td>
-                <td>${formatCurrencyVND(element.giaban)}</td>
-                <td>${element.soluong}</td>
-            </tr>`;
-        })
-
-        hangSP.innerHTML = str;
-        document.getElementById('maPN').innerText = 'PN' + clicked_id;
-    })
-    .catch(error => console.error('Error:', error))
+function OnloadData(){
+    LoadData();
+    LoadReceipt();
 }
+
+function LoadData(){
+    DisplaySelect('NCC');
+    DisplaySelect('SP');
+    DisplaySelect('HANG');
+    DisplaySelect('DANHMUC');
+}
+
+// function DisplaySelect(type){
+//     var str = '';
+//     var url = '../Controller/Receipt/LoadDataToInsert.php?type=' + type;
+//     fetch(url, {
+//         method: 'GET',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         }
+//     })
+//     .then(response => response.json())
+//     .then(data => {
+//         data.forEach(element =>{
+//             str += `<tr class='SP-rows'">
+//                 <td><div class='name-sp'>
+//                     <img class='img-sp' src="../images/products/${element.img}">
+//                     <p>${element.tensp}</p>
+//                 </div></td>
+//                 <td>${element.gianhap}</td>
+//                 <td>${element.giaban}</td>
+//                 <td>${element.gianhap}</td>
+//                 <td>${element.giaban}</td>
+//                 <td>${element.soluong}</td>
+//                 </tr>`;
+//         })
+
+//         hangSP.innerHTML = str;
+//         document.getElementById('maPN').innerText = 'Mã phiếu nhập: PN' + clicked_id;
+//     })
+//     .catch(error => console.error('Error:', error))
+// }    

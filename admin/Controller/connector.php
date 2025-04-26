@@ -1,15 +1,15 @@
 <?php
 function getConnection($branch = "branch2") {
     $servers = [
-        'branch1' => 'DESKTOP-VTHQS62\MSSQLSERVER3',          // Server chính
-        'branch2' => 'DESKTOP-VTHQS62\MSSQLSERVER1',  
-        'branch3' => 'DESKTOP-VTHQS62\MSSQLSERVER2',  
-        'branch4' => 'DESKTOP-VTHQS62\MSSQLSERVER4'
+        'branch1' => 'LAPTOP-O2NQEJ35',          // Server chính
+        'branch2' => 'LAPTOP-O2NQEJ35\MSSQLSERVER2',  
+        'branch3' => 'LAPTOP-O2NQEJ35\MSSQLSERVER3',  
+        'branch4' => 'LAPTOP-O2NQEJ35\MSSQLSERVER4'
     ];
 
     $database = "chdidong";
     $uid = "sa";
-    $password = "vuem1705";
+    $password = "13524679";
 
     if (!isset($servers[$branch])) {
         die("Chi nhánh không tồn tại!");

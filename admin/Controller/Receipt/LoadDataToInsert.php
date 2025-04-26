@@ -1,19 +1,19 @@
 <?php
-include('../../Controller/connectDB.php');
-$conn = getConnection();
+include('../connector.php');
 header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     $type = isset($_GET['type'])? $_GET['type'] : '';
+    $connect = getConnection("branch2");
 
     if($type=='NCC'){
-        $sql = "SELECT idNCC, TENNCC from nhacungcap WHERE TRANGTHAI=1";
+        $sql = "SELECT idNCC, TENNCC from nhacungcap ";
 
-        $result = mysqli_query($conn, $sql);
+        $result = sqlsrv_query($connect, $sql);
         $list_ncc = array();
 
-        while($type = mysqli_fetch_array($result)){
+        while($type = sqlsrv_fetch_array($result)){
             $id = $type['idNCC'];
             $name = $type['TENNCC'];
     
@@ -29,12 +29,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         echo $json;
 
     }else if($type=='HANG'){
-        $sql = "SELECT idHANG, TENHANG from hang WHERE TRANGTHAI=1";
+        $sql = "SELECT idHANG, TENHANG from hang";
 
-        $result = mysqli_query($conn, $sql);
+        $result = sqlsrv_query($connect, $sql);
         $list_hang = array();
 
-        while($type = mysqli_fetch_array($result)){
+        while($type = sqlsrv_fetch_array($result)){
             $id = $type['idHANG'];
             $name = $type['TENHANG'];
     
@@ -49,12 +49,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $json = json_encode($list_hang);
         echo $json;
     }else if($type=='DANHMUC'){
-        $sql = "SELECT idDM, LOAISP from danhmuc WHERE TRANGTHAI=1";
+        $sql = "SELECT idDM, LOAISP from danhmuc";
 
-        $result = mysqli_query($conn, $sql);
+        $result = sqlsrv_query($connect, $sql);
         $list_danhmuc = array();
 
-        while($type = mysqli_fetch_array($result)){
+        while($type = sqlsrv_fetch_array($result)){
             $id = $type['idDM'];
             $name = $type['LOAISP'];
     
@@ -69,13 +69,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $json = json_encode($list_danhmuc);
         echo $json;
     }
-    else{
-        $sql = "SELECT idSP, TENSP from sanpham WHERE TRANGTHAI=1 AND SOLUONG <=10";
+    else {
+        $sql = "SELECT sp.idSP, sp.TENSP 
+        FROM sanpham sp";
 
-        $result = mysqli_query($conn, $sql);
+        $result = sqlsrv_query($connect, $sql);
         $list_sp = array();
 
-        while($type = mysqli_fetch_array($result)){
+        while($type = sqlsrv_fetch_array($result)){
             $id = $type['idSP'];
             $name = $type['TENSP'];
     

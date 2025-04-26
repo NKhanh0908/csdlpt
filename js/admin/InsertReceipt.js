@@ -33,11 +33,14 @@ const listPr = new Array();
 //Thim sản phữm mới
 function OpenAddProductPop(){
     addproduct.classList.add("open-addproduct");
+    document.querySelector(".hidden-log-out").classList.add("active");
 }
 
 function CloseAddProductPop(){
     addproduct.classList.remove("open-addproduct");
+    document.querySelector(".hidden-log-out").classList.remove("active");
 }
+
 //Hiện ảnh
 function hienThiAnh(event) {
     var input = event.target;
@@ -67,7 +70,8 @@ function InsertProduct(){
         alert("Chưa chọn danh mục cho sản phẩm ấy ơi !"); return;
     }
 
-    if(mausac.value == ''){
+    if(mausac.value == '' && 
+        (hang_select.value == 1 || hang_select.value == 7 || hang_select.value == 8) ){
         alert("Chưa nhập màu sắc cho sản phẩm ấy ơi !"); return;
     }
 
@@ -78,6 +82,15 @@ function InsertProduct(){
     const url = '../Controller/Receipt/InsertProduct.php';      
     var file = img.files[0];
     console.log(file);
+    var mausacIns = '';
+    if(mausac.value == '') {
+        mausacIns = "KHÔNG CÓ";
+    } else {
+        mausacIns = mausac.value;
+    }
+
+
+    console.log("dữ liệu muốn sem: " + dungluong_select.value + " và " + mausacIns);
 
     if (file) {
     const reader = new FileReader();
@@ -95,7 +108,7 @@ function InsertProduct(){
                 tensp: tensp.value,
                 hang: hang_select.value,
                 danhmuc: danhmuc_select.value,
-                mausac: mausac.value,
+                mausac: mausacIns,
                 dungluong: dungluong_select.value,
                 mota: mota.value,
                 fileName: file.name,
@@ -123,6 +136,7 @@ function LoadData(){
     DisplaySelect('HANG');
     DisplaySelect('DANHMUC');
 }
+
 function DisplaySelect(type){
     var str = '';
     var url = '../Controller/Receipt/LoadDataToInsert.php?type=' + type;
@@ -153,11 +167,24 @@ function DisplaySelect(type){
         }
     })
 }
-//
+
+document.getElementById("danhmuc").addEventListener('change', () =>{
+    console.log("hong dô dây hã mom")
+    if(danhmuc_select.value == 1 || danhmuc_select.value == 7 || danhmuc_select.value == 8) {
+        document.getElementById("color_displ").style = "display: flex; justify-content: space-between; align-items: center;";
+        document.getElementById("dl_displ").style = "display: flex; justify-content: space-between; align-items: center;";
+    } else if(danhmuc_select.value == 3 || danhmuc_select.value == 5) {
+        document.getElementById("color_displ").style.display = "block";
+        document.getElementById("dl_displ").style.display = "none";
+    } else {
+        document.getElementById("color_displ").style.display = "none";
+        document.getElementById("dl_displ").style.display = "none";
+    }
+})
 
 //Này là ấy 
 function Return(){
-    alert("Từ từ chưa viết đi~ ơi");
+    // alert("Từ từ chưa viết đi~ ơi");
     document.getElementById('addReceipt-popup').classList.remove('open-addreceipt');
 }
 //////
@@ -204,6 +231,15 @@ function InsertReceipt(){
         return;
     }
 
+    let branch = document.getElementById('input-branch').value;
+    let ncc = document.getElementById('input-ncc').value;
+    let loinhuan = document.getElementById('input-loinhuan').value;
+    let idSP = document.getElementById('input-listSP').value;
+    let gianhap = document.getElementById('input-gianhap').value;
+    let soluong = document.getElementById('input-soluong').value;
+
+
+
     try{
     const url = '../Controller/Receipt/InsertReceipt.php';
 
@@ -225,6 +261,7 @@ function InsertReceipt(){
             console.log(data.message);
             console.log("Thành tiền = " + data.thanhtien);
             products.forEach(element => {
+                console.log(element);
                 InsertReceiptDetail(idPN, element[0], element[1], element[2], element[3], element[4], element[5], loinhuan);
             })
             alert("Insert phíu nhoặp rầu nghen");
@@ -243,6 +280,7 @@ function InsertReceiptDetail(idPN, idSP, soluongSP, gianhapSP, giathem, mausac, 
     try{
     const url = '../Controller/Receipt/InsertReceiptDetail.php';
 
+    console.log(idPN + ", " + idSP + ", " + mausac + ", " + dungluong + ", ");
     fetch(url, {
         method: 'POST',
         headers: {
@@ -282,78 +320,84 @@ function Display(){
     })
     .then(response => response.json())
     .then(data=> {
-
+        console.log(data);
         gianhap.value = data[0].gianhap; 
         console.log("gianhap "+ gianhap.value);
-        const colors = new Set();
-        const dungluongs = new Set();
-        data.forEach(e => {
-            listPr.push(e);
-            colors.add(e.mausac);
-            dungluongs.add(e.dungluong);
-        })
-
-        document.getElementById("input-listC").innerHTML = "";
-        document.getElementById("input-listR").innerHTML = "";
-
-        colors.forEach(c => {
-            document.getElementById("input-listC").innerHTML += `<option value="${c}">${c}</option>`;
-        })
-        dungluongs.forEach(d => {
-            document.getElementById("input-listR").innerHTML += `<option value="${d}" >${d}</option>`;
-        })
-        loadListPro(document.getElementById("input-listC").value, document.getElementById("input-listR").value);
+        document.getElementById('input-gianhap').value = data[0].gianhap;
+        
     })
     .catch(err => console.log(err))
 }
 
-document.getElementById("input-listR").addEventListener('change', () =>{
-
+document.getElementById("input-listC").addEventListener('change', () => {
     const mausac = document.getElementById("input-listC").value;
-    const dl = document.getElementById("input-listR").value
-    document.getElementById("input-listC").innerHTML = "";
-    listPr.forEach(c => {
-        if(d.dungluong ==  dl) {
-            document.getElementById("input-listC").innerHTML += `<option value="${c.mausac}" >${c.mausac}</option>`;
-        }
-        
-    })
-    loadListPro(mausac, dl);
-})
+    const listR = document.getElementById("input-listR");
 
-document.getElementById("input-listC").addEventListener('change', () =>{
-    const mausac = document.getElementById("input-listC").value;
-    const dl = document.getElementById("input-listR").value
-    document.getElementById("input-listR").innerHTML = "";
+    listR.innerHTML = "";
+
+    let firstDungLuong = "";
+
     listPr.forEach(d => {
-        if(d.mausac ==  mausac) {
-            document.getElementById("input-listR").innerHTML += `<option value="${d.dungluong}">${d.dungluong}</option>`;
+        if (d.mausac == mausac) {
+            listR.innerHTML += `<option value="${d.dungluong}">${d.dungluong}</option>`;
+            if (firstDungLuong === "") {
+                firstDungLuong = d.dungluong;
+            }
         }
-    })
-    loadListPro(mausac, dl);
-})
+    });
+
+    loadListPro(mausac, firstDungLuong);
+});
+
+document.getElementById("input-listR").addEventListener('change', () => {
+    const dungluong = document.getElementById("input-listR").value;
+    const listC = document.getElementById("input-listC");
+
+    listC.innerHTML = "";
+
+    let firstMausac = "";
+
+    listPr.forEach(d => {
+        if (d.dungluong == dungluong) {
+            listC.innerHTML += `<option value="${d.mausax}">${d.mausac}</option>`;
+            if (firstMausac === "") {
+                firstMausac = d.mausac;
+            }
+        }
+    });
+
+    loadListPro(firstMausac, dungluong);
+});
+
 
 function loadListPro(mausac, dungluong) {
-    document.getElementById("input-congthem").innerHTML = ""
-    gianhap.innerHTML = ""
+    document.getElementById("input-congthem").value = "";
+    gianhap.value = "";
+
     listPr.forEach(e => {
-        if(e.mausac ==  mausac && e.dungluong ==  dungluong) {
-            document.getElementById("input-congthem").value = e.giathem
+        if (e.mausac == mausac && e.dungluong == dungluong) {
+            document.getElementById("input-congthem").value = e.giathem;
             gianhap.value = e.gianhap;
         }
-    })
+    });
 }
 
 
-
 function AddProduct(){
+
+    let branch = document.getElementById('input-branch').value;
+    let ncc = document.getElementById('input-ncc').value;
+    var loinhuan = document.getElementById('input-loinhuan').value
     let idSP = document.getElementById('input-listSP').value;
+    let gianhap = document.getElementById('input-gianhap').value;
+    let soluong = document.getElementById('input-soluong').value;
+
     let quantity = document.getElementById('input-soluong').value;
 
+    
     let mausac = document.getElementById('input-listC').value;
     let dungluong = document.getElementById('input-listR').value;
-
-
+    console.log(idSP + " " + quantity + " " + gianhap + " " + loinhuan)
     
     console.log(idSP);
     if(idSP<=0 ){
@@ -368,30 +412,25 @@ function AddProduct(){
         return;
     }
 
-    if(!Number.isInteger(parseInt(loinhuan.value)) || parseInt(loinhuan.value) > 99 || parseInt(loinhuan.value) < 0){
+    if(!Number.isInteger(parseInt(loinhuan)) || parseInt(loinhuan) > 99 || parseInt(loinhuan) < 0){
         alert("Lợi nhuận là số từ 0-99 á má");
         return;
     }
 
-    if(!Number.isInteger(parseInt(gianhap.value)) || parseInt(gianhap.value) < 0){
+    if(!Number.isInteger(parseInt(gianhap)) || parseInt(gianhap) < 0){
         alert("Giá nhập là số lớn hơn 0 á má");
         return;
     }
-    if(!Number.isInteger(parseInt(inputquantity.value)) || parseInt(inputquantity.value) < 0){
+    if(!Number.isInteger(parseInt(quantity)) || parseInt(quantity) < 0){
         alert("Số lượng là số lớn hơn 0 á má");
         return;
     }
 
-    if(!Number.isInteger(parseInt(giaCongThem.value)) || parseInt(giaCongThem.value) < 0){
-        alert("Thêm ko thêm còn đòi âm nữa");
-        return;
-    }
-
-    var product = new Array(idSP, quantity, gianhap.value, giaCongThem.value, mausac, dungluong);
+    var product = new Array(idSP, quantity, gianhap, loinhuan);
     products.push(product);
 
     alert("Thêm sản phẩm thành công!");
-    DisplayProduct(product[0], product[1], product[2], product[3], product[4], product[5], loinhuan.value);
+    DisplayProduct(product[0], product[1], product[2], product[3]);
 }
 
 function RemoveProduct(idsp){
@@ -399,8 +438,12 @@ function RemoveProduct(idsp){
     // let idsp = document.getElementById('input-id').value;
     console.log("Remove: " + idsp);
     var isExisted = products.filter(item => item[0]==idsp);
+    console.log('Filtered Products:', JSON.stringify(isExisted, null, 2));
+    // Alternative: console.table(isExisted);       
     isExisted_quantity = isExisted[0][1];
     isExisted_gianhapsp = isExisted[0][2];
+    console.log("isExisted_quantity: " + isExisted_quantity);
+    console.log("isExisted_gianhapsp: " + isExisted_gianhapsp);
     products.splice(products.indexOf(isExisted[0]), 1);
     alert("Xóa thành công");
     
@@ -408,18 +451,18 @@ function RemoveProduct(idsp){
     scrollViewSP.innerHTML = str;
     thanhtien_value -= parseInt(isExisted_quantity) * parseInt(isExisted_gianhapsp);
     console.log("thanh tien sau xoa: " + thanhtien_value);
-    thanhtienchan.innerHTML = parseInt(thanhtien_value) + ' VND';
+    //thanhtienchan.innerHTML = parseInt(thanhtien_value) + ' VND';
 
     if(products.length == 0){
         return;
     }
     products.forEach(element =>{
-        DisplayProduct(element[0], element[1], element[2], element[3] , element[4], element[5], loinhuan.value);
+        DisplayProduct(element[0], element[1], element[2], loinhuan.value);
     })
 
 }
 
-function DisplayProduct(idsp, quantity, gianhapsp,  giathem, mausac, dungluong, loinhuansp){   
+function DisplayProduct(idsp, quantity, gianhapsp, loinhuansp){   
     var url = '../Controller/Receipt/LoadProductDetail.php';
     
     fetch(url, {
@@ -428,28 +471,41 @@ function DisplayProduct(idsp, quantity, gianhapsp,  giathem, mausac, dungluong, 
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            idSP: idsp,
-            mausac: mausac,
-            dungluong: dungluong
+            idSP: idsp
         }) 
     })
     .then(response => response.json())
     .then(data => {
-        str +=`<div class='item'>
-                <img src="../../images/products/${data.img}">
-                <p>${data.name}</p>
-                <p>Giá cộng thêm: ${giathem} Vnd</p>
-                <p>${data.mausac} </p>
-                <p>${data.dungluong} </p>
-                <p>Giá cũ: ${data.gianhap} Vnd</p>
-                <p>Giá mới: ${parseInt(gianhapsp)} Vnd</p>
-                <p>Lời: ${loinhuansp}%</p>
-                <div class='action-item'>
-                    <button onclick="Action('-', ${data.id})">-</button>
-                    <p id='quantity-${data.id}'>${quantity}</p>
-                    <button onclick="Action('+', ${data.id})">+</button>
+        thanhtien_value = 0;
+        console.log(data);
+        str +=`
+            <div class='item'>
+                <img src="../../images/products/${data.img}" class='img-product'>
+                <div class='item-detail-product'>
+                    <div class='item-detail-product-1'>
+                        <p>${data.name}</p>
+                        <div class='item-detail-product-1-2'>
+                            <span>Giá cũ: ${data.gianhap} VND</span>
+                            <span>Giá mới: ${parseInt(gianhapsp)} VND</span>
+                        </div>  
+                    </div>
+
+                    <div class='item-detail-product-2'>
+                        <p>
+                            <strong>Lợi nhuận</strong><br>
+                            ${loinhuansp}%
+                        </p>
+                    </div>
+
+                    <div class='item-detail-product-3'>
+                        <div class='action-item'>
+                            <button onclick="Action('-', ${data.id})">-</button>
+                            <p id='quantity-${data.id}'>${quantity}</p>
+                            <button onclick="Action('+', ${data.id})">+</button>
+                        </div>
+                        <button class='btn-delete' onclick="RemoveProduct(${data.id})">Xóa</button>
+                    </div>
                 </div>
-                <button class='btn-delete' onclick="RemoveProduct(${data.id})">Xóa</button>
             </div>`;
 
         scrollViewSP.innerHTML = str;
@@ -487,4 +543,9 @@ function Action(str, idsp){
             }
         });
     }
+}
+
+// Đơn vị tiền VND
+function formatCurrencyVND(amount) {
+    return new Intl.NumberFormat('vi-VN').format(amount);
 }

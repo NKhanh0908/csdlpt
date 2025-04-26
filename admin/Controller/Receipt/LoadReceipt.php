@@ -1,15 +1,16 @@
 <?php
-include('../../Controller/connectDB.php');
-$conn = getConnection();
+include('../connector.php');
 header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $json = file_get_contents('php://input');
     $data = json_decode($json, true);
-    
+    $branch = isset($data['branch'])? $data['branch'] : '';
     $keyword = isset($data['keyword'])? $data['keyword'] : '';
     $order = isset($data['order'])? $data['order'] : '';
     $dateSearch = isset($data['dateSearch'])? $data['dateSearch'] : '';
+
+    $connect = getConnection($branch);
 
     //Khỏi tạo biến cho câu truy vấn
     $sql = '';
@@ -34,11 +35,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         default: break;
     }
     //Chạy truy vấn
-    $result = mysqli_query($conn, $sql . $sql_date . $sql_order);
+    $result = sqlsrv_query($connect, $sql . $sql_date . $sql_order);
     $list_receipt = array();
     
     //Khúc dưới này chắc hiểu mà hen
-    while($receipts = mysqli_fetch_array($result)){
+    while($receipts = sqlsrv_fetch_array($result)){
         $id = $receipts['idPN'];
         $ncc = $receipts['TENNCC'];
         $diachi = $receipts['DIACHI'];

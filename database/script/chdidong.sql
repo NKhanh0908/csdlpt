@@ -626,3 +626,29 @@ INSERT INTO tonkho (idKHO, idSP, SOLUONG) VALUES
 (3, 5, 70),
 (3, 6, 100),
 (3, 7, 150);
+
+
+INSERT INTO phieunhap (idNCC, NGAYNHAP, THANHTIEN, LOINHUAN, TRANGTHAI, idCN) VALUES
+(1, '2024-04-01', 15000000, 20, 1, 1),
+(1, '2024-04-15', 12000000, 18, 1, 1);
+
+-- Insert sample data for chitietphieunhap table
+INSERT INTO chitietphieunhap (idPN, idSP, SOLUONG) VALUES
+(2002, 1, 10),
+(2002, 2, 15),
+(2002, 3, 8),
+(2003, 4, 12),
+(2003, 5, 20),
+(2003, 6, 5);
+
+INSERT INTO phieunhap (idNCC, NGAYNHAP, THANHTIEN, LOINHUAN, TRANGTHAI, idCN) VALUES
+  (2, '2024-04-05', 20000000, 15, 1, 2),
+  (3, '2024-04-20', 25000000, 22, 1, 2);
+
+INSERT INTO chitietphieunhap (idPN, idSP, SOLUONG) VALUES
+(24002, 7, 8),
+(24002, 8, 15),
+(24002, 9, 10),
+(24003, 10, 6),
+(24003, 11, 12),
+(24003, 12, 9);

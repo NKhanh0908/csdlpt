@@ -1,61 +1,116 @@
-<link rel="stylesheet" href="/css/admin/Receipt.css">
+<!-- CSS chung -->
+<link rel="stylesheet" href="../../css/admin/OneForAll.css">
+<link rel="stylesheet" href="../../css/admin/Receipt.css">
 
-<h1>Quản lý Phiếu nhập</h1><br>
-<div class='containers'>
-    <div class="filter" style="cursor: pointer;">
-        Tìm kiếm: <input id='keyword' name="search-filter" placeholder="Nhập từ khóa" oninput="LoadReceipt()"></input>
-        Ngày nhập: <input type="date" name="date-search" id="date-serch" onchange="LoadReceipt()">
-        Lọc theo thành tiền: <select id="order-price" onchange="LoadReceipt()">
-        <option value="0" selected>--Sắp xếp theo--</option>
-        <option value="1">Giá tăng dần</option>
-        <option value="2">Giá giảm dần</option>
-        </select>
-        
-    </div><br>
-    <button onclick="OpenAddReceiptPop()" class='btn-add'>Thim phiếu nhập</button><br><br>
-    <h3>Danh sách phiếu nhập</h3>
-
-    <body class="receipt-list" onload="OnloadData()">
-        <table>
-            <thead>
-                <tr>
-                <th style="width: 10%;">Mã phiếu nhập</th>
-                <th style="width: 15%;">Nhà cung cấp</th>
-                <th style="width: 20%;">Địa chỉ</th>
-                <th style="width: 20%;">Ngày nhập</th>
-                <th style="width: 20%;">Thành tiền</th>
-                <th style="width: 8%;">Lợi nhuận</th>
-                <th style="width: 7%;"></th>
-                </tr>
-            </thead>
-            <tbody id='hang'></tbody>
-        </table>
-        <div id='result'></div>
-    </body>
-</div>
-<div class='modal' id='modal'>
-    <div class="receiptDetail-form" id="receiptDetail-form" >
-        <h1>Chi tiết phiếu nhập</h1><br>
-        <h3 id='maPN'>Mã phiếu nhập: </h3>
-        <button id='close-receiptdetail' type="button" onclick="closeReceiptDetailPop()">X</button>
-        <div class='receiptdetail-container'>
-            <table>
-                <thead>
-                    <tr>
-                    <th style="width: 50%;">Tên sản phẩm</th>
-                    <th style="width: 15%;">Giá nhập</th>
-                    <th style="width: 15%;">Giá bán</th>
-                    <th style="width: 10%;">Số lượng</th>
-                    </tr>
-                </thead>
-                <tbody id='hang-sp'></tbody>
-            </table>
+<body onload="OnloadData()">
+    <div class="header">    
+        <div class="first-header">
+            <p>Quản lý phiếu nhập</p>
+        </div>
+        <div class="second-header">
+            <div class="second-header-main">
+                <button class="home">
+                    <a href="?page=employeeinfo"> 
+                        <i class="fa-solid fa-house home-outline"></i>
+                    </a>
+                </button>
+                <div class="line"></div>
+                <button onclick="OpenAddReceiptPop()" class='btn-add'>Thêm phiếu nhập</button>
+            </div>
         </div>
     </div>
-</div>
 
-<div id='addReceipt-popup' class="addReceipt-popup">
-    <?php include('InsertReceiptView.php');?>
-</div>
+    <!-- Nội dung chính -->
+    <main class="main">
+        <div class="container">
+            <div class="filter">
+                <div class="filter-search">
+                    <input id='keyword' name="search-filter" placeholder="Nhập từ khóa" oninput="LoadReceipt()"></input>
+                </div>
+                <div class="filter-date">
+                    <span>Ngày nhập:</span>
+                    <input type="date" name="date-search" id="date-serch" onchange="LoadReceipt()">
+                </div>
+                <div class="filter-merge">
+                    <span>Sắp xếp: </span>
+                    <select id="order-price" onchange="LoadReceipt()">
+                        <option value="0" selected>--Sắp xếp theo--</option>
+                        <option value="1">Giá tăng dần</option>
+                        <option value="2">Giá giảm dần</option>
+                    </select>
+                </div>
+                <div class="filter-merge">
+                    <span>Chi nhánh: </span>
+                    <select id="branch-id" onchange="LoadReceipt()">
+                        <option value="branch2" selected>Chi nhánh 1</option>
+                        <option value="branch3">Chi nhánh 2</option>
+                        <option value="branch4">Chi nhánh 3</option>
+                    </select>
+                </div>
+            </div>
 
-<script src="/js/admin/Receipt.js"></script>
+            <div class="receipt-list">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Mã phiếu nhập</th>
+                            <th>Nhà cung cấp</th>
+                            <th>Địa chỉ</th>
+                            <th>Ngày nhập</th>
+                            <th>Thành tiền</th>
+                            <th>Lợi nhuận</th>
+                        </tr>
+                    </thead>
+                    <tbody id='hang'></tbody>
+                </table>
+                <div id='result'></div>
+            </div>
+
+            <div class='modal' id='modal'>
+                <div class="receiptDetail-form" id="receiptDetail-form">
+                    <h1>Chi tiết phiếu nhập</h1>
+                    <div class="receiptDetail-form-main">
+                        <div class="receiptDetail-form-info">
+                            <p>
+                                <strong>Mã phiếu nhập:</strong>
+                                <span id="maPN"></span>
+                            </p>
+                            <p>
+                                <strong>Nhà cung cấp:</strong> 
+                                <span id="ncc-name"></span>
+                            </p>
+                            <p>
+                                <strong>Ngày nhập:</strong> 
+                                <span id="ngay-nhap"></span>
+                            </p>
+                        </div>
+                      
+                        <div class='receiptdetail-container'>
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th style="width: 25%;">Tên sản phẩm</th>
+                                    <th style="width: 15%;">Số lượng</th>
+                                    <th style="width: 15%;">Giá</th>
+                                    <th style="width: 15%;">Loại sản phẩm</th>
+                                    <th style="width: 15%;">Hãng</th>
+                                    </tr>
+                                </thead>
+                                <tbody id='hang-sp'></tbody>
+                            </table>
+                        </div>
+
+                        <div class="receiptDetail-form-btn">
+                            <button id='close-receiptdetail' type="button" onclick="closeReceiptDetailPop()">Trở lại</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id='addReceipt-popup' class="addReceipt-popup">
+                    <?php include('InsertReceiptView.php');?>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+<script src="../../js/admin/Receipt.js"></script>

@@ -98,3 +98,18 @@ body::-webkit-scrollbar {
     border-radius: 8px 8px 0px 0px;
     background-color: white;
 }
+
+/* Effect nhưng chọn chức năng tương ứng khi mở trang do thẻ a */
+.update-employee-effect.active a,
+.detail-order-effect.active a  {
+    background: linear-gradient(90deg, #ff5e00 0, #ffa46b 90%);
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.update-employee-effect.active a i,
+.detail-order-effect.active a i {
+    color: white;
+    font-weight: bold;
+}

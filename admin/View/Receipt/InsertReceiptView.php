@@ -1,66 +1,143 @@
+<link rel="stylesheet" href="../../css/admin/insertReceiptView.css">
 
 <div class="addreceipt-form" id="addreceipt-form">
-    <h1>Thim phiếu nhập</h1><br>
-    <div id='input-receipt'>
-        <div id='input-receiptinfo'>
-            <h2>Nhập thông tin phiếu</h2>
-            <Label for='input-ncc'>Chọn nhà cung cấp:</Label>
-            <select name="input-ncc" id="input-ncc">
-            </select>
-            <label for="input-loinhuan">Nhập mức lợi nhuận: </label>
-            <input type="number" min='1' value='1' max='99' name='input-loinhuan' id='input-loinhuan' onchange="OnchangeLoiNhuan()"> (%)
-        </div>
+    <h1>Thêm phiếu nhập</h1>
+    <div id='input-receipt' class="input-receipt">
+        <h3>Nhập thông tin phiếu</h3>
+        <div class="input-receipt-content">
+            <div id='input-receiptinfo' class="input-receiptinfo">
+            <div class="item-input">
+                    <Label for='input-branch'>Chi nhánh:</Label>
+                    <select name="input-branch" id="input-branch">
+                        <option value="branch2">Chi nhánh 1</option>
+                        <option value="branch3">Chi nhánh 2</option>
+                        <option value="branch4">Chi nhánh 3</option>
+                    </select>
+                </div>
+                <div class="item-input">
+                    <Label for='input-ncc'>Nhà cung cấp:</Label>
+                    <select name="input-ncc" id="input-ncc">
+                    </select>
+                </div>
+                <div class="item-input">
+                    <label for="input-loinhuan">Lợi nhuận: </label>
+                    <input type="number" min='1' value='1' max='99' name='input-loinhuan' id='input-loinhuan' onchange="OnchangeLoiNhuan()"> (%)
+                </div>
+            </div>
 
-        <div id='input-receiptdetail'>
-            <h2>Thêm danh sách sản phẩm</h2>
-            <Label for='input-listSP'>Chọn sản phẩm:</Label>
-            <select name="input-listSP" id="input-listSP" onchange="DisplayPrice()">
-            </select><br>
+            <div id='input-receiptdetail' class="input-receiptdetail">
+                <div class="item-detail">
+                    <Label for='input-listSP'>Chọn sản phẩm:</Label>
+                    <select name="input-listSP" id="input-listSP" onchange="Display()">
+                    </select>
+                </div>
 
-            Giá nhập: <input type="text" id='input-gianhap'>
-            Số lượng: <input type="number" id='input-soluong' min='1' value='1'>
-            <button id='btn-addSP' onclick="AddProduct()">+ Sản phẩm</button><br>
-            
-            <button id="addProduct" onclick="OpenAddProductPop()">+ Sản phẩm mới</button>
+                <div class="item-detail">
+                    <div id="co-bl" class="co-bl" style="display: none;">
+                        <Label for='input-listC'>Màu sắc:</Label>
+                        <select name="input-listC" id="input-listC">
+                        </select>
+                    </div>
+
+                    <div id="dl-bl" class="dl-bl" style="display: none;">
+                        <Label for='input-listR'>Dung lượng:</Label>
+                        <select name="input-listR" id="input-listR">
+                        </select>
+                    </div>
+                    
+                    <div id="priceAdd" class="add-price" style="display: none;">
+                        <label for="">Giá thêm: </label>
+                        <input type="number" id='input-congthem' min='0' value="0">
+                    </div>
+                </div>
+
+                <div class="item-detail">
+                    <div class="item-detail-1">
+                        <label for="">Giá nhập: </label>
+                        <input type="text" id='input-gianhap'>
+                    </div>
+
+                    <div class="item-detail-1">
+                        <label for="">Số lượng:</label>
+                        <input type="number" id='input-soluong' min='1' value='1'>
+                    </div>                 
+                </div>
+                
+                <div class="item-receipt-btn">
+                    <button id='btn-addSP' onclick="AddProduct()">Xác nhận</button>
+                    <button id="addProduct" onclick="OpenAddProductPop()">Sản phẩm mới</button>
+                </div>
+            </div>
         </div>
     </div>
-    <div>
-        <h2>Danh sách sản phẩm</h2>
-        <div id="scrollView-SP"></div>
+
+    <div class="container-receipt">
+        <h3>Danh sách sản phẩm</h3>
+        <div id="scrollView-SP" class="scrollView-SP"></div>
     </div>
     
     <div class="thanhtien">
         <p>Thành tiền:</p>
         <p id="thanhtien-sp">0</p>
     </div>
-    <button id='close-receipt' type="button" onclick="CloseAddReceiptPop()">Trở về</button>
-    <button id='submit-addreceipt' type="button" onclick="InsertReceipt()">Thim</button>
+
+    <div class="footer-btn">
+        <button id='close-receipt' type="button" onclick="CloseAddReceiptPop()">Trở lại</button>
+        <button id='submit-addreceipt' class="submit-addreceipt" type="button" onclick="InsertReceipt()">Thêm</button>
+    </div>
 </div>
 
 <div class="addproduct-container" id='addproduct-container'>
     <h1>Thêm sản phẩm</h1>
-    
-    <label for="Tensp">Tên sản phẩm: </label>
-    <input type="text" name="Tensp" placeholder="Nhập tên sản phẩm."><br>
+    <div class="addproduct-form">
+        <div class="addproduct-form-img">
+            <img id="img" src="" alt="">
+            <input type="file" name="Img" id="change-img" accept="image/png, image/gif, image/jpeg" onchange="hienThiAnh(event)">
+            <button type="button" onclick="document.getElementById('change-img').click()">Chọn ảnh</button>
+        </div>
+        <div class="addproduct-form-input">
+            <div class="item-addproduct">
+                <label for="Tensp">Tên sản phẩm: </label>
+                <input type="text" name="Tensp" placeholder="Nhập tên sản phẩm.">
+            </div>
 
-    <label for="hang">Hãng: </label>
-    <select name="hang"></select><br>
+            <div class="item-addproduct">
+                <label for="hang">Hãng: </label>
+                <select name="hang"></select>
+            </div>
 
-    <label for="danhmuc">Danh mục</label>
-    <select name="danhmuc"></select><br>   
+            <div class="item-addproduct">
+                <label for="danhmuc">Danh mục</label>
+                <select id="danhmuc" name="danhmuc"></select>
+            </div>
 
-    <label for="Mota">Mô tả</label>
-    <textarea type="text" name="Mota" placeholder="Nhập mô tả cho sản phẩm." cols="50" rows="5"></textarea><br>
-    
-    <label for="Img">Hình ảnh</label><br>
-    <input type="file" name="Img" accept="image/png, image/gif, image/jpeg"
-    onchange="hienThiAnh(event)"><br>
-    <div>
-        <img id="img" src="" alt="" style="width: 100px; height: 100px;">
+            <div id="color_displ" class="item-addproduct" style="display: none;">
+                <label for="Mausac">Màu sắc: </label>
+                <input type="text" name="mausac" placeholder="Nhập màu mới.">
+            </div>
+
+            <div id="dl_displ" class="item-addproduct" style="display: none;">
+                <label for="Dungluong">Dung lượng: </label>
+                <select name="dl">
+                    <option value="KHÔNG CÓ">Vui lòng chọn dung lượng</option>
+                    <option value="128GB">128GB</option>
+                    <option value="256GB">256GB</option>
+                    <option value="512GB">512GB</option>
+                    <option value="1TB">1TB</option>
+                </select>        
+            </div>
+
+            <div class="item-addproduct">
+                <label for="Mota">Mô tả</label>
+                <textarea type="text" name="Mota" placeholder="Nhập mô tả cho sản phẩm."></textarea>
+            </div>
+        </div>
     </div>
 
-    <button type="submit" name="Add-SP" onclick="InsertProduct()">Thêm sản phẩm</button>
-    <button class="btn-cancel" name="Cancel" onclick="CloseAddProductPop()">Hủy</button>
+    <div class="addproduct-form-btn">
+        <button class="btn-cancel" name="Cancel" onclick="CloseAddProductPop()">Hủy</button>
+        <button type="submit" class="add-SP" name="Add-SP" onclick="InsertProduct()">Thêm</button>
+    </div>
 </div>
 
-<script type="text/javascript" src="/js/admin/InsertReceipt.js"></script>
+<script type="text/javascript" src="../../js/admin/InsertReceipt.js"></script>
