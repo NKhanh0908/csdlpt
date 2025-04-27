@@ -212,9 +212,12 @@ function OnchangeLoiNhuan() {
     scrollViewSP.innerHTML = '';
     thanhtien_value = 0;
 
-    products.forEach(element => {
-        DisplayProduct(element[0], element[1], element[2], element[3], element[4], element[5], loinhuanchange);
-    });
+    thanhtien_value = 0;
+    products.forEach(element =>{
+        DisplayProduct(element[0], element[1], element[2], loinhuanchange);
+        thanhtien_value += parseInt(element[1]) * parseFloat(element[2]);
+    })
+    thanhtienchan.innerHTML = parseInt(thanhtien_value)  + ' VND';
 
     alert("Cập nhật lợi nhuận thành công");
 }
@@ -251,7 +254,8 @@ function InsertReceipt(){
         body: JSON.stringify({
             idNCC: ncc_select.value,
             loinhuan: loinhuan.value,
-            thanhtien: thanhtien_value
+            thanhtien: thanhtien_value,
+            branch: branch
         })
         })
         .then(response => response.json())
@@ -262,7 +266,7 @@ function InsertReceipt(){
             console.log("Thành tiền = " + data.thanhtien);
             products.forEach(element => {
                 console.log(element);
-                InsertReceiptDetail(idPN, element[0], element[1], element[2], element[3], element[4], element[5], loinhuan);
+                InsertReceiptDetail(idPN, element[0], element[1], element[2], branch);
             })
             alert("Insert phíu nhoặp rầu nghen");
 
@@ -276,11 +280,11 @@ function InsertReceipt(){
     }
 }
 
-function InsertReceiptDetail(idPN, idSP, soluongSP, gianhapSP, giathem, mausac, dungluong, loinhuan){
+function InsertReceiptDetail(idPN, idSP, soluongSP, gianhapSP, branch){
     try{
     const url = '../Controller/Receipt/InsertReceiptDetail.php';
 
-    console.log(idPN + ", " + idSP + ", " + mausac + ", " + dungluong + ", ");
+    console.log(idPN + ", " + idSP + ", " + soluongSP + ", " + gianhapSP + ", " + branch);
     fetch(url, {
         method: 'POST',
         headers: {
@@ -291,10 +295,7 @@ function InsertReceiptDetail(idPN, idSP, soluongSP, gianhapSP, giathem, mausac, 
             idSP: idSP,
             soluong: soluongSP,
             gianhap: gianhapSP,
-            giathem: giathem,
-            mausac: mausac,
-            dungluong: dungluong,
-            loinhuan: loinhuan
+            branch: branch
         })
         })
         .then(response => response.json())
@@ -431,6 +432,11 @@ function AddProduct(){
 
     alert("Thêm sản phẩm thành công!");
     DisplayProduct(product[0], product[1], product[2], product[3]);
+    thanhtien_value = 0;
+    products.forEach(element =>{
+        thanhtien_value += parseInt(element[1]) * parseFloat(element[2]);
+    })
+    thanhtienchan.innerHTML = parseInt(thanhtien_value)  + ' VND';
 }
 
 function RemoveProduct(idsp){
@@ -456,9 +462,13 @@ function RemoveProduct(idsp){
     if(products.length == 0){
         return;
     }
+    thanhtien_value = 0;
     products.forEach(element =>{
         DisplayProduct(element[0], element[1], element[2], loinhuan.value);
+        thanhtien_value += parseInt(element[1]) * parseFloat(element[2]);
     })
+    thanhtienchan.innerHTML = parseInt(thanhtien_value)  + ' VND';
+
 
 }
 
@@ -476,7 +486,6 @@ function DisplayProduct(idsp, quantity, gianhapsp, loinhuansp){
     })
     .then(response => response.json())
     .then(data => {
-        thanhtien_value = 0;
         console.log(data);
         str +=`
             <div class='item'>
@@ -509,9 +518,6 @@ function DisplayProduct(idsp, quantity, gianhapsp, loinhuansp){
             </div>`;
 
         scrollViewSP.innerHTML = str;
-
-        thanhtien_value += parseInt(quantity) * parseFloat(gianhapsp);
-        thanhtienchan.innerHTML = parseInt(thanhtien_value)  + ' VND';
     })
 }
 

@@ -1,5 +1,5 @@
 <?php
-$conn=mysqli_connect("localhost:3306", "root", "", "chdidong");
+include('../connector.php');
 header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -7,16 +7,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = json_decode($json, true);
 
     $idPN = isset($data['idPN'])? $data['idPN'] : '';
+    $branch = isset($data['branch'])? $data['branch'] : '';
+    $connect = getConnection($branch);
     //Móc ra sản phẩm trong phiếu nhập
-    $sql = 'SELECT sp.TENSP, ct.SOLUONG 
-    FROM `chitietphieunhap` ct JOIN phieunhap pn ON 
-    ct.idPN = pn.idPN JOIN chitietsanpham c ON ct.idCTSP = c.idCTSP JOIN sanpham sp ON c.idSP = sp.idSP WHERE pn.idPN=' . intval($idPN);
+    $sql = 'SELECT sp.TENSP, ct.SOLUONG FROM sanpham sp INNER JOIN chitietphieunhap ct ON sp.idSP = ct.idSP
+    WHERE ct.idPN = ' . intval($idPN);
 
-    $result = mysqli_query($conn, $sql);
+    $result = sqlsrv_query($connect, $sql);
     $list_details= array();
     
     //Chạy truy vấn lưu từng sp vào mảng
-    while($details = mysqli_fetch_array($result)){
+    while($details = sqlsrv_fetch_array($result)){
         $tensp = $details['TENSP'];
         $soluong = $details['SOLUONG'];
 

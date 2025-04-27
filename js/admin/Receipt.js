@@ -116,6 +116,7 @@ function ShowDetail(id){
     var str = '';
     // btn.title = "id: " + id; 
     // console.log(btn);
+    let branch = document.getElementById('branch-id').value;
 
     try{
         url = '../Controller/Receipt/LoadReceiptDetail.php';
@@ -125,7 +126,8 @@ function ShowDetail(id){
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                idPN : id
+                idPN : id,
+                branch : branch
             })
         })
         .then(response => response.json())
