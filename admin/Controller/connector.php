@@ -137,10 +137,9 @@ function getEmployeeBranch($employeeId) {
 
 function getValidBranch($idCN) {
     $branchMap = [
-        1 => 'branch1',
-        2 => 'branch2',
-        3 => 'branch3',
-        4 => 'branch4'
+        1 => 'branch2',
+        2 => 'branch3',
+        3 => 'branch4'
     ];
 
     if (!isset($branchMap[$idCN])) {

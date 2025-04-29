@@ -168,14 +168,46 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST' && isset($_POST["addEmployee"])) {
         }
 
         // Kiểm tra ảnh
-        if (empty($_FILES["txtImg"]) || $_FILES["txtImg"]["error"] !== 0) {
+        if (empty($_FILES["txtImg"]) || !isset($_FILES["txtImg"]["name"]) || $_FILES["txtImg"]["name"] === "") {
             $missingFields[] = "txtImg (Ảnh)";
-            error_log("Missing or invalid image: " . (isset($_FILES["txtImg"]) ? $_FILES["txtImg"]["error"] : "not set"));
+            error_log("No image file selected");
+        } else if ($_FILES["txtImg"]["error"] !== 0) {
+            $missingFields[] = "txtImg (Ảnh)";
+            $error_message = "Lỗi upload ảnh: ";
+            switch ($_FILES["txtImg"]["error"]) {
+                case UPLOAD_ERR_INI_SIZE:
+                    $error_message .= "File vượt quá kích thước cho phép";
+                    break;
+                case UPLOAD_ERR_FORM_SIZE:
+                    $error_message .= "File vượt quá kích thước form cho phép";
+                    break;
+                case UPLOAD_ERR_PARTIAL:
+                    $error_message .= "File chỉ được upload một phần";
+                    break;
+                case UPLOAD_ERR_NO_FILE:
+                    $error_message .= "Không có file nào được upload";
+                    break;
+                case UPLOAD_ERR_NO_TMP_DIR:
+                    $error_message .= "Thiếu thư mục tạm";
+                    break;
+                case UPLOAD_ERR_CANT_WRITE:
+                    $error_message .= "Không thể ghi file";
+                    break;
+                case UPLOAD_ERR_EXTENSION:
+                    $error_message .= "Upload bị dừng bởi extension";
+                    break;
+                default:
+                    $error_message .= "Lỗi không xác định";
+                    break;
+            }
+            error_log("Image upload error: " . $error_message);
         }
 
         // Nếu thiếu trường nào, ném lỗi
         if (count($missingFields) > 0) {
-            throw new Exception('Thiếu thông tin: ' . implode(", ", $missingFields));
+            $error_message = 'Thiếu thông tin: ' . implode(", ", $missingFields);
+            error_log($error_message);
+            throw new Exception($error_message);
         }
 
         // Lấy dữ liệu từ POST
@@ -281,6 +313,7 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST' && isset($_POST["addEmployee"])) {
         $insert_nv = "INSERT INTO nhanvien (idTK, GIOITINH, NGAYSINH, DIACHI, IMG, NGAYVAOLAM, TINHTRANG, idCN, idCV)
                     VALUES (?, ?, ?, ?, ?, ?, 'Dang lam', ?, ?)";
         $params_nv = [$idTK, $gioitinh, $ngaysinh, $diachi, $new_img_name, $ngaylam, $idCN, $idCV];
+        error_log("params_nv: " . print_r($params_nv, true));
         $stmt_nv = sqlsrv_prepare($conn, $insert_nv, $params_nv);
         if (!$stmt_nv) {
             throw new Exception("Lỗi chuẩn bị câu lệnh SQL thêm nhân viên: " . print_r(sqlsrv_errors(), true));
@@ -293,7 +326,7 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST' && isset($_POST["addEmployee"])) {
 
         // Thông báo thành công với nhiều cách
         echo "<div class='alert alert-success'>Thêm nhân viên thành công!</div>";
-        echo "<script>alert('Thêm nhân viên thành công!'); window.location.href='employee.php';</script>";
+        echo "<script>alert('Thêm nhân viên thành công!'); window.location.href='index.php?page=employee';</script>";
         
     } catch (Exception $e) {
         $error_message = $e->getMessage();

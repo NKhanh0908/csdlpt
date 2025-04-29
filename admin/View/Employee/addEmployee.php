@@ -55,6 +55,15 @@ include("../Controller/Employee/addEmployee.php");  // Chỉnh lại đường d
 
     <h2 style="text-align:center;">Thêm Nhân viên</h2>
 
+    <?php
+    // Debug section to display any PHP errors
+    if (isset($error_message)) {
+        echo '<div style="color: red; margin: 10px; padding: 10px; border: 1px solid red;">';
+        echo '<strong>Lỗi:</strong> ' . htmlspecialchars($error_message);
+        echo '</div>';
+    }
+    ?>
+
     <form method="post" enctype="multipart/form-data">
 
         <label for="txtImg">Hình ảnh</label><br>

@@ -83,6 +83,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             error_log("Đã thêm sản phẩm mới vào kho thành công");
         }
     }
+
+    $checkPriceProduct = sqlsrv_query($connect, "SELECT GIANHAP FROM sanpham WHERE idSP = $idSP");
+    $row = sqlsrv_fetch_array($checkPriceProduct, SQLSRV_FETCH_ASSOC);
+    $gianhapSP = $row['GIANHAP'];
+
+    if($gianhapSP != $gianhap){
+        $updatePriceProduct = sqlsrv_query($connect, "UPDATE sanpham SET GIANHAP = $gianhap WHERE idSP = $idSP");
+        if($updatePriceProduct === false) {
+            error_log("Lỗi khi cập nhật giá nhập: " . print_r(sqlsrv_errors(), true));
+        } else {
+            error_log("Đã cập nhật giá nhập sản phẩm: $idSP");
+        }
+    }
     
     
 

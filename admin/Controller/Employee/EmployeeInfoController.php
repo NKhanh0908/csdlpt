@@ -5,29 +5,63 @@ include('../connector.php');
 $branch = isset($_GET["branch"]) ? $_GET["branch"] : "all";
 
 // Kết nối đến database chính (branch1) để lấy dữ liệu từ tất cả chi nhánh
-$conn = getConnection('branch1');
+$sql ="";
+if($branch == "all"){
+    $conn = getConnection('branch2');
+    $sql .= "SELECT 
+    tk.idTK, tk.HOTEN, tk.SDT, tk.EMAIL,
+    nv.GIOITINH, nv.NGAYSINH, nv.DIACHI,
+    nv.IMG, nv.NGAYVAOLAM, nv.TINHTRANG,
+    tk.TRANGTHAI, cv.TENCHUCVU AS tenCV,
+    nv.idCN, cn.ten AS TEN_CHI_NHANH
+FROM chdidong.dbo.taikhoan tk
+JOIN chdidong.dbo.nhanvien    nv ON tk.idTK = nv.idTK
+JOIN chdidong.dbo.chucvu      cv ON nv.idCV = cv.idCV
+JOIN chdidong.dbo.chinhanh    cn ON nv.idCN = cn.idCN
 
-// Xây dựng query cơ bản
-$query = "SELECT 
-             tk.idTK, tk.HOTEN, tk.SDT, tk.EMAIL, nv.GIOITINH, nv.NGAYSINH, nv.NGAYSINH, nv.DIACHI, nv.IMG, nv.NGAYVAOLAM, nv.TINHTRANG
-            , nv.DIACHI, nv.NGAYVAOLAM, 
-             tk.TRANGTHAI, cv.TENCHUCVU as tenCV, nv.idCN,
-            cn.ten AS TEN_CHI_NHANH
-          FROM chdidong.dbo.taikhoan tk
-          JOIN chdidong.dbo.nhanvien nv ON tk.idTK = nv.idTK
-          JOIN chdidong.dbo.chucvu cv on nv.idCV = cv.idCV
-        --   JOIN chdidong.dbo.quyen q ON tk.QUYEN = q.idQUYEN
-          JOIN chdidong.dbo.chinhanh cn ON nv.idCN = cn.idCN";
-          
+UNION ALL
 
-// Thêm điều kiện lọc nếu không phải là "all"
-if ($branch !== "all") {
-    $query .= " WHERE nv.idCN = " . intval(str_replace("branch", "", $branch));
+SELECT 
+    tk.idTK, tk.HOTEN, tk.SDT, tk.EMAIL,
+    nv.GIOITINH, nv.NGAYSINH, nv.DIACHI,
+    nv.IMG, nv.NGAYVAOLAM, nv.TINHTRANG,
+    tk.TRANGTHAI, cv.TENCHUCVU AS tenCV,
+    nv.idCN, cn.ten AS TEN_CHI_NHANH
+FROM LINKEDSV2.chdidong.dbo.taikhoan tk
+JOIN LINKEDSV2.chdidong.dbo.nhanvien nv ON tk.idTK = nv.idTK
+JOIN LINKEDSV2.chdidong.dbo.chucvu   cv ON nv.idCV = cv.idCV
+JOIN LINKEDSV2.chdidong.dbo.chinhanh cn ON nv.idCN = cn.idCN
+
+UNION ALL
+
+SELECT 
+    tk.idTK, tk.HOTEN, tk.SDT, tk.EMAIL,
+    nv.GIOITINH, nv.NGAYSINH, nv.DIACHI,
+    nv.IMG, nv.NGAYVAOLAM, nv.TINHTRANG,
+    tk.TRANGTHAI, cv.TENCHUCVU AS tenCV,
+    nv.idCN, cn.ten AS TEN_CHI_NHANH
+FROM LINKEDSV3.chdidong.dbo.taikhoan tk
+JOIN LINKEDSV3.chdidong.dbo.nhanvien nv ON tk.idTK = nv.idTK
+JOIN LINKEDSV3.chdidong.dbo.chucvu   cv ON nv.idCV = cv.idCV
+JOIN LINKEDSV3.chdidong.dbo.chinhanh cn ON nv.idCN = cn.idCN;
+";
+
+}else{
+    $conn = getConnection($branch);
+    $sql .= "SELECT 
+    tk.idTK, tk.HOTEN, tk.SDT, tk.EMAIL,
+    nv.GIOITINH, nv.NGAYSINH, nv.DIACHI,
+    nv.IMG, nv.NGAYVAOLAM, nv.TINHTRANG,
+    tk.TRANGTHAI, cv.TENCHUCVU AS tenCV,
+    nv.idCN, cn.ten AS TEN_CHI_NHANH
+FROM chdidong.dbo.taikhoan tk
+JOIN chdidong.dbo.nhanvien    nv ON tk.idTK = nv.idTK
+JOIN chdidong.dbo.chucvu      cv ON nv.idCV = cv.idCV
+JOIN chdidong.dbo.chinhanh    cn ON nv.idCN = cn.idCN";
 }
 
-$query .= " ORDER BY tk.idTK ASC";
 
-$result = sqlsrv_query($conn, $query);
+$result = sqlsrv_query($conn, $sql);
 
 if (!$result) {
     die(json_encode(["error" => sqlsrv_errors()]));

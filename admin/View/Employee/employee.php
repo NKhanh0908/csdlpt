@@ -182,9 +182,9 @@ include_once './../Controller/connector.php';
                     <label for="filterBranch">Lọc theo chi nhánh:</label>
                     <select id="filterBranch">
                         <option value="all">Tất cả chi nhánh</option>
-                        <option value="branch1">Chi nhánh 1</option>
-                        <option value="branch2">Chi nhánh 2</option>
-                        <option value="branch3">Chi nhánh 3</option>
+                        <option value="branch2">Chi nhánh 1</option>
+                        <option value="branch3">Chi nhánh 2</option>
+                        <option value="branch4">Chi nhánh 3</option>
                     </select>
                 </div>
             </div>
@@ -235,6 +235,7 @@ include_once './../Controller/connector.php';
             fetch(`../Controller/Employee/EmployeeInfoController.php?branch=${branchValue}`)
                 .then(response => response.json())
                 .then(employees => {
+                    console.log(employees);
                     renderEmployeeTable(employees);
                     updateStatistics(employees);
                 })

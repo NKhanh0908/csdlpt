@@ -20,7 +20,7 @@ $errors = [];
 $success = '';
 $employeeData = [];
 $branchesList = getActiveBranches();
-$connForJobTitles = getConnection('branch1'); // Hoặc chi nhánh nào bạn muốn
+$connForJobTitles = getConnection('branch2'); // Hoặc chi nhánh nào bạn muốn
 $jobTitlesList = getJobTitles($connForJobTitles);
 
 

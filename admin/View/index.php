@@ -98,7 +98,7 @@ include "checkLogin.php";  // Đúng - cùng thư mục
             if (isset($_GET['page'])) {
                 $page = $_GET['page'];
             } else {
-                $page = 'employeeinfo';
+                $page = 'employee';
             }
 
             switch ($page) {
