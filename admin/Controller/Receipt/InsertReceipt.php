@@ -12,6 +12,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $branch = isset($data['branch'])? $data['branch'] : '';
     $connect = getConnection($branch);
 
+    if($branch == 'branch2'){
+        $idCN = 1;
+    }else if($branch == 'branch3'){
+        $idCN = 2;
+    }else if($branch == 'branch4'){
+        $idCN = 3;
+    }else{
+        echo json_encode(['status' => 'error', 'message' => 'Không tìm thấy chi nhánh']);
+    }
+
     //Khỏi tạo phiếu nhập
     // $pn_row = sqlsrv_query($connect, "SELECT idPN from phieunhap");
     // $idPN = sqlsrv_num_rows($pn_row) + 1;
@@ -20,13 +30,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $today = date('Y-m-d');
 
     // Sử dụng SCOPE_IDENTITY() thay vì OUTPUT INSERTED vì bảng có trigger
-    $sql = "INSERT INTO phieunhap(idNCC, NGAYNHAP, THANHTIEN, LOINHUAN)
-    VALUES($idNCC, '$today', '$thanhtien' , $loinhuan);
+    $sql = "INSERT INTO phieunhap(idNCC, NGAYNHAP, THANHTIEN, LOINHUAN, idCN)
+    VALUES($idNCC, '$today', '$thanhtien' , $loinhuan, $idCN);
     SELECT SCOPE_IDENTITY() AS idPN;";
 
     $result = sqlsrv_query($connect, $sql);
     
-    if ($result === false) {
+    if ($result == false) {
         // Xử lý lỗi nếu có
         $errors = sqlsrv_errors();
         echo json_encode(['status' => 'error', 'message' => 'Lỗi khi thêm phiếu nhập: ' . $errors[0]['message']]);
