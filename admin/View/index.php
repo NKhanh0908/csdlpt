@@ -1,6 +1,45 @@
 <?php
 include "checkLogin.php";  // Đúng - cùng thư mục
 
+$avt_img="";
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    $idNV = $_SESSION['idNV'] ?? null;
+    error_log("ID NV: " . $idNV);
+
+    include '../Controller/connector.php';
+    $connector = getConnection("branch2");
+
+    $sql = "SELECT [idTK], [GIOITINH], [NGAYSINH], [DIACHI], [IMG], [NGAYVAOLAM], [TINHTRANG], [idCN], [idCV], [rowguid]
+            FROM [chdidong].[dbo].[nhanvien] WHERE idTK = ?";
+    $params = [$idNV];
+
+    $result = sqlsrv_query($connector, $sql, $params);
+
+    if ($result === false) {
+        error_log("SQL error: " . print_r(sqlsrv_errors(), true));
+    } else {
+        $row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC);
+
+        if ($row) {
+            $avt_img = $row['IMG'];
+            error_log("IMG path: " . $avt_img);
+        } else {
+            error_log("Không tìm thấy nhân viên với idTK = $idNV");
+        }
+    }
+    $sql = "SELECT [idTK]
+            ,[GIOITINH]
+            ,[NGAYSINH]
+            ,[DIACHI]
+            ,[IMG]
+            ,[NGAYVAOLAM]
+            ,[TINHTRANG]
+            ,[idCN]
+            ,[idCV]
+            ,[rowguid]
+        FROM [chdidong].[dbo].[nhanvien] WHERE idTK = . $idNV";
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -20,7 +59,7 @@ include "checkLogin.php";  // Đúng - cùng thư mục
             <i class="fa-solid fa-angle-left" id="btn-menu"></i>
         </div>
         <div class="avt">
-            <img id="img-avt" src="" alt="Ảnh đại diện">
+            <img id="img-avt" src="<?=$avt_img?>" alt="Ảnh đại diện">
             <p id="name-menu"></p>
             <p id="position-menu"></p>
         </div>

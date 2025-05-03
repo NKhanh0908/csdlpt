@@ -1,25 +1,26 @@
 <?php
     function getAllAccounts() {
-        $connect = new mysqli("localhost:3306", "root", "", "chdidong");
+        
+        $connect = getConnection("branch2");
 
-        if ($connect->connect_error) {
-            die("Kết nối thất bại: " . $connect->connect_error);
+        if ($connect === false) {
+            die("Kết nối thất bại: " . print_r(sqlsrv_errors(), true));
         }
 
-        $sql = "SELECT tk.idTK, tk.USERNAME, tk.HOTEN, tk.EMAIL, q.TENQUYEN, tk.TRANGTHAI 
-                FROM taikhoan tk
-                LEFT JOIN quyen q ON tk.idQUYEN = q.idQUYEN";
+        $sql = "SELECT tk.idTK, tk.USERNAME, tk.HOTEN, tk.EMAIL, tk.TRANGTHAI 
+        FROM taikhoan tk";
 
-        $result = $connect->query($sql);
+        $result = sqlsrv_query($connect, $sql);
 
         $accounts = [];
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
+        if ($result !== false) {
+            while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
                 $accounts[] = $row;
             }
         }
 
-        $connect->close();
+        sqlsrv_free_stmt($result);
+        sqlsrv_close($connect);
         return $accounts;
     }
 ?>

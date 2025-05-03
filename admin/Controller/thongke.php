@@ -3,14 +3,14 @@
     include_once("connector.php");
 
     function getBranchProductStatistics() {
-        $branches = ['branch1','branch2', 'branch3', 'branch4'];
+        $branches = ['branch2', 'branch3', 'branch4'];
         $branchProducts = [];
-
+        $i=0;
         foreach ($branches as $branch) {
             $conn = getConnection($branch);
             if ($conn === false) continue;
 
-            $branchName = "Chi nhánh " . str_replace('branch', '', $branch);
+            $branchName = "Chi nhánh " . ($i+=1);
 
             $sql = "SELECT TOP 3 sp.TENSP, SUM(ct.SOLUONG) AS total_sold 
                     FROM chitiethoadon ct 
@@ -45,12 +45,12 @@
     function getBranchRevenueStatistics($fromDate, $toDate) {
         $branches = ['branch2', 'branch3', 'branch4'];
         $data = [];
-
+        $i=0;
         foreach ($branches as $branch) {
             $conn = getConnection($branch);
             if ($conn === false) continue;
 
-            $branchName = "Chi nhánh " . str_replace('branch', '', $branch);
+            $branchName = "Chi nhánh " . ($i+=1);
             $sql = "SELECT MONTH(NGAYMUA) AS month, SUM(THANHTIEN) AS revenue
                     FROM donhang 
                     WHERE NGAYMUA BETWEEN ? AND ?
@@ -82,12 +82,12 @@
     function getBranchOrderCountStatistics($fromDate, $toDate) {
         $branches = ['branch2', 'branch3', 'branch4'];
         $data = [];
-
+        $i=0;
         foreach ($branches as $branch) {
             $conn = getConnection($branch);
             if ($conn === false) continue;
 
-            $branchName = "Chi nhánh " . str_replace('branch', '', $branch);
+            $branchName = "Chi nhánh " . ($i+=1);
             $sql = "SELECT MONTH(NGAYMUA) AS month, COUNT(idHD) AS total_orders
                     FROM donhang 
                     WHERE NGAYMUA BETWEEN ? AND ?
@@ -119,12 +119,12 @@
     function getBranchOrderStatusStatistics($fromDate, $toDate) {
         $branches = ['branch2', 'branch3', 'branch4'];
         $data = [];
-    
+        $i=0;
         foreach ($branches as $branch) {
             $conn = getConnection($branch);
             if ($conn === false) continue;
     
-            $branchName = "Chi nhánh " . str_replace('branch', '', $branch);
+            $branchName = "Chi nhánh " . ($i+=1);
             $sql = "SELECT TRANGTHAI, COUNT(idHD) AS total_orders
                     FROM donhang 
                     WHERE NGAYMUA BETWEEN ? AND ?
@@ -181,12 +181,12 @@
     function getBranchRevenueGrowthStatistics($fromDate, $toDate) {
         $branches = ['branch2', 'branch3', 'branch4'];
         $data = [];
-
+        $i=0;
         foreach ($branches as $branch) {
             $conn = getConnection($branch);
             if ($conn === false) continue;
 
-            $branchName = "Chi nhánh " . str_replace('branch', '', $branch);
+            $branchName = "Chi nhánh " . ($i+=1);
             $sql = "WITH MonthlyRevenue AS (
                         SELECT MONTH(NGAYMUA) AS month, SUM(THANHTIEN) AS revenue
                         FROM donhang

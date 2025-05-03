@@ -130,7 +130,7 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-include('../Controller/connector.php');
+require_once ('../Controller/connector.php');
 // use PHPMailer\PHPMailer\PHPMailer;
 // use PHPMailer\PHPMailer\Exception;
 

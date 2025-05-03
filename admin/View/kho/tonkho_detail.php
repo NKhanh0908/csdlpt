@@ -87,7 +87,6 @@ if ($stmtTonKho === false) {
                                 <th>Mã sản phẩm</th>
                                 <th>Tên sản phẩm</th>
                                 <th>Số lượng tồn</th>
-                                <th>Thao tác</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -103,23 +102,6 @@ if ($stmtTonKho === false) {
                                         <input type="number" class="form-control d-none" 
                                                id="edit_soluong_'.$row['idSP'].'" 
                                                value="'.$row['SOLUONG'].'">
-                                      </td>';
-                                echo '<td>
-                                        <button class="btn btn-warning btn-sm" 
-                                                onclick="toggleEdit('.$row['idSP'].')"
-                                                id="btn_edit_'.$row['idSP'].'">
-                                            <i class="fas fa-edit"></i> Sửa
-                                        </button>
-                                        <button class="btn btn-success btn-sm d-none" 
-                                                onclick="saveEdit('.$idKho.', '.$row['idSP'].')"
-                                                id="btn_save_'.$row['idSP'].'">
-                                            <i class="fas fa-save"></i> Lưu
-                                        </button>
-                                        <button class="btn btn-secondary btn-sm d-none" 
-                                                onclick="cancelEdit('.$row['idSP'].')"
-                                                id="btn_cancel_'.$row['idSP'].'">
-                                            <i class="fas fa-times"></i> Hủy
-                                        </button>
                                       </td>';
                                 echo '</tr>';
                             }

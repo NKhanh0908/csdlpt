@@ -1,5 +1,5 @@
 <?php
-include_once ('../Controller/connector.php');
+require_once  ('../Controller/connector.php');
 
 $conn = getConnection('branch2');
 

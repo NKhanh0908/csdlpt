@@ -1,6 +1,6 @@
 <?php
 
-include('../Controller/connector.php');
+require_once ('../Controller/connector.php');
 
 function getAllProvider(){
     global $conn;

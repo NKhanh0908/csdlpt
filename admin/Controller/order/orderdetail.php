@@ -1,5 +1,5 @@
 <?php
-include('../Controller/connector.php');
+require_once ('../Controller/connector.php');
 
 $idHD = isset($_GET['idHD']) ? intval($_GET['idHD']) : 0;
 $idCN = isset($_GET['idCN']) ? intval($_GET['idCN']) : 2;

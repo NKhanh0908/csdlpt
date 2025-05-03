@@ -21,7 +21,7 @@
                     </a>
                 </button>
                 <div class="line"></div>
-                <button class="btn-AddAccount" onclick="OpenAddAccount()">Thêm tài khoản</button>
+                <!-- <button class="btn-AddAccount" onclick="OpenAddAccount()">Thêm tài khoản</button> -->
             </div>
         </div>
     </div>
@@ -36,7 +36,6 @@
                         <th>Username</th>
                         <th>Họ Tên</th>
                         <th>Email</th>
-                        <th>Quyền</th>
                         <th>Trạng Thái</th>
                     </tr>
                 </thead>
@@ -49,7 +48,6 @@
                                 <td><?= htmlspecialchars($row['USERNAME']) ?></td>
                                 <td><?= htmlspecialchars($row['HOTEN']) ?></td>
                                 <td><?= htmlspecialchars($row['EMAIL']) ?></td>
-                                <td class="role"><?= $row['TENQUYEN'] ?></td>
                                 <td class="<?= $row['TRANGTHAI'] ? 'active' : 'inactive' ?> state">
                                     <?= $row['TRANGTHAI'] ? 'Hoạt động' : 'Ngưng hoạt động' ?>
                                 </td>
