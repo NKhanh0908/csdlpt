@@ -134,7 +134,7 @@ include_once './../Controller/connector.php';
                                 `
                                     <a href="?page=updateEmployee&idTK=${employee.idTK}&idCN=${employee.idCN}" class='btn btn-update' name="update">Cập nhật</a>
                                 ` : ''}
-                            <button type='button' class='btn btn-toggle-status' data-id='${employee.idTK}'
+                            <button type='button' class='btn btn-toggle-status' data-id='${employee.idTK}' data-idCN='${employee.idCN}'
                                 style="background-color: ${employee.TRANGTHAI == 1 ? '#dc3545' : '#28a745'}">
                                 ${employee.TRANGTHAI == 1 ? "Khóa" : "Mở khóa"}
                             </button>
@@ -179,6 +179,7 @@ include_once './../Controller/connector.php';
             document.querySelectorAll(".btn-toggle-status").forEach(button => {
                 button.addEventListener("click", function() {
                     const idTK = this.getAttribute("data-id");
+                    const idCN = this.getAttribute("data-idCN");
                     const row = this.closest("tr");
                     const currentStatus = this.innerText.trim();
                     const updateButton = row.querySelector(".btn-update");
@@ -191,7 +192,7 @@ include_once './../Controller/connector.php';
                     fetch("../Controller/employee/toggleStatus.php", {
                         method: "POST",
                         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                        body: `idTK=${idTK}`
+                        body: `idTK=${idTK}&idCN=${idCN}`
                     })
                     .then(response => response.text())
                     .then(data => {

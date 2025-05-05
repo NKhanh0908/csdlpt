@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             <i class="fa-solid fa-angle-left" id="btn-menu"></i>
         </div>
         <div class="avt">
-            <img id="img-avt" src="<?=$avt_img?>" alt="Ảnh đại diện">
+            <img id="img-avt" src="../../images/employee/image.png" alt="Ảnh đại diện">
             <p id="name-menu"></p>
             <p id="position-menu"></p>
         </div>
