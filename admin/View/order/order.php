@@ -2,38 +2,62 @@
 // include_once '../../Controller/connectDB.php';
 // $conn = getConnection(); 
 ?>
+
 <!-- CSS chung -->
 <link rel="stylesheet" href="../../css/admin/OneForAll.css">
 <link rel="stylesheet" href="../../css/admin/order.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-<h3>Danh sách đơn hàng</h3>
 
-<!-- Bộ lọc trạng thái -->
-<label for="filterStatus">Lọc theo trạng thái:</label>
-<select id="filterStatus">
-    <option value="all">Tất cả</option>
-    <?php
-  include_once './../Controller/connector.php';
-  $connector = getConnection('branch2');
-    $sql_status = "SELECT * FROM trangthaidonhang";
-    $result_status = sqlsrv_query($connector, $sql_status);
-    while ($row_status = sqlsrv_fetch_array($result_status, SQLSRV_FETCH_ASSOC)) {
-        echo "<option value='{$row_status['idSTATUS']}'>{$row_status['STATUS']}</option>";
-    }
-    ?>
-</select>
+<body>
+    <div class="header">    
+        <div class="first-header">
+            <p>Quản lý đơn hàng</p>
+        </div>
+        <div class="second-header">
+            <div class="second-header-main">
+                <button class="home">
+                    <a href="?page=employeeinfo"> 
+                        <i class="fa-solid fa-house home-outline"></i>
+                    </a>
+                </button>
+                <div class="line"></div>
+                <!-- <button id="issue-an-invoice" class="btn-invoice" onclick="openAddInvoice()">Thêm hóa đơn</button> -->
+            </div>
+        </div>
+    </div>
 
-<label for="filterBranch">Lọc theo chi nhánh:</label>
-<select id="filterBranch">
-    <option value="branch1">Tất cả</option>
-    <option value="branch2">Chi nhánh 1</option>
-    <option value="branch3">Chi nhánh 2</option>
-    <option value="branch4">Chi nhánh 3</option>
-</select>
+    <main class="main">
+        <div class="container">
+            <div class="first-order-container">
+                <label for="filterStatus">Trạng thái:</label>
+                <select id="filterStatus" class="filter-Status">
+                    <option value="all">Tất cả</option>
+                    <?php
+                        include_once './../Controller/connector.php';
+                        $connector = getConnection('branch2');
+                        $sql_status = "SELECT * FROM trangthaidonhang";
+                        $result_status = sqlsrv_query($connector, $sql_status);
+                        while ($row_status = sqlsrv_fetch_array($result_status, SQLSRV_FETCH_ASSOC)) {
+                            echo "<option value='{$row_status['idSTATUS']}'>{$row_status['STATUS']}</option>";
+                        }
+                    ?>
+                </select>
 
+                <label for="filterBranch">Lọc theo chi nhánh:</label>
+                <select id="filterBranch" class="filter-Status">
+                    <option value="branch1">Tất cả</option>
+                    <option value="branch2">Chi nhánh 1</option>
+                    <option value="branch3">Chi nhánh 2</option>
+                    <option value="branch4">Chi nhánh 3</option>
+                </select>
+            </div>
 
-<!-- Khu vực hiển thị đơn hàng -->
-<div id="orderList"></div>
+            <!-- Khu vực hiển thị đơn hàng -->
+            <div id="orderList" class="order-list"></div>
+
+        </div>
+    </main>
+</body>
 
 <script>
     function loadOrders() {

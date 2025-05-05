@@ -1,5 +1,5 @@
 <?php
-include("../../Controller/Employee/updateEmployee.php");
+include("../Controller/Employee/updateEmployee.php");
 
 if ($_SERVER["REQUEST_METHOD"] == 'GET') {
     if (isset($_GET['idTK']) && isset($_GET['idCN'])) {

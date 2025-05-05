@@ -1,5 +1,5 @@
 <?php
-include('../../Controller/connector.php');
+include_once('../Controller/connector.php');
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -160,6 +160,9 @@ function transferEmployeeToBranch($idTK, $fromBranchId, $toBranchId) {
             $empOld['idTK'], $empOld['GIOITINH'], $empOld['NGAYSINH'], $empOld['DIACHI'],
             $empOld['IMG'], $empOld['NGAYVAOLAM'], $empOld['TINHTRANG'], $toBranchId, $empOld['idCV']
         ];
+
+        
+
     
         $insertResult = sqlsrv_query($toConn, $sqlInsert, $params);
         if ($insertResult === false) throw new Exception("Lỗi chèn: " . print_r(sqlsrv_errors(), true));

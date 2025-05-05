@@ -1,59 +1,27 @@
 <?php
 include("../Controller/Employee/addEmployee.php");  // Chỉnh lại đường dẫn đúng
-
-
 ?>
 
-<!DOCTYPE html>
-<html lang="vi">
-
-<head>
-    <meta charset="UTF-8">
-    <title>Thêm tài khoản</title>
-    <style>
-        form {
-            width: 400px;
-            margin: 50px auto;
-            padding: 20px;
-            border: 1px solid #ddd;
-            background-color: #f9f9f9;
-            border-radius: 8px;
-        }
-
-        input,
-        select {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            box-sizing: border-box;
-        }
-
-        input[type="submit"] {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #45a049;
-        }
-
-        label {
-            font-weight: bold;
-        }
-
-        .error {
-            color: red;
-            font-size: 14px;
-            display: block;
-        }
-    </style>
-</head>
+<!-- CSS chung -->
+<link rel="stylesheet" href="../../css/admin/OneForAll.css">
+<link rel="stylesheet" href="../../css/admin/Employee_add.css">
 
 <body>
-
-    <h2 style="text-align:center;">Thêm Nhân viên</h2>
+    <div class="header">    
+        <div class="first-header">
+            <p>Thêm nhân viên</p>
+        </div>
+        <div class="second-header">
+            <div class="second-header-main">
+                <button class="home">
+                    <a href="?page=employeeinfo"> 
+                        <i class="fa-solid fa-house home-outline"></i>
+                    </a>
+                </button>
+                <div class="line"></div>
+            </div>
+        </div>
+    </div>  
 
     <?php
     // Debug section to display any PHP errors
@@ -64,90 +32,139 @@ include("../Controller/Employee/addEmployee.php");  // Chỉnh lại đường d
     }
     ?>
 
-    <form method="post" enctype="multipart/form-data">
+    <main class="main">
+        <div class="container">
+            <div class="head-add">
+                <a href="?page=employee"><i class="fa-solid fa-arrow-left"></i></a>
+                <h3>Thông tin nhân viên</h3>
+            </div>
 
-        <label for="txtImg">Hình ảnh</label><br>
-        <input type="file" name="txtImg" accept="image/png, image/gif, image/jpeg" onchange="hienThiAnh(event)">
-        <div>
-            <img id="img" src="" alt="" style="width: 100px; height: 100px;">
+            <form method="post" enctype="multipart/form-data">
+                <div class="add-info">
+                    <div class="add-img">
+                        <img id="img" src="" alt="">
+                        <button type="button" onclick="document.getElementById('upload-img').click()">Chọn ảnh</button>
+                        <input type="file" id="upload-img" name="txtImg" accept="image/png, image/gif, image/jpeg" onchange="hienThiAnh(event)">
+                        <span class="error" id="imgError"></span>
+                    </div>
+
+                    <div class="add-info-detail">
+                        <div class="add-info-detail-content">
+                            <div class="item-info">
+                                <div class="item-info-title">
+                                    <label>Họ tên:</label>
+                                    <input type="text" name="hoten">
+                                </div>
+                                <span class="error" id="hotenError"></span>
+                            </div>
+
+                            <div class="item-info">
+                                <div class="item-info-title">
+                                    <label>Ngày sinh:</label>
+                                    <input type="date" name="date">
+                                </div>
+                                <span class="error" id="dateError"></span>
+                            </div>
+
+                            <div class="item-info">
+                                <div class="item-info-title">
+                                    <label>Giới tính:</label>
+                                    <div class="radio-group">
+                                        <div class="radio-item">
+                                            <input type="radio" name="gender" value="1" checked> Nam
+                                        </div>
+                                        <div class="radio-item"> 
+                                            <input type="radio" name="gender" value="0"> Nữ
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="item-info">
+                                <div class="item-info-title">
+                                    <label>Địa chỉ:</label>
+                                    <input type="text" name="address">  
+                                </div>
+                                <span class="error" id="addressError"></span>
+                            </div>
+                        </div>
+
+                        <div class="add-line"></div>
+
+                        <div class="add-info-detail-content">
+                            <div class="item-info">
+                                <div class="item-info-title">
+                                    <label>Số điện thoại:</label>
+                                    <input type="text" name="phone">
+                                </div>
+                                <span class="error"><?= $errors['sdt'] ?? '' ?></span>
+                                <span class="error" id="phoneError"></span>
+                            </div>
+
+                            <div class="item-info">
+                                <div class="item-info-title">
+                                    <label>Email:</label>
+                                    <input type="email" name="email">
+                                </div>
+                                <span class="error" id="emailError"></span>
+                            </div>
+
+                            <div class="item-info">
+                                <div class="item-info-title">
+                                    <label>Ngày vào làm: </label>
+                                    <input type="date" name="ngaylam" value="<?= date('Y-m-d') ?>">
+                                </div>
+                                <span class="error" id="ngaylamError"></span>
+                            </div>
+
+                            <div class="item-info">
+                                <div class="item-info-title">
+                                    <label for="branch">Chi nhánh:</label>
+                                    <select name="idCN" required>
+                                    <?php
+                                        // Kết nối tạm tới 1 chi nhánh (ví dụ: branch1) chỉ để hiển thị danh sách chi nhánh
+                                        $conn = getConnection('branch1');  // Không dùng getValidBranch ở đây
+
+                                        $result = sqlsrv_query($conn, "SELECT idCN, ten FROM chdidong.dbo.chinhanh");
+                                        if ($result) {
+                                        while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
+                                            // Nếu có giá trị cũ (khi submit lỗi), giữ lại lựa chọn
+                                            $selected = (isset($_POST['idCN']) && $_POST['idCN'] == $row['idCN']) ? 'selected' : '';
+                                            echo "<option value='{$row['idCN']}' $selected>{$row['ten']}</option>";
+                                        }
+                                        }
+                                    ?>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="item-info">
+                                <div class="item-info-title">
+                                    <label for="jobTitle">Chức vụ:</label>
+                                    <select name="idCV" required>
+                                        <?php
+                                        $result = sqlsrv_query($conn, "SELECT idCV, TENCHUCVU FROM chdidong.dbo.chucvu");
+                                        if ($result) {
+                                            while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
+                                                $selected = ($emp['idCV'] ?? '') == $row['idCV'] ? 'selected' : '';
+                                                echo "<option value='{$row['idCV']}' $selected>{$row['TENCHUCVU']}</option>";
+                                            }
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="add-button">
+                    <input type="submit" value="Thêm nhân viên" name="addEmployee">
+                </div>
+            </form>
         </div>
-        <span class="error" id="imgError"></span>
-
-        <label>Họ tên:</label>
-        <input type="text" name="hoten">
-        <span class="error" id="hotenError"></span>
-
-        <label>Ngày sinh:</label>
-        <input type="date" name="date">
-        <span class="error" id="dateError"></span>
-
-        <label>Giới tính:</label>
-        <input type="radio" name="gender" value="1" checked> Nam
-        <input type="radio" name="gender" value="0"> Nữ
-        <br><br>
-
-        <label>Địa chỉ:</label>
-        <input type="text" name="address">
-        <span class="error" id="addressError"></span>
-
-        <label>Số điện thoại:</label>
-        <input type="text" name="phone">
-        <span class="error"><?= $errors['sdt'] ?? '' ?></span>
-        <span class="error" id="phoneError"></span>
-
-        <label>Email:</label>
-        <input type="email" name="email">
-        <span class="error" id="emailError"></span>
-
-        <label>Ngày vào làm: </label>
-        <input type="date" name="ngaylam" value="<?= date('Y-m-d') ?>">
-        <span class="error" id="ngaylamError"></span>
-
-
-        <!-- <label>Lương cơ bản: </label>
-        <input type="number" name="luongCB">
-        <span class="error" id="luongCBError"></span> -->
-
-       
-    
-    <label for="branch">Chi nhánh:</label>
-    <select name="idCN" required>
-                <?php
-            // Kết nối tạm tới 1 chi nhánh (ví dụ: branch1) chỉ để hiển thị danh sách chi nhánh
-            $conn = getConnection('branch1');  // Không dùng getValidBranch ở đây
-
-            $result = sqlsrv_query($conn, "SELECT idCN, ten FROM chdidong.dbo.chinhanh");
-            if ($result) {
-                while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
-                    // Nếu có giá trị cũ (khi submit lỗi), giữ lại lựa chọn
-                    $selected = (isset($_POST['idCN']) && $_POST['idCN'] == $row['idCN']) ? 'selected' : '';
-                    echo "<option value='{$row['idCN']}' $selected>{$row['ten']}</option>";
-                }
-            }
-            ?>
-            </select>
-
-                    <label for="jobTitle">Chức vụ:</label>
-                    <select name="idCV" required>
-                        <?php
-                        $result = sqlsrv_query($conn, "SELECT idCV, TENCHUCVU FROM chdidong.dbo.chucvu");
-                        if ($result) {
-                            while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
-                                $selected = ($emp['idCV'] ?? '') == $row['idCV'] ? 'selected' : '';
-                                echo "<option value='{$row['idCV']}' $selected>{$row['TENCHUCVU']}</option>";
-                            }
-                        }
-                        ?>
-                    </select>
-                
-                
-
-        <input type="submit" value="Thêm nhân viên" name="addEmployee">
-    </form>
-
+    </main>    
 </body>
-
-</html>
 
 <script>
     function hienThiAnh(event) {

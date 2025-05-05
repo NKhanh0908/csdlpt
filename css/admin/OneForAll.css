@@ -54,12 +54,23 @@ body::-webkit-scrollbar {
     cursor: pointer;
 }
 
+.filter-select-branch-employee {
+    height: 35px;
+    padding: 0px 8px;
+    border-radius: 10px;
+    border: none;
+    font-size: 15px;
+    cursor: pointer;
+    background-color: #F0F0F0;
+}
+
 .second-header-main button a {
     text-decoration: none;
     color: inherit;
 }
 
-.second-header-main button:hover {
+.second-header-main button:hover,
+.filter-select-branch-employee:hover {
     background-color: #f7e3d4;
     color: #ff7b1d;
 }

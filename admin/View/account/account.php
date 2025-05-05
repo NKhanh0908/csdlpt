@@ -62,9 +62,7 @@
             </table>
         </div>
 
-        <div class="modal" id="modal">
-            <?php include('../../admin/View/account/add_account.php'); ?>   
-        </div>
+        
     </main>
 </body>
 

@@ -193,6 +193,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 case 'employee':
                     include "employee/employee.php";
                     break;
+                case 'updateEmployee':
+                    if (isset($_GET['idTK'])) {
+                        include "employee/updateEmployee.php";
+                    } else {
+                        echo "<p style='color:red;'>Không tìm thấy ID nhân viên</p>";
+                    }
+                    break;
                 case 'add_account':
                     include "account/add_account.php";
                     break;
